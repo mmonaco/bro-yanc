@@ -1,0 +1,2 @@
+/home/user/Documents/bro_broc/broccoli-python/build/CMakeFiles/_broccoli_intern.dir
+/home/user/Documents/bro_broc/broccoli-python/build/CMakeFiles/uninstall.dir
