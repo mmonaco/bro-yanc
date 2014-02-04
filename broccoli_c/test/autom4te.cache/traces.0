@@ -1,9 +1,0 @@
-m4trace:configure.ac:5: -2- _m4_warn([obsolete], [The macro `AC_HELP_STRING' is obsolete.
-You should run autoupdate.], [../../lib/autoconf/general.m4:207: AC_HELP_STRING is expanded from...
-configure.ac:5: the top level])
-m4trace:configure.ac:13: -1- AC_SUBST([broccoli_libs])
-m4trace:configure.ac:13: -1- AC_SUBST_TRACE([broccoli_libs])
-m4trace:configure.ac:13: -1- m4_pattern_allow([^broccoli_libs$])
-m4trace:configure.ac:14: -1- AC_SUBST([broccoli_cflags])
-m4trace:configure.ac:14: -1- AC_SUBST_TRACE([broccoli_cflags])
-m4trace:configure.ac:14: -1- m4_pattern_allow([^broccoli_cflags$])
