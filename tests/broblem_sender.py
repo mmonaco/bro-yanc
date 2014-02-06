@@ -26,6 +26,9 @@ for i in range(len(materials)):
 bc.send("test2") #this is the printer to print out the users 
 ####################################################################
 
+#To demonstate: :~/Documents/broc_yanc/broccoli_python/tests$ python broblem_sender.py
+#user@user-VirtualBox:/usr/local/bro/scripts$ ./../bin/bro ~/Documents/broc_yanc/broccoli_python/tests/alex_test.bro 
+
  
 
 

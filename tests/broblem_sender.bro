@@ -13,7 +13,7 @@ global broblematic_users: set[addr]; #creates the set of users that we will work
 
 event test1(i:addr)
 {
-        print "This is alex's test";
+        #print "This is alex's test";
         add broblematic_users[i]; #adds each user to the set #add the users to a list 
 }
 #TODO pipe arrays into bro so it can add whole arrays as opposed to individual users. 
