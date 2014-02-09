@@ -21,7 +21,7 @@ def test1(i):
 	print i 
 
 for i in range(len(materials)): 
-	bc.send("test1",addr(materials[i]))
+	bc.send("test1",addr(materials[i])) #also has IPv6 compatability 
 	
 bc.send("test2") #this is the printer to print out the users 
 ####################################################################
