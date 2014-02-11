@@ -13,7 +13,8 @@ event test1()
 
 {
 
-   event test2(-4, 42, current_time(), 1min, T, 3.14, "I LIKE DENVER", 12345/udp, 1.2.3.4, 22.33.44.0/24, [2607:f8b0:4009:802::1014], [2607:f8b0:4009:802::1014]/32);
+   event test2(-4, 42, current_time(), 1min, T, 3.14, "Keller", 12345/udp, 1.2.3.4, 22.33.44.0/24, [2607:f8b0:4009:802::1014], [2607:f8b0:4009:802::1014]/32);
+   #test 1 initates test2, which will send the info back to the reciver python
 
 }
 
