@@ -1,9 +1,8 @@
 #! /usr/bin/env python
 
-import csv
 from broccoli import *
 
-tester = 0 
+bc = Connection("127.0.0.1:47758")
 
 def term():
 	while True:		# infinite loop
@@ -34,9 +33,9 @@ def term():
 			break
 
 
+
 def do_setbro(splitLine):
 	print "the function is called"
-	return
 #	# splitLine[1] is a bro script file name
 #	# send bro script to bro device
 #	# wait for bro script to send list of vars
@@ -45,8 +44,14 @@ def do_setbro(splitLine):
 #	# store vars in dictionary
 
 def do_setvar(splitLine):
-	print "the function is called"
-	return
+	#setvar a 1.1.1.1 b 2.2.2.2 c 3.3.3.3 d 4.4.4.4 g 5.5.5.5
+	#TODO why doesn't it run a on the firts go?
+	for i in range (1,len(splitLine)-1,2):
+		bc.send("setvar",string(splitLine[i]),addr(splitLine[i+1])) #sends the first 2 
+
+	bc.send("test1") 
+	#after everything is loaded 
+
 #   # splitLine[1] will be var name (e.g., broblemetic_users)
 #   # splitLine[2] will be var value (e.g., eric)
 #   # if var is an arry, then splitLine will have more vals
@@ -56,7 +61,6 @@ def do_setvar(splitLine):
 #   # send var name and value to bro device
 
 def do_update(splitLine):
-	print "the function is called"
 	return
 #   # splitLine will not have anything else
 #   # send command to bro device to send back
@@ -65,13 +69,11 @@ def do_update(splitLine):
 #   # call do_list
 
 def do_list(splitLine):
-	print "the function is called"
 	return
 #   # for each var in dictionary,
 #   # print varname and value
 
 def do_help(splitLine):
-	print ""
 	return 
 #   # print list of commands and options
 
