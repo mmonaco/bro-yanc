@@ -1,0 +1,13 @@
+#separator \x09
+#set_separator	,
+#empty_field	(empty)
+#unset_field	-
+#path	communication
+#open	2014-02-12-13-39-14
+#fields	ts	peer	src_name	connected_peer_desc	connected_peer_addr	connected_peer_port	level	message
+#types	time	string	string	string	addr	port	string	string
+1392237554.156541	bro	parent	-	-	-	info	raised pipe's socket buffer size from 208K to 1024K
+1392237554.156541	bro	parent	-	-	-	info	communication started, parent pid is 17224, child pid is 17225
+1392237554.161209	bro	child	-	-	-	error	can't bind to 0.0.0.0:47758, Address already in use
+1392237559.662892	bro	parent	-	-	-	info	parent statistics: pending=0 bytes=0K/0K chunks=2/3 io=1/2 bytes/io=0.07K/0.02K events=0/0 operations=0/0
+#close	2014-02-12-13-39-19

@@ -32,7 +32,7 @@ def term():
 		if splitLine[0] == "quit":
 			break
 
-
+user_dict ={}
 
 def do_setbro(splitLine):
 	print "the function is called"
@@ -45,13 +45,15 @@ def do_setbro(splitLine):
 
 def do_setvar(splitLine):
 	#setvar a 1.1.1.1 b 2.2.2.2 c 3.3.3.3 d 4.4.4.4 g 5.5.5.5
-	#TODO why doesn't it run a on the firts go?
+	#why doesn't it run a on the firts go?
+	bc.send("setvar",string("BOGUS"),string("BOGUS"))
+	#bogus is a stopgap
 	for i in range (1,len(splitLine)-1,2):
-		bc.send("setvar",string(splitLine[i]),addr(splitLine[i+1])) #sends the first 2 
-
-	bc.send("test1") 
-	#after everything is loaded 
-
+		bc.send("setvar",string(splitLine[i]),string(splitLine[i+1])) 
+		#sends the list in 2s 
+		user_dict[splitLine[i]] = splitLine[i+1]
+		#adds each element to a local user_dict
+	
 #   # splitLine[1] will be var name (e.g., broblemetic_users)
 #   # splitLine[2] will be var value (e.g., eric)
 #   # if var is an arry, then splitLine will have more vals
@@ -69,6 +71,7 @@ def do_update(splitLine):
 #   # call do_list
 
 def do_list(splitLine):
+	print user_dict
 	return
 #   # for each var in dictionary,
 #   # print varname and value
@@ -78,18 +81,3 @@ def do_help(splitLine):
 #   # print list of commands and options
 
 term()
-
-
-# bc = Connection("127.0.0.1:47758") #opens the connection to the bro box 
-
-# @event(addr) #creates the new event to send the addr
-
-# def test1(i):
-# 	print i 
-
-# for i in range(len(materials)): 
-# 	bc.send("test1",addr(materials[i])) 
-# 	#also has IPv6 compatability 
-	
-# bc.send("test2") 
-
