@@ -2,7 +2,7 @@
 redef Communication::listen_port = 47758/tcp;
 
 redef Communication::nodes += {
-        ["broping"] = [$host = 127.0.0.1, $events = /test1|setvar|update|list|init_update|bro_list/, $connect=F, $ssl=F] #declares the tests 
+        ["broping"] = [$host = 127.0.0.1, $events = /test1|setvar|list|init_update|bro_list/, $connect=F, $ssl=F] #declares the tests 
 };
 
 type rec: record { #this intializes a data struct for us to use with the with setbro
@@ -37,14 +37,13 @@ event setvar(x:string, y:string){
 
 event bro_list(){
 	print "bro list called";
-	for ( b in broblematic_users ) #go through the users and print out users in the set
+	for ( b in broblematic_users ) #go through the users and print out users in the set on the bro device 
         print fmt("  %s", b);
 }
 
+
+
 event init_update(){
-	print "update launched";
-
+	print "initiated update";
 	event update("james","rick");
-
-	print "actual update launched";
 }

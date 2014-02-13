@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 
 from broccoli import *
+import time as Time
 
 bc = Connection("127.0.0.1:47758")
 
@@ -11,15 +12,15 @@ my_record = record_type("a", "b")
 def term():
 	while True:		# infinite loop
 		n = raw_input("\n>> ")
-		splitLine = n.split()
+		splitLine = (n.lower()).split()
 
 		if splitLine[0] == "bro_list":
 			print "bro_list was typed"  
 			do_bro_list()
 
 		if splitLine[0] == "update":
-			print "update was typed"  
-			init_update()
+			global recv
+			update_waiter()
 
 		if splitLine[0] == "setbro":
 			print "setbro was typed and recived" 
@@ -39,6 +40,23 @@ def term():
 		if splitLine[0] == "quit":
 			break
 
+
+def update_waiter():
+	bc = Connection("127.0.0.1:47758") 
+	#makes the connection 
+
+	bc.send("init_update") 
+	#initiate init_update, which will send back to the python script from the bro
+
+	recv = 0 
+	#reciever counter is set to 0
+	while True:
+	    bc.processInput();
+	     #wait for the input
+	    if recv == 1: 
+	    #this is the number of recieving data grams it is looking for. 2 for 2 init_update
+	        break
+	    Time.sleep(1)
 
 
 def do_setbro(splitLine):
@@ -70,18 +88,15 @@ def do_setvar(splitLine):
 #   # store the value in dictionary
 #   # send var name and value to bro device
 
-def init_update():
-	print "Init update sent"
-	bc.send("init_update")
-	bc.processInput()
 
-
-@event(string,string)
+@event
 def update(a,b):
-	print "do update reicved"
-	print a, b
-
-
+   #the reciever counter
+    #recv += 1 # it adds one to mention one init_update
+    print "\n"
+    print "On the python end: \n" 
+    print repr(a) #the other end 
+    print repr(b) 
 
 def do_bro_list(): 
 	bc.send("bro_list")	
@@ -109,4 +124,4 @@ def do_help(splitLine):
 
 
 if __name__ == "__main__":
-    term()
+	term()
