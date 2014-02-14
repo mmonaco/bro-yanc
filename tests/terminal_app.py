@@ -3,38 +3,36 @@
 from broccoli import *
 import time as Time
 
+global recv 
+recv = 0 
+
 bc = Connection("127.0.0.1:47758")
 
 user_dict ={}
 
-my_record = record_type("a", "b")
+my_record = record_type("a","b")
 
 def term():
+	print ("\nTerminal to Bro Device. Type 'help' for commands")
 	while True:		# infinite loop
 		n = raw_input("\n>> ")
 		splitLine = (n.lower()).split()
 
-		if splitLine[0] == "bro_list":
-			print "bro_list was typed"  
-			do_bro_list()
-
 		if splitLine[0] == "update":
-			global recv
+			print (recv)
 			update_waiter()
 
 		if splitLine[0] == "setbro":
-			print "setbro was typed and recived" 
+
 			do_setbro(splitLine)
 		
 		if splitLine[0] == "help":
-			print "help was typed and recived" 
 			do_help(splitLine)
 
 		if splitLine[0] == "list": 
-			do_list(splitLine)
+			do_list()
 
 		if splitLine[0] == "setvar": 
-			print "setvar was typed and recived"
 			do_setvar(splitLine)
 
 		if splitLine[0] == "quit":
@@ -42,25 +40,24 @@ def term():
 
 
 def update_waiter():
-	bc = Connection("127.0.0.1:47758") 
-	#makes the connection 
+	bc = Connection("127.0.0.1:47758")
+	#makes the connection
 
-	bc.send("init_update") 
+	bc.send("init_update")
 	#initiate init_update, which will send back to the python script from the bro
 
-	recv = 0 
-	#reciever counter is set to 0
 	while True:
-	    bc.processInput();
-	     #wait for the input
-	    if recv == 1: 
-	    #this is the number of recieving data grams it is looking for. 2 for 2 init_update
-	        break
-	    Time.sleep(1)
+		bc.processInput();
+		if recv > 1:
+			break
+		Time.sleep(1)
+	do_list()
+
 
 
 def do_setbro(splitLine):
 	return
+	#What exactly does this mean? 
 #	# splitLine[1] is a bro script file name
 #	# send bro script to bro device
 #	# wait for bro script to send list of vars
@@ -87,40 +84,41 @@ def do_setvar(splitLine):
 #   # look up var name in dictionary,
 #   # store the value in dictionary
 #   # send var name and value to bro device
+#DONE 
 
 
 @event
 def update(a,b):
-   #the reciever counter
-    #recv += 1 # it adds one to mention one init_update
-    print "\n"
-    print "On the python end: \n" 
-    print repr(a) #the other end 
-    print repr(b) 
-
-def do_bro_list(): 
-	bc.send("bro_list")	
+   global recv
+   recv += 1 
+   # it adds one to mention one init_update
+   user_dict[a] = b 
+   # adds a dictionary for user a to be user b
 
 #   # splitLine will not have anything else
-#   # send command to bro device to send back
+#   # send comand to bro device to send back
 #   #   current values of all vars
 #   # store vals in dictionary
 #   # call do_list
+#DONE
 
-def do_list(splitLine):
+def do_list():
 	print user_dict
 	return
 #   # for each var in dictionary,
 #   # print varname and value
-#DONE
 
 def do_help(splitLine):
 	print("Supported commands are:\n")
-	print("bro_list -- which lists out all of the locally stored variable names and values\n")
-	print("update -- which ")
-
+	print("list -- which lists out all of the locally stored variable names and values\n")
+	print("Example: >> list\n")
+	print("update -- which updates the values of your local variables to those on the bro device\n")
+	print("Example: >> update\n")
+	print("setvar -- which takes in an array of strings, seperated by spaces, and creates a record on the bro device that maps the first string to the second\n")
+	print("Example: >> setvar brick rick brob rob\n")
+	print("quit -- which quits the program")
+	print("Example: >> quit")
 	return 
-#   # print list of commands and options
 
 
 if __name__ == "__main__":

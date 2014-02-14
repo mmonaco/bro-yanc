@@ -45,5 +45,7 @@ event bro_list(){
 
 event init_update(){
 	print "initiated update";
-	event update("james","rick");
+	for ( b in broblematic_users )
+		event update(b$local_name, b$cont_name);
+		print "Should have sent it";
 }
