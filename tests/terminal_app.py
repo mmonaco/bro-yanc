@@ -16,7 +16,19 @@ def term():
 	print ("\nTerminal to Bro Device. Type 'help' for commands")
 	while True:		# infinite loop
 		n = raw_input("\n>> ")
+		# counter = 0
+		# history = []
+		# #TODO implement command history 
+		# #NOT COMPLETE
+		# if n == "^[[A":
+		# 	print history[counter - 1]
+		# if n == "[[B":
+		# 	print history[counter + 1]
+		# history.append(n)
+
+		
 		splitLine = (n.lower()).split()
+		
 
 		if splitLine[0] == "update":
 			print (recv)
@@ -37,6 +49,8 @@ def term():
 
 		if splitLine[0] == "quit":
 			break
+		else:
+			print ("Do you need help? Type 'help' for a list of possible commands.")
 
 
 def update_waiter():
