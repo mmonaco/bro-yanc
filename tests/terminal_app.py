@@ -14,42 +14,38 @@ my_record = record_type("a","b")
 
 def term():
 	print ("\nTerminal to Bro Device. Type 'help' for commands")
-	while True:		# infinite loop
+	while True:	
 		n = raw_input("\n>> ")
-		# counter = 0
-		# history = []
-		# #TODO implement command history 
-		# #NOT COMPLETE
-		# if n == "^[[A":
-		# 	print history[counter - 1]
-		# if n == "[[B":
-		# 	print history[counter + 1]
-		# history.append(n)
 
-		
+		commands = ["update","setbro","help","list","setvar","quit"]
+
 		splitLine = (n.lower()).split()
 		
-
-		if splitLine[0] == "update":
-			print (recv)
+		if splitLine[0] == commands[0]: 
+			#update
 			update_waiter()
 
-		if splitLine[0] == "setbro":
-
+		if splitLine[0] == commands[1]:
+			#setbro
 			do_setbro(splitLine)
 		
-		if splitLine[0] == "help":
+		if splitLine[0] == commands[2]:
+			#help
 			do_help(splitLine)
 
-		if splitLine[0] == "list": 
+		if splitLine[0] == commands[3]: 
+			#list
 			do_list()
 
-		if splitLine[0] == "setvar": 
+		if splitLine[0] == commands[4]: 
+			#setvar
 			do_setvar(splitLine)
 
-		if splitLine[0] == "quit":
+		if splitLine[0] == commands[5]:
+			#quit
 			break
-		else:
+
+		if not splitLine[0] in commands:
 			print ("Do you need help? Type 'help' for a list of possible commands.")
 
 
@@ -82,13 +78,13 @@ def do_setbro(splitLine):
 def do_setvar(splitLine):
 	#setvar brick rick brob rob blane lane
 	#why doesn't it run a on the firts go?
-	bc.send("setvar",string("BOGUS"),string("BOGUS"))
-	#bogus is a stopgap
 	for i in range (1,len(splitLine)-1,2):
 		bc.send("setvar",string(splitLine[i]),string(splitLine[i+1])) 
-		#sends the list in 2s 
-		user_dict[splitLine[i]] = splitLine[i+1]
-		#adds each element to a local user_dict
+		#sends the list in 2s
+
+		#user_dict[splitLine[i]] = splitLine[i+1]
+
+		#adds each element to a local user_dict ->should i do this or just wait for update?
 
 	
 #   # splitLine[1] will be var name (e.g., broblemetic_users)
@@ -105,7 +101,6 @@ def do_setvar(splitLine):
 def update(a,b):
    global recv
    recv += 1 
-   # it adds one to mention one init_update
    user_dict[a] = b 
    # adds a dictionary for user a to be user b
 
@@ -123,17 +118,16 @@ def do_list():
 #   # print varname and value
 
 def do_help(splitLine):
-	print("Supported commands are:\n")
+	print("\nSupported commands are:\n")
 	print("list -- which lists out all of the locally stored variable names and values\n")
 	print("Example: >> list\n")
 	print("update -- which updates the values of your local variables to those on the bro device\n")
 	print("Example: >> update\n")
 	print("setvar -- which takes in an array of strings, seperated by spaces, and creates a record on the bro device that maps the first string to the second\n")
 	print("Example: >> setvar brick rick brob rob\n")
-	print("quit -- which quits the program")
+	print("quit -- which quits the program\n")
 	print("Example: >> quit")
 	return 
-
 
 if __name__ == "__main__":
 	term()
