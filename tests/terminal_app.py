@@ -2,13 +2,23 @@
 
 from broccoli import *
 import time as Time
+import re
 
 global recv 
+# we will use recv as a counter for when our event actually runs 
+global recv_counter
+# recv counter will wait until the event is completed 
+
 recv = 0 
+recv_counter = 1
 
 bc = Connection("127.0.0.1:47758")
+#intialize connection 
 
 user_dict ={}
+#this maps the variables on the bro end to variables on our end 
+var_dict = {}
+#this maps variables on bro to 
 
 my_record = record_type("a","b")
 
@@ -50,6 +60,9 @@ def term():
 
 
 def update_waiter():
+	global recv_counter
+	global recv
+	#initalize the two recievers 
 	bc = Connection("127.0.0.1:47758")
 	#makes the connection
 
@@ -58,29 +71,50 @@ def update_waiter():
 
 	while True:
 		bc.processInput();
-		if recv > 1:
+
+		if recv > recv_counter:
+			recv_counter = (recv + 1)
+			#recv counter needs to be set one larger at the end of this so it can be ready to wait for the next test properly
 			break
 		Time.sleep(1)
+
 	do_list()
+	#list out the stuff in the dictionary
 
 
 
 def do_setbro(splitLine):
+#BRO FILE needs to have variables declared on line with no spaces. 
+	for line in open(splitLine[1]):
+	#opens up our bro file
+		if (":" or "=") in line:
+		#iterates through each line that contains : or = 
+			x = line.split()
+			#split it into pieves
+			if x[0] == ("global" or "local"):
+			#check if the definer is global or local 
+				bro_var = x[1].split(":" or "=",1)[0]
+				#this is the variable on the bro end stripped down
+				bro_var_type = x[1].split(":" or "=",1)[1]
+				#this is the other part that the variable equals
+				#TODO find a way to split down the second part, what the variable actually equals so that its just the type and not anything else. 
+				var_dict[bro_var] = bro_var_type
+	print var_dict
+
+
 	return
-	#What exactly does this mean? 
-#	# splitLine[1] is a bro script file name
-#	# send bro script to bro device
-#	# wait for bro script to send list of vars
-#	## [(var_name, var_type), ...]
-#	## note: in the future, do this as a call back
-#	# store vars in dictionary
 
 def do_setvar(splitLine):
 	#setvar brick rick brob rob blane lane
 	#why doesn't it run a on the firts go?
-	for i in range (1,len(splitLine)-1,2):
-		bc.send("setvar",string(splitLine[i]),string(splitLine[i+1])) 
-		#sends the list in 2s
+
+	if (len(splitLine) % 2 != 1):
+		print "Wrong numbe of varaibles"
+	#checks if there are an odd number of variables input 
+	else: 
+		for i in range (1,len(splitLine)-1,2):
+			#sends the list in 2s
+			bc.send("setvar",string(splitLine[i]),string(splitLine[i+1])) 
 
 		#user_dict[splitLine[i]] = splitLine[i+1]
 
@@ -99,9 +133,14 @@ def do_setvar(splitLine):
 
 @event
 def update(a,b):
-   global recv
-   recv += 1 
-   user_dict[a] = b 
+	user_dict[a] = b
+
+	global recv
+	recv += 1 
+
+
+	
+
    # adds a dictionary for user a to be user b
 
 #   # splitLine will not have anything else
