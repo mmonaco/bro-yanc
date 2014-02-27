@@ -1,10 +1,16 @@
-@load frameworks/communication/listen #this sets up the bro framework 
+@load frameworks/communication/listen #this sets up the bro framework for listening from python 
+@load base/frameworks/control #this is for controlling 
+@load base/frameworks/communication
+
+module Control;
+
 redef Communication::listen_port = 47758/tcp;
 
 redef Communication::nodes += {
         ["broping"] = [$host = 127.0.0.1, $events = /test1|setvar|list|init_update|bro_list/, $connect=F, $ssl=F] #declares the tests 
 };
 
+#this is for sending to baby bro
 type rec: record {
  #this intializes a data struct for us to use with the with setbro
     local_name: string;
@@ -13,10 +19,15 @@ type rec: record {
 
 global broblematic_users:set[rec]; 
 
-global update: event(a: string, b: string);
+global update:event(a: string, b: string);
 
 event bro_init(){
 print "bro is up ";
+local baby = connect(127.0.0.1,"",4775/tcp,"",.01min,F);
+print baby;
+local trash = "garbage";
+print trash;
+send_id(baby,trash);
 }
 
 event test1(){
@@ -41,6 +52,8 @@ event bro_list(){
 
 event init_update(){
 	print "init_update";
+
+
 	for ( b in broblematic_users)
 		#print fmt("  %s", b$local_name);
 		#print fmt("  %s", b$cont_name);

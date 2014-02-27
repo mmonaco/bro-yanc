@@ -58,6 +58,10 @@ def term():
 		if not splitLine[0] in commands:
 			print ("Do you need help? Type 'help' for a list of possible commands.")
 
+#TODO
+#Finish setbro 
+#Command history 
+#up arrow support 
 
 def update_waiter():
 	global recv_counter
@@ -71,8 +75,9 @@ def update_waiter():
 
 	while True:
 		bc.processInput();
-
-		if recv > recv_counter:
+		print (recv)
+		print (recv_counter)
+		if recv >= recv_counter:
 			recv_counter = (recv + 1)
 			#recv counter needs to be set one larger at the end of this so it can be ready to wait for the next test properly
 			break
@@ -82,7 +87,7 @@ def update_waiter():
 	#list out the stuff in the dictionary
 
 
-
+#As of now, it just takes variables in file and spits out data type 
 def do_setbro(splitLine):
 #BRO FILE needs to have variables declared on line with no spaces. 
 	for line in open(splitLine[1]):
@@ -109,7 +114,7 @@ def do_setvar(splitLine):
 	#why doesn't it run a on the firts go?
 
 	if (len(splitLine) % 2 != 1):
-		print "Wrong numbe of varaibles"
+		print "Wrong numbe of variables"
 	#checks if there are an odd number of variables input 
 	else: 
 		for i in range (1,len(splitLine)-1,2):

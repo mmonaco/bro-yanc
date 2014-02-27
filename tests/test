@@ -1,0 +1,2234 @@
+sw_params
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+SumStats::calc_deps
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+[SumStats::VARIANCE] = [SumStats::AVERAGE],
+[SumStats::STD_DEV] = [SumStats::VARIANCE]
+}]
+SumStats::finish_epoch
+[type_name=func, exported=F, constant=F, enum_constant=F, redefinable=F, value=SumStats::finish_epoch
+{ 
+<init> SumStats::key;
+{ 
+if (SumStats::ss$name in SumStats::result_store) 
+{ 
+SumStats::now = network_time();
+if (SumStats::ss?$epoch_result) 
+{ 
+SumStats::data = SumStats::result_store[SumStats::ss$name];
+for ([SumStats::key] in SumStats::data) 
+SumStats::ss$epoch_result(SumStats::now, SumStats::key, SumStats::data[SumStats::key]);
+
+}
+
+if (SumStats::ss?$epoch_finished) 
+SumStats::ss$epoch_finished(SumStats::now);
+
+SumStats::reset(SumStats::ss);
+}
+
+schedule SumStats::ss$epoch {
+SumStats::finish_epoch(SumStats::ss)
+};
+}
+}]
+NO_DIRECTION
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+gtp_end_user_addr
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Intel::DataStore
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+record_field
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+BIDIRECTIONAL
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+smb_trans
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ChecksumOffloading::done
+[type_name=bool, exported=F, constant=F, enum_constant=F, redefinable=F, value=F]
+ChecksumOffloading::bad_udp_checksums
+[type_name=count, exported=F, constant=F, enum_constant=F, redefinable=F, value=0]
+matcher_stats
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Notice::suppressing
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+
+}]
+gtp_charging_gateway_addr
+[type_name=addr, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+geo_location
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+connection
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+signature_state
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gtp_nsapi
+[type_name=count, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gtp_teid1
+[type_name=count, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+PcapFilterID
+[type_name=enum, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Notice::pp_alarms
+[type_name=file, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+packet
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Exec::results
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+
+}]
+ip6_mobility_msg
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gtp_tft
+[type_name=string, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gtp_trace_type
+[type_name=count, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ip6_ah
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ip6_mobility_brr
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+icmp6_nd_options
+[type_name=vector, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+discarder_check_udp
+[type_name=func, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+PKT_PROFILE_MODE_SECS
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+SumStats::ObserveFunc
+[type_name=func, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ip6_mobility_be
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ftp_port
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gtp_create_pdp_ctx_request_elements
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+smb_tree_connect
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Intel::updated_item
+[type_name=func, exported=F, constant=F, enum_constant=F, redefinable=F, value=Intel::updated_item
+]
+Control::hello
+[type_name=string, exported=F, constant=F, enum_constant=F, redefinable=F, value=hello world]
+SumStats::calc_store
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+[SumStats::AVERAGE] = anonymous-function
+{ 
+if (!SumStats::rv?$average) 
+SumStats::rv$average = SumStats::val;
+else
+SumStats::rv$average += (SumStats::val - SumStats::rv$average) / (coerce SumStats::rv$num to double);
+
+},
+[SumStats::HLL_UNIQUE] = anonymous-function
+{ 
+if (!SumStats::rv?$card) 
+{ 
+SumStats::rv$card = hll_cardinality_init(SumStats::r$hll_error_margin, SumStats::r$hll_confidence);
+SumStats::rv$hll_error_margin = SumStats::r$hll_error_margin;
+SumStats::rv$hll_confidence = SumStats::r$hll_confidence;
+}
+
+hll_cardinality_add(SumStats::rv$card, SumStats::obs);
+SumStats::rv$hll_unique = double_to_count(hll_cardinality_estimate(SumStats::rv$card));
+},
+[SumStats::SAMPLE] = anonymous-function
+{ 
+SumStats::sample_add_sample(SumStats::obs, SumStats::rv);
+},
+[SumStats::MAX] = anonymous-function
+{ 
+if (!SumStats::rv?$max) 
+SumStats::rv$max = SumStats::val;
+else
+if (SumStats::rv$max < SumStats::val) 
+SumStats::rv$max = SumStats::val;
+
+
+},
+[SumStats::LAST] = anonymous-function
+{ 
+if (0 < SumStats::r$num_last_elements) 
+{ 
+if (!SumStats::rv?$last_elements) 
+SumStats::rv$last_elements = Queue::init((coerce [$max_len=SumStats::r$num_last_elements] to record { max_len:count; }));
+
+Queue::put(SumStats::rv$last_elements, SumStats::obs);
+}
+
+},
+[SumStats::SUM] = anonymous-function
+{ 
+SumStats::rv$sum += SumStats::val;
+},
+[SumStats::VARIANCE] = anonymous-function
+{ 
+if (1 < SumStats::rv$num) 
+SumStats::rv$var_s += ((SumStats::val - SumStats::rv$prev_avg) * (SumStats::val - SumStats::rv$average));
+
+SumStats::calc_variance(SumStats::rv);
+SumStats::rv$prev_avg = SumStats::rv$average;
+},
+[SumStats::STD_DEV] = anonymous-function
+{ 
+SumStats::calc_std_dev(SumStats::rv);
+},
+[SumStats::MIN] = anonymous-function
+{ 
+if (!SumStats::rv?$min) 
+SumStats::rv$min = SumStats::val;
+else
+if (SumStats::val < SumStats::rv$min) 
+SumStats::rv$min = SumStats::val;
+
+
+},
+[SumStats::TOPK] = anonymous-function
+{ 
+topk_add(SumStats::rv$topk, SumStats::obs);
+},
+[SumStats::UNIQUE] = anonymous-function
+{ 
+if (!SumStats::rv?$unique_vals) 
+SumStats::rv$unique_vals = (coerce set() to set[record { num:count; dbl:double; str:string; }]);
+
+if (SumStats::r?$unique_max) 
+SumStats::rv$unique_max = SumStats::r$unique_max;
+
+if (!SumStats::r?$unique_max || flattenSumStats::rv$unique_vals <= SumStats::r$unique_max) 
+add SumStats::rv$unique_vals[SumStats::obs];
+
+SumStats::rv$unique = flattenSumStats::rv$unique_vals;
+}
+}]
+dns_tsig_additional
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ip6_mobility_back
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Signatures::count_per_orig
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+
+}]
+OTHER_ADDR
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+ip6_fragment
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Site::local_dns_suffix_regex
+[type_name=pattern, exported=F, constant=F, enum_constant=F, redefinable=F, value=/^?((^\.?|\.)()$)$?/]
+teredo_origin
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+dns_soa
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+LOCAL_HOSTS
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+udp
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+Exec::pending_commands
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+
+}]
+sw_align
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+nfheader_id
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ip6_hdr
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+endpoint
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+bittorrent_benc_value
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gtp_msisdn
+[type_name=string, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+peer_id
+[type_name=count, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+dns_mapping
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+dns_answer
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Signatures::last_vthresh
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+
+}]
+ModbusRegisters
+[type_name=vector, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+teredo_auth
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Intel::match_no_items
+[type_name=func, exported=F, constant=F, enum_constant=F, redefinable=F, value=Intel::match_no_items
+]
+unknown_transport
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+ip6_mobility_bu
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+dns_max_queries
+[type_name=count, exported=F, constant=F, enum_constant=F, redefinable=F, value=5]
+gtp_teid_control_plane
+[type_name=count, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+count_set
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+PacketFilter::FilterTester
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+Control::test
+[type_name=string, exported=F, constant=F, enum_constant=F, redefinable=F, value=jkhsdfjkhsdkjhsdjkhlf]
+dhcp_router_list
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+SYN_packet
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ORIG_ADDR
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+PKT_PROFILE_MODE_BYTES
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+PREFIX_PRESERVING_A50
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+dns_msg
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gtp_teardown_ind
+[type_name=bool, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gap_info
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+OS_version_inference
+[type_name=enum, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gtp_recovery
+[type_name=count, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Analyzer::ports
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+[Analyzer::ANALYZER_AYIYA] = {
+5072/udp
+},
+[Analyzer::ANALYZER_SSH] = {
+22/tcp
+},
+[Analyzer::ANALYZER_IRC] = {
+6666/tcp,
+6669/tcp,
+6667/tcp,
+6668/tcp
+},
+[Analyzer::ANALYZER_MODBUS] = {
+502/tcp
+},
+[Analyzer::ANALYZER_SOCKS] = {
+1080/tcp
+},
+[Analyzer::ANALYZER_DNP3] = {
+20000/tcp
+},
+[Analyzer::ANALYZER_SSL] = {
+585/tcp,
+992/tcp,
+989/tcp,
+995/tcp,
+5223/tcp,
+443/tcp,
+990/tcp,
+563/tcp,
+614/tcp,
+636/tcp,
+993/tcp
+},
+[Analyzer::ANALYZER_TEREDO] = {
+3544/udp
+},
+[Analyzer::ANALYZER_HTTP] = {
+8080/tcp,
+8888/tcp,
+631/tcp,
+3128/tcp,
+81/tcp,
+80/tcp,
+8000/tcp,
+1080/tcp
+},
+[Analyzer::ANALYZER_SMTP] = {
+587/tcp,
+25/tcp
+},
+[Analyzer::ANALYZER_DHCP] = {
+67/udp,
+68/udp
+},
+[Analyzer::ANALYZER_SYSLOG] = {
+514/udp
+},
+[Analyzer::ANALYZER_DNS] = {
+5355/udp,
+137/udp,
+53/udp,
+53/tcp,
+5353/udp
+},
+[Analyzer::ANALYZER_GTPV1] = {
+2152/udp,
+2123/udp
+},
+[Analyzer::ANALYZER_FTP] = {
+2811/tcp,
+21/tcp
+}
+}]
+Unified2::gen_map
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+
+}]
+EncapsulatingConnVector
+[type_name=vector, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gtp_selection_mode
+[type_name=count, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+dhcp_msg
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ChecksumOffloading::bad_tcp_checksums
+[type_name=count, exported=F, constant=F, enum_constant=F, redefinable=F, value=0]
+ip6_mobility_coti
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ip6_hopopts
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+software
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ModbusCoils
+[type_name=vector, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+addr_vec
+[type_name=vector, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gtp_update_pdp_ctx_response_elements
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+string_vec
+[type_name=vector, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+discarder_check_icmp
+[type_name=func, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Files::analyzer_add_callbacks
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+[Files::ANALYZER_EXTRACT] = FileExtract::on_add
+{ 
+if (!FileExtract::args?$extract_filename) 
+FileExtract::args$extract_filename = cat(extract-, FileExtract::f$source, -, FileExtract::f$id);
+
+FileExtract::f$info$extracted = FileExtract::args$extract_filename;
+FileExtract::args$extract_filename = build_path_compressed(FileExtract::prefix, FileExtract::args$extract_filename);
+mkdir(FileExtract::prefix);
+}
+}]
+bittorrent_peer_set
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ip6_mobility_hoti
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gtp_charging_id
+[type_name=count, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Host
+[type_name=enum, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ip6_routing
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+NO_HOSTS
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+script_id
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+software_version
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ip6_ext_hdr_chain
+[type_name=vector, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+event_peer
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+generic_inference
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+pkt_hdr
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+table_string_of_string
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+SumStats::init_resultval_hook
+[type_name=func, exported=F, constant=F, enum_constant=F, redefinable=F, value=SumStats::init_resultval_hook
+{ 
+if (SumStats::SAMPLE in SumStats::r$apply) 
+SumStats::rv$num_samples = SumStats::r$num_samples;
+
+}{ 
+if (SumStats::SUM in SumStats::r$apply && !SumStats::rv?$sum) 
+SumStats::rv$sum = (coerce 0 to double);
+
+}{ 
+if (SumStats::TOPK in SumStats::r$apply && !SumStats::rv?$topk) 
+SumStats::rv$topk = topk_init(SumStats::r$topk_size);
+
+}]
+smb_hdr
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+icmp
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+teredo_hdr
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gtp_omc_id
+[type_name=string, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gtp_rai
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+direct_inference
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+gtp_private_extension
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+rotate_info
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+SumStats::compose_resultvals_hook
+[type_name=func, exported=F, constant=F, enum_constant=F, redefinable=F, value=SumStats::compose_resultvals_hook
+{ 
+if (SumStats::rv1?$average && SumStats::rv2?$average) 
+SumStats::result$average = ((SumStats::rv1$average * (coerce SumStats::rv1$num to double)) + (SumStats::rv2$average * (coerce SumStats::rv2$num to double))) / (coerce (SumStats::rv1$num + SumStats::rv2$num) to double);
+else
+if (SumStats::rv1?$average) 
+SumStats::result$average = SumStats::rv1$average;
+else
+if (SumStats::rv2?$average) 
+SumStats::result$average = SumStats::rv2$average;
+
+
+
+}{ 
+<init> SumStats::rhll;
+{ 
+if (!(SumStats::rv1?$card || SumStats::rv2?$card)) 
+return ;
+
+;
+if (SumStats::rv1?$card) 
+{ 
+SumStats::rhll = hll_cardinality_init(SumStats::rv1$hll_error_margin, SumStats::rv1$hll_confidence);
+hll_cardinality_merge_into(SumStats::rhll, SumStats::rv1$card);
+}
+else
+SumStats::rhll = hll_cardinality_init(SumStats::rv2$hll_error_margin, SumStats::rv2$hll_confidence);
+
+if (SumStats::rv2?$card) 
+hll_cardinality_merge_into(SumStats::rhll, SumStats::rv2$card);
+
+SumStats::result$card = SumStats::rhll;
+SumStats::result$hll_unique = double_to_count(hll_cardinality_estimate(SumStats::rhll));
+}
+}{ 
+if (SumStats::rv1?$last_elements && SumStats::rv2?$last_elements) 
+SumStats::result$last_elements = Queue::merge(SumStats::rv1$last_elements, SumStats::rv2$last_elements);
+else
+if (SumStats::rv1?$last_elements) 
+SumStats::result$last_elements = SumStats::rv1$last_elements;
+else
+if (SumStats::rv2?$last_elements) 
+SumStats::result$last_elements = SumStats::rv2$last_elements;
+
+
+
+}{ 
+if (SumStats::rv1?$max && SumStats::rv2?$max) 
+SumStats::result$max = (SumStats::rv2$max < SumStats::rv1$max) ? SumStats::rv1$max : SumStats::rv2$max;
+else
+if (SumStats::rv1?$max) 
+SumStats::result$max = SumStats::rv1$max;
+else
+if (SumStats::rv2?$max) 
+SumStats::result$max = SumStats::rv2$max;
+
+
+
+}{ 
+if (SumStats::rv1?$min && SumStats::rv2?$min) 
+SumStats::result$min = (SumStats::rv1$min < SumStats::rv2$min) ? SumStats::rv1$min : SumStats::rv2$min;
+else
+if (SumStats::rv1?$min) 
+SumStats::result$min = SumStats::rv1$min;
+else
+if (SumStats::rv2?$min) 
+SumStats::result$min = SumStats::rv2$min;
+
+
+
+}{ 
+<init> SumStats::i, SumStats::other_vector, SumStats::othercount;
+{ 
+if (SumStats::rv1$num_samples != SumStats::rv2$num_samples) 
+{ 
+Reporter::error(Merging sample sets with differing sizes is not supported);
+return ;
+}
+
+SumStats::num_samples = SumStats::rv1$num_samples;
+SumStats::result$num_samples = SumStats::num_samples;
+if (SumStats::num_samples < flattenSumStats::rv1$samples || SumStats::num_samples < flattenSumStats::rv2$samples) 
+{ 
+Reporter::error(Sample vector with too many elements. Aborting.);
+return ;
+}
+
+if (flattenSumStats::rv1$samples != SumStats::num_samples && flattenSumStats::rv2$samples < SumStats::num_samples) 
+{ 
+if (flattenSumStats::rv1$samples != SumStats::rv1$sample_elements || flattenSumStats::rv2$samples < SumStats::rv2$sample_elements) 
+{ 
+Reporter::error(Mismatch in sample element size and tracking. Aborting merge);
+return ;
+}
+
+for ([SumStats::i] in SumStats::rv1$samples) 
+SumStats::sample_add_sample(SumStats::rv1$samples[SumStats::i], SumStats::result);
+
+for ([SumStats::i] in SumStats::rv2$samples) 
+SumStats::sample_add_sample(SumStats::rv2$samples[SumStats::i], SumStats::result);
+
+}
+else
+{ 
+;
+;
+if (SumStats::rv2$sample_elements < SumStats::rv1$sample_elements) 
+{ 
+SumStats::result$samples = (*)SumStats::rv1$samples;
+SumStats::other_vector = SumStats::rv2$samples;
+SumStats::othercount = SumStats::rv2$sample_elements;
+}
+else
+{ 
+SumStats::result$samples = (*)SumStats::rv2$samples;
+SumStats::other_vector = SumStats::rv1$samples;
+SumStats::othercount = SumStats::rv1$sample_elements;
+}
+
+SumStats::totalcount = SumStats::rv1$sample_elements + SumStats::rv2$sample_elements;
+SumStats::result$sample_elements = SumStats::totalcount;
+for ([SumStats::i] in SumStats::other_vector) 
+{ 
+if (rand(SumStats::totalcount) <= SumStats::othercount) 
+SumStats::result$samples[SumStats::i] = SumStats::other_vector[SumStats::i];
+
+}
+
+}
+
+}
+}{ 
+if (SumStats::rv1?$sum || SumStats::rv2?$sum) 
+{ 
+SumStats::result$sum = SumStats::rv1?$sum ? SumStats::rv1$sum : (coerce 0 to double);
+if (SumStats::rv2?$sum) 
+SumStats::result$sum += SumStats::rv2$sum;
+
+}
+
+}{ 
+if (SumStats::rv1?$topk) 
+{ 
+SumStats::result$topk = topk_init(topk_size(SumStats::rv1$topk));
+topk_merge(SumStats::result$topk, SumStats::rv1$topk);
+if (SumStats::rv2?$topk) 
+topk_merge(SumStats::result$topk, SumStats::rv2$topk);
+
+}
+else
+if (SumStats::rv2?$topk) 
+{ 
+SumStats::result$topk = topk_init(topk_size(SumStats::rv2$topk));
+topk_merge(SumStats::result$topk, SumStats::rv2$topk);
+}
+
+
+}{ 
+<init> SumStats::val2;
+{ 
+if (SumStats::rv1?$unique_vals || SumStats::rv2?$unique_vals) 
+{ 
+if (SumStats::rv1?$unique_max) 
+SumStats::result$unique_max = SumStats::rv1$unique_max;
+else
+if (SumStats::rv2?$unique_max) 
+SumStats::result$unique_max = SumStats::rv2$unique_max;
+
+
+if (SumStats::rv1?$unique_vals) 
+SumStats::result$unique_vals = (*)SumStats::rv1$unique_vals;
+
+if (SumStats::rv2?$unique_vals) 
+{ 
+if (!SumStats::result?$unique_vals) 
+{ 
+SumStats::result$unique_vals = (*)SumStats::rv2$unique_vals;
+}
+else
+{ 
+for ([SumStats::val2] in SumStats::rv2$unique_vals) 
+{ 
+if (SumStats::result?$unique_max && SumStats::result$unique_max <= flattenSumStats::result$unique_vals) 
+break ;
+
+add SumStats::result$unique_vals[(*)SumStats::val2];
+}
+
+}
+
+}
+
+SumStats::result$unique = flattenSumStats::result$unique_vals;
+}
+
+}
+}{ 
+if (SumStats::rv1?$var_s && SumStats::rv1?$average && SumStats::rv2?$var_s && SumStats::rv2?$average) 
+{ 
+SumStats::rv1_avg_sq = (SumStats::rv1$average - SumStats::result$average);
+SumStats::rv1_avg_sq = SumStats::rv1_avg_sq * SumStats::rv1_avg_sq;
+SumStats::rv2_avg_sq = (SumStats::rv2$average - SumStats::result$average);
+SumStats::rv2_avg_sq = SumStats::rv2_avg_sq * SumStats::rv2_avg_sq;
+SumStats::result$var_s = (coerce SumStats::rv1$num to double) * (SumStats::rv1$var_s / (coerce SumStats::rv1$num to double) + SumStats::rv1_avg_sq) + (coerce SumStats::rv2$num to double) * (SumStats::rv2$var_s / (coerce SumStats::rv2$num to double) + SumStats::rv2_avg_sq);
+}
+else
+if (SumStats::rv1?$var_s) 
+SumStats::result$var_s = SumStats::rv1$var_s;
+else
+if (SumStats::rv2?$var_s) 
+SumStats::result$var_s = SumStats::rv2$var_s;
+
+
+
+if (SumStats::rv1?$prev_avg && SumStats::rv2?$prev_avg) 
+SumStats::result$prev_avg = ((SumStats::rv1$prev_avg * (coerce SumStats::rv1$num to double)) + (SumStats::rv2$prev_avg * (coerce SumStats::rv2$num to double))) / (coerce (SumStats::rv1$num + SumStats::rv2$num) to double);
+else
+if (SumStats::rv1?$prev_avg) 
+SumStats::result$prev_avg = SumStats::rv1$prev_avg;
+else
+if (SumStats::rv2?$prev_avg) 
+SumStats::result$prev_avg = SumStats::rv2$prev_avg;
+
+
+
+SumStats::calc_variance(SumStats::result);
+}{ 
+SumStats::calc_std_dev(SumStats::result);
+}]
+SEQUENTIALLY_NUMBERED
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+irc_join_info
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gtp_create_pdp_ctx_response_elements
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gtpv1_hdr
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+IPAddrAnonymizationClass
+[type_name=enum, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+X509
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ChecksumOffloading::bad_ip_checksums
+[type_name=count, exported=F, constant=F, enum_constant=F, redefinable=F, value=0]
+PacketFilter::filter_plugins
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+
+}]
+SumStats::stats_store
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+
+}]
+load_sample_info
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ModbusHeaders
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Log::filters
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+[Files::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[FTP::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[Reporter::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[Tunnel::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[Cluster::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[Notice::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[SOCKS::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[IRC::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[Signatures::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[Modbus::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[Notice::ALARM_LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[PacketFilter::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[DPD::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[Unified2::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[DNP3::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[Software::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[Intel::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[DNS::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[SSL::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[DHCP::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[SSH::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[Communication::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[SMTP::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[Syslog::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[Weird::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[Conn::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}],
+[HTTP::LOG, default] = [name=default, writer=Log::WRITER_ASCII, pred=<uninitialized>, path=<uninitialized>, path_func=Log::default_path_func
+{ 
+if ( != Log::path) 
+return (Log::path);
+
+Log::id_str = fmt(%s, Log::id);
+Log::parts = split1(Log::id_str, /^?(::)$?/);
+if (flattenLog::parts == 2) 
+{ 
+if (Log::parts[2] == LOG) 
+{ 
+Log::module_parts = split_n(Log::parts[1], /^?([^A-Z][A-Z][a-z]*)$?/, T, 4);
+Log::output = ;
+if (1 in Log::module_parts) 
+Log::output = Log::module_parts[1];
+
+if (2 in Log::module_parts && Log::module_parts[2] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[2], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[2], 2, (coerce flattenLog::module_parts[2] to int)));
+
+if (3 in Log::module_parts && Log::module_parts[3] != ) 
+Log::output = cat(Log::output, _, Log::module_parts[3]);
+
+if (4 in Log::module_parts && Log::module_parts[4] != ) 
+Log::output = cat(Log::output, sub_bytes(Log::module_parts[4], 1, (coerce 1 to int)), _, sub_bytes(Log::module_parts[4], 2, (coerce flattenLog::module_parts[4] to int)));
+
+return (to_lower(Log::output));
+}
+
+if (/^?(_LOG$)$?/ in Log::parts[2]) 
+Log::parts[2] = sub(Log::parts[2], /^?(_LOG$)$?/, );
+
+return (cat(to_lower(Log::parts[1]), _, to_lower(Log::parts[2])));
+}
+else
+return (to_lower(Log::id_str));
+
+}, include=<uninitialized>, exclude=<uninitialized>, log_local=T, log_remote=T, interv=0 secs, postprocessor=<uninitialized>, config={
+
+}]
+}]
+Control::bob
+[type_name=string, exported=F, constant=F, enum_constant=F, redefinable=F, value=jkhsdfjkhsdkjhsdjkhlf]
+dns_edns_additional
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+sw_align_vec
+[type_name=vector, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+icmp6_nd_prefix_info
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gtp_cause
+[type_name=count, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ip6_mobility_cot
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+pkt_profile_modes
+[type_name=enum, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gtp_proto_config_options
+[type_name=string, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+pcap_packet
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ip6_dstopts
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ip6_ext_hdr
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Exec::FileLine
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+icmp_hdr
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gtp_access_point_name
+[type_name=string, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Weird::current_conn
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=[id=[orig_h=<uninitialized>, orig_p=<uninitialized>, resp_h=<uninitialized>, resp_p=<uninitialized>], orig=[size=<uninitialized>, state=<uninitialized>, num_pkts=<uninitialized>, num_bytes_ip=<uninitialized>, flow_label=<uninitialized>], resp=[size=<uninitialized>, state=<uninitialized>, num_pkts=<uninitialized>, num_bytes_ip=<uninitialized>, flow_label=<uninitialized>], start_time=<uninitialized>, duration=<uninitialized>, service={
+
+}, addl=<uninitialized>, hot=<uninitialized>, history=<uninitialized>, uid=<uninitialized>, tunnel=<uninitialized>]]
+ip6_esp
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+INBOUND
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+gtp_update_pdp_ctx_request_elements
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+pm_mapping
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+NetStats
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+None
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+smb_negotiate
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ntp_msg
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+var_sizes
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gtp_qos_profile
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+bro_resources
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+PacketFilter::currently_building
+[type_name=bool, exported=F, constant=F, enum_constant=F, redefinable=F, value=F]
+transport_proto
+[type_name=enum, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+pm_callit_request
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Unified2::OneLine
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Control::james
+[type_name=addr, exported=F, constant=F, enum_constant=F, redefinable=F, value=192.23.1.233]
+id_table
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+bittorrent_benc_dir
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+irc_join_list
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+pm_mappings
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+SumStats::reducer_store
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+
+}]
+OS_version
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Exec::pending_files
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+
+}]
+gtp_trace_reference
+[type_name=count, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+entropy_test_result
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Signatures::vert_table
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+
+}]
+smb_trans_data
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ip4_hdr
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+icmp_context
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+bt_tracker_headers
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+addr_set
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+PKT_PROFILE_MODE_PKTS
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+PREFIX_PRESERVING_MD5
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+sw_substring
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gtp_charging_characteristics
+[type_name=count, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gtp_reordering_required
+[type_name=bool, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ip6_option
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+SumStats::threshold_tracker
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+
+}]
+Signatures::horiz_table
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+
+}]
+string_array
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Files::registered_protocols
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+[Analyzer::ANALYZER_FTP_DATA] = [get_file_handle=FTP::get_file_handle
+{ 
+if (!FTP::c$id$resp_h, FTP::c$id$resp_p in FTP::ftp_data_expected) 
+return ();
+
+return (cat(Analyzer::ANALYZER_FTP_DATA, FTP::c$start_time, FTP::c$id, FTP::is_orig));
+}, describe=FTP::describe_file
+{ 
+<init> FTP::cid;
+{ 
+if (FTP::f$source != FTP) 
+return ();
+
+for ([FTP::cid] in FTP::f$conns) 
+{ 
+if (FTP::f$conns[FTP::cid]?$ftp) 
+return (FTP::describe(FTP::f$conns[FTP::cid]$ftp));
+
+}
+
+return ();
+}
+}],
+[Analyzer::ANALYZER_HTTP] = [get_file_handle=HTTP::get_file_handle
+{ 
+if (!HTTP::c?$http) 
+return ();
+
+if (HTTP::c$http$range_request && !HTTP::is_orig) 
+{ 
+return (cat(Analyzer::ANALYZER_HTTP, HTTP::is_orig, HTTP::c$id$orig_h, HTTP::build_url(HTTP::c$http)));
+}
+else
+{ 
+HTTP::mime_depth = HTTP::is_orig ? HTTP::c$http$orig_mime_depth : HTTP::c$http$resp_mime_depth;
+return (cat(Analyzer::ANALYZER_HTTP, HTTP::c$start_time, HTTP::is_orig, HTTP::c$http$trans_depth, HTTP::mime_depth, id_string(HTTP::c$id)));
+}
+
+}, describe=HTTP::describe_file
+{ 
+<init> HTTP::cid;
+{ 
+if (HTTP::f$source != HTTP) 
+return ();
+
+for ([HTTP::cid] in HTTP::f$conns) 
+{ 
+if (HTTP::f$conns[HTTP::cid]?$http) 
+return (HTTP::build_url_http(HTTP::f$conns[HTTP::cid]$http));
+
+}
+
+return ();
+}
+}],
+[Analyzer::ANALYZER_SMTP] = [get_file_handle=SMTP::get_file_handle
+{ 
+return (cat(Analyzer::ANALYZER_SMTP, SMTP::c$start_time, SMTP::c$smtp$trans_depth, SMTP::c$smtp_state$mime_depth));
+}, describe=SMTP::describe_file
+{ 
+<init> SMTP::cid;
+{ 
+if (SMTP::f$source != SMTP) 
+return ();
+
+for ([SMTP::cid] in SMTP::f$conns) 
+{ 
+SMTP::c = SMTP::f$conns[SMTP::cid];
+return (SMTP::describe(SMTP::c$smtp));
+}
+
+return ();
+}
+}],
+[Analyzer::ANALYZER_IRC_DATA] = [get_file_handle=IRC::get_file_handle
+{ 
+return (cat(Analyzer::ANALYZER_IRC_DATA, IRC::c$start_time, IRC::c$id, IRC::is_orig));
+}, describe=anonymous-function
+{ 
+return ();
+}]
+}]
+sw_substring_vec
+[type_name=vector, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+IPAddrAnonymization
+[type_name=enum, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+http_message_stat
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+SumStats::thresholds_store
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+
+}]
+Exec::OneLine
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+tcp
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+RESP_ADDR
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+ip6_options
+[type_name=vector, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Signatures::did_sig_log
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+
+}]
+Notice::pp_alarms_open
+[type_name=bool, exported=F, constant=F, enum_constant=F, redefinable=F, value=F]
+nf_v5_header
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+http_stats_rec
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Direction
+[type_name=enum, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+pm_port_request
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Notice::tmp_notice_storage
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+
+}]
+PatternMatchResult
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+KEEP_ORIG_ADDR
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+nf_v5_record
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gtp_delete_pdp_ctx_response_elements
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+REMOTE_HOSTS
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+bittorrent_peer
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ip6_mobility_hot
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Signatures::count_per_resp
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+
+}]
+icmp_conn
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+index_vec
+[type_name=vector, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+record_field_table
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+SumStats::result_store
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+
+}]
+Site::local_dns_neighbor_suffix_regex
+[type_name=pattern, exported=F, constant=F, enum_constant=F, redefinable=F, value=/^?((^\.?|\.)()$)$?/]
+Control::ram
+[type_name=int, exported=F, constant=F, enum_constant=F, redefinable=F, value=5]
+Unified2::sid_map
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+
+}]
+OUTBOUND
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+mime_header_rec
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Intel::MinDataStore
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+discarder_check_tcp
+[type_name=func, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Intel::new_item
+[type_name=func, exported=F, constant=F, enum_constant=F, redefinable=F, value=Intel::new_item
+]
+Software::Description
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+Unified2::classification_map
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+
+}]
+fuzzy_inference
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+IRC::dcc_expected_transfers
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+
+}]
+gtp_gsn_addr
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+done_with_network
+[type_name=bool, exported=F, constant=F, enum_constant=F, redefinable=F, value=F]
+FTP::ftp_data_expected
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+
+}]
+backdoor_endp_stats
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+conn_id
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+PacketFilter::dynamic_restrict_filters
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+
+}]
+tcp_hdr
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gtp_trigger_id
+[type_name=string, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+gtp_delete_pdp_ctx_request_elements
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ip6_mobility_hdr
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+PacketFilter::filter_changed
+[type_name=bool, exported=F, constant=F, enum_constant=F, redefinable=F, value=F]
+udp_hdr
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+endpoint_stats
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+PKT_PROFILE_MODE_NONE
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+interconn_endp_stats
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+PacketFilter::DefaultPcapFilter
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+Signatures::last_hthresh
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value={
+
+}]
+gtp_imsi
+[type_name=count, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+RANDOM_MD5
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+string_set
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+icmp6_nd_option
+[type_name=record, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+mime_header_list
+[type_name=table, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+discarder_check_ip
+[type_name=func, exported=F, constant=F, enum_constant=F, redefinable=F, value=<uninitialized>]
+ALL_HOSTS
+[type_name=enum, exported=F, constant=F, enum_constant=T, redefinable=F, value=<uninitialized>]
+SumStats::register_observe_plugins
+[type_name=func, exported=F, constant=F, enum_constant=F, redefinable=F, value=SumStats::register_observe_plugins
+{ 
+SumStats::register_observe_plugin(SumStats::AVERAGE, anonymous-function
+{ 
+if (!SumStats::rv?$average) 
+SumStats::rv$average = SumStats::val;
+else
+SumStats::rv$average += (SumStats::val - SumStats::rv$average) / (coerce SumStats::rv$num to double);
+
+});
+}{ 
+SumStats::register_observe_plugin(SumStats::HLL_UNIQUE, anonymous-function
+{ 
+if (!SumStats::rv?$card) 
+{ 
+SumStats::rv$card = hll_cardinality_init(SumStats::r$hll_error_margin, SumStats::r$hll_confidence);
+SumStats::rv$hll_error_margin = SumStats::r$hll_error_margin;
+SumStats::rv$hll_confidence = SumStats::r$hll_confidence;
+}
+
+hll_cardinality_add(SumStats::rv$card, SumStats::obs);
+SumStats::rv$hll_unique = double_to_count(hll_cardinality_estimate(SumStats::rv$card));
+});
+}{ 
+SumStats::register_observe_plugin(SumStats::LAST, anonymous-function
+{ 
+if (0 < SumStats::r$num_last_elements) 
+{ 
+if (!SumStats::rv?$last_elements) 
+SumStats::rv$last_elements = Queue::init((coerce [$max_len=SumStats::r$num_last_elements] to record { max_len:count; }));
+
+Queue::put(SumStats::rv$last_elements, SumStats::obs);
+}
+
+});
+}{ 
+SumStats::register_observe_plugin(SumStats::MAX, anonymous-function
+{ 
+if (!SumStats::rv?$max) 
+SumStats::rv$max = SumStats::val;
+else
+if (SumStats::rv$max < SumStats::val) 
+SumStats::rv$max = SumStats::val;
+
+
+});
+}{ 
+SumStats::register_observe_plugin(SumStats::MIN, anonymous-function
+{ 
+if (!SumStats::rv?$min) 
+SumStats::rv$min = SumStats::val;
+else
+if (SumStats::val < SumStats::rv$min) 
+SumStats::rv$min = SumStats::val;
+
+
+});
+}{ 
+SumStats::register_observe_plugin(SumStats::SAMPLE, anonymous-function
+{ 
+SumStats::sample_add_sample(SumStats::obs, SumStats::rv);
+});
+}{ 
+SumStats::register_observe_plugin(SumStats::SUM, anonymous-function
+{ 
+SumStats::rv$sum += SumStats::val;
+});
+}{ 
+SumStats::register_observe_plugin(SumStats::TOPK, anonymous-function
+{ 
+topk_add(SumStats::rv$topk, SumStats::obs);
+});
+}{ 
+SumStats::register_observe_plugin(SumStats::UNIQUE, anonymous-function
+{ 
+if (!SumStats::rv?$unique_vals) 
+SumStats::rv$unique_vals = (coerce set() to set[record { num:count; dbl:double; str:string; }]);
+
+if (SumStats::r?$unique_max) 
+SumStats::rv$unique_max = SumStats::r$unique_max;
+
+if (!SumStats::r?$unique_max || flattenSumStats::rv$unique_vals <= SumStats::r$unique_max) 
+add SumStats::rv$unique_vals[SumStats::obs];
+
+SumStats::rv$unique = flattenSumStats::rv$unique_vals;
+});
+}{ 
+SumStats::register_observe_plugin(SumStats::VARIANCE, anonymous-function
+{ 
+if (1 < SumStats::rv$num) 
+SumStats::rv$var_s += ((SumStats::val - SumStats::rv$prev_avg) * (SumStats::val - SumStats::rv$average));
+
+SumStats::calc_variance(SumStats::rv);
+SumStats::rv$prev_avg = SumStats::rv$average;
+});
+SumStats::add_observe_plugin_dependency(SumStats::VARIANCE, SumStats::AVERAGE);
+}{ 
+SumStats::register_observe_plugin(SumStats::STD_DEV, anonymous-function
+{ 
+SumStats::calc_std_dev(SumStats::rv);
+});
+SumStats::add_observe_plugin_dependency(SumStats::STD_DEV, SumStats::VARIANCE);
+}]
+I'm a local string
