@@ -16,9 +16,7 @@ bc = Connection("127.0.0.1:47758")
 #intialize connection 
 
 user_dict ={}
-#this maps the variables on the bro end to variables on our end 
-var_dict = {}
-#this maps variables on bro to 
+#this maps the variables on the bro end to variables on our end  
 
 my_record = record_type("a","b")
 
@@ -33,6 +31,7 @@ def term():
 		
 		if splitLine[0] == commands[0]: 
 			#update
+			user_dict.clear()
 			update_waiter()
 
 		if splitLine[0] == commands[1]:
@@ -63,6 +62,13 @@ def term():
 #Command history 
 #up arrow support 
 
+@event
+def update(a,b):
+	user_dict[a] = b
+
+	global recv
+	recv += 1 
+
 def update_waiter():
 	global recv_counter
 	global recv
@@ -86,29 +92,6 @@ def update_waiter():
 	do_list()
 	#list out the stuff in the dictionary
 
-
-#As of now, it just takes variables in file and spits out data type 
-def do_setbro(splitLine):
-#BRO FILE needs to have variables declared on line with no spaces. 
-	for line in open(splitLine[1]):
-	#opens up our bro file
-		if (":" or "=") in line:
-		#iterates through each line that contains : or = 
-			x = line.split()
-			#split it into pieves
-			if x[0] == ("global" or "local"):
-			#check if the definer is global or local 
-				bro_var = x[1].split(":" or "=",1)[0]
-				#this is the variable on the bro end stripped down
-				bro_var_type = x[1].split(":" or "=",1)[1]
-				#this is the other part that the variable equals
-				#TODO find a way to split down the second part, what the variable actually equals so that its just the type and not anything else. 
-				var_dict[bro_var] = bro_var_type
-	print var_dict
-
-
-	return
-
 def do_setvar(splitLine):
 	#setvar brick rick brob rob blane lane
 	#why doesn't it run a on the firts go?
@@ -119,47 +102,13 @@ def do_setvar(splitLine):
 	else: 
 		for i in range (1,len(splitLine)-1,2):
 			#sends the list in 2s
-			bc.send("setvar",string(splitLine[i]),string(splitLine[i+1])) 
+			bc.send("setvar",string(splitLine[i]),addr(splitLine[i+1])) 
 
 		#user_dict[splitLine[i]] = splitLine[i+1]
-
-		#adds each element to a local user_dict ->should i do this or just wait for update?
-
-	
-#   # splitLine[1] will be var name (e.g., broblemetic_users)
-#   # splitLine[2] will be var value (e.g., eric)
-#   # if var is an arry, then splitLine will have more vals
-#   #   (e.g., eric, alex, oliver)
-#   # look up var name in dictionary,
-#   # store the value in dictionary
-#   # send var name and value to bro device
-#DONE 
-
-
-@event
-def update(a,b):
-	user_dict[a] = b
-
-	global recv
-	recv += 1 
-
-
-	
-
-   # adds a dictionary for user a to be user b
-
-#   # splitLine will not have anything else
-#   # send comand to bro device to send back
-#   #   current values of all vars
-#   # store vals in dictionary
-#   # call do_list
-#DONE
 
 def do_list():
 	print user_dict
 	return
-#   # for each var in dictionary,
-#   # print varname and value
 
 def do_help(splitLine):
 	print("\nSupported commands are:\n")
