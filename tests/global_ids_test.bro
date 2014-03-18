@@ -2,53 +2,17 @@
 @load base/frameworks/communication
 @load base/frameworks/yanc
  
+
 redef Communication::listen_port = 1337/tcp;
- 
+ #port to take orders from 
+
 redef Communication::nodes += {
-["foo"] = [$host = 127.0.0.1, $events = /my_event_request/, $connect = F]
+["foo"] = [$host = 127.0.0.1, $events = /build_table_command/, $connect = F]
+#this is the master node, we need to edit this 
 };
- 
-event remote_connection_handshake_done(p: event_peer)
-{
-	print fmt("connection established to: %s", p);
-}
- 
-global request_count: count = 0;
- 
-event my_event_response(details: count)
-{
-	print "sent my_event_response", details;
-}
- 
-event my_event_request(details: string)
-{
-	local table_test = global_ids();
-
-	for (k in table_test){
-		local temp = table_test[k];
-		#very ugly hack. since all of the global variables declared in this file begin with "yanc_id", check to see if the 0th char = y and if the 4th char = "_"
-		#This should be good enough for now, as long as there isn't anything of similar format. IF there is we can add more if conditions 
-		if (k[0] == "y" && k[4] == "_" ){
-		#make temp into a string and 
-			print k;
-			print temp;
-		}
-	}
-	#print "recv my_event_request", details;
-	++request_count;
-	event my_event_response(request_count);
-}
- 
-event remote_connection_closed(p: event_peer)
-{	
-	print fmt("connection to peer closed: %s", p);
-}
-
-
 
 ##################################################################
-
-
+module yanc_id;
 
 global hello: string "hello world";
 global james: addr 192.23.1.233;
@@ -61,11 +25,12 @@ event bro_init(){
 	
 }	
 
-
-
 event build_table(){
 
+	print("I WAS CALLED");
+
 	local table_test = global_ids();
+	local finished_table;
 
 	for (k in table_test){
 		local temp = table_test[k];
@@ -77,5 +42,21 @@ event build_table(){
 			print temp;
 		}
 	}
+}
+####################################################################
+
+event remote_connection_handshake_done(p: event_peer)
+{
+	print fmt("AAAAAAAAAAAAAAAAAAAAAAAAconnection established to: %s", p);
+}
+  
+event build_table_command()
+{
+	event build_table();
+}
+ 
+event remote_connection_closed(p: event_peer)
+{	
+	print fmt("connection to peer closed: %s", p);
 }
 

@@ -3,70 +3,50 @@
 #empty_field	(empty)
 #unset_field	-
 #path	communication
-#open	2014-03-13-17-17-19
+#open	2014-03-18-16-22-24
 #fields	ts	peer	src_name	connected_peer_desc	connected_peer_addr	connected_peer_port	level	message
 #types	time	string	string	string	addr	port	string	string
-1394752639.638899	bro	parent	-	-	-	info	raised pipe's socket buffer size from 208K to 1024K
-1394752639.638899	bro	parent	-	-	-	info	communication started, parent pid is 3018, child pid is 3019
-1394752639.638899	bro	parent	-	-	-	info	[#1/127.0.0.1:1337] added peer
-131394752639.642484	bro	child	-	-	-	info	[#10000/127.0.0.1:60361] accepted clear connection
-1394752639.643625	bro	parent	-	-	-	info	[#10000/127.0.0.1:60361] added peer
-1394752639.643625	bro	parent	-	-	-	info	[#10000/127.0.0.1:60361] peer connected
-1394752639.643625	bro	parent	-	-	-	info	[#10000/127.0.0.1:60361] phase: version
-1394752639.644780	bro	script	-	-	-	info	connection established
-1394752639.644780	bro	script	-	-	-	info	requesting events matching /^?(my_event_request)$?/
-1394752639.644780	bro	script	-	-	-	info	accepting state
-1394752639.646275	bro	parent	-	-	-	info	[#10000/127.0.0.1:60361] phase: handshake
-1394752639.647403	bro	parent	-	-	-	info	[#10000/127.0.0.1:60361] peer_description is bro
-1394752639.649619	bro	parent	-	-	-	info	[#10000/127.0.0.1:60361] registered for event my_event_response
-1394752639.652185	bro	parent	-	-	-	info	[#10000/127.0.0.1:60361] peer supports keep-in-cache; using that
-1394752639.652185	bro	parent	-	-	-	info	[#10000/127.0.0.1:60361] phase: running
-1394752639.728772	bro	script	-	-	-	info	connection closed
-1394752639.731353	bro	parent	-	-	-	info	[#10000/127.0.0.1:60361] peer disconnected
-1394752639.733368	bro	child	-	-	-	info	[#10000/127.0.0.1:60361] connection closed
-1394752651.144715	bro	child	-	-	-	info	selects=100000 canwrites=0 timeouts=99988
-1394752663.788094	bro	child	-	-	-	info	selects=200000 canwrites=0 timeouts=199988
-1394752676.375226	bro	child	-	-	-	info	selects=300000 canwrites=0 timeouts=299988
-1394752689.379511	bro	child	-	-	-	info	selects=400000 canwrites=0 timeouts=399988
-1394752702.875989	bro	child	-	-	-	info	selects=500000 canwrites=0 timeouts=499987
-1394752715.761444	bro	child	-	-	-	info	selects=600000 canwrites=0 timeouts=599987
-1394914356.246809	bro	child	-	-	-	info	selects=700000 canwrites=0 timeouts=699987
-1394914369.335373	bro	child	-	-	-	info	selects=800000 canwrites=0 timeouts=799987
-1394914381.735462	bro	child	-	-	-	info	selects=900000 canwrites=0 timeouts=899987
-1394914394.461911	bro	child	-	-	-	info	selects=1000000 canwrites=0 timeouts=999987
-1394914407.189157	bro	child	-	-	-	info	selects=1100000 canwrites=0 timeouts=1099987
-1394914419.841960	bro	child	-	-	-	info	selects=1200000 canwrites=0 timeouts=1199987
-1394914433.340553	bro	child	-	-	-	info	selects=1300000 canwrites=0 timeouts=1299987
-1394914447.930550	bro	child	-	-	-	info	selects=1400000 canwrites=0 timeouts=1399987
-1394914463.504718	bro	child	-	-	-	info	selects=1500000 canwrites=0 timeouts=1499987
-1394914477.989752	bro	child	-	-	-	info	selects=1600000 canwrites=0 timeouts=1599987
-1394914491.387333	bro	child	-	-	-	info	selects=1700000 canwrites=0 timeouts=1699987
-1394914506.376797	bro	child	-	-	-	info	selects=1800000 canwrites=0 timeouts=1799987
-1394914518.912807	bro	child	-	-	-	info	selects=1900000 canwrites=0 timeouts=1899987
-1394914532.758865	bro	child	-	-	-	info	selects=2000000 canwrites=0 timeouts=1999987
-1394914547.029109	bro	child	-	-	-	info	selects=2100000 canwrites=0 timeouts=2099987
-1394914562.719948	bro	child	-	-	-	info	selects=2200000 canwrites=0 timeouts=2199987
-1394914576.536345	bro	child	-	-	-	info	selects=2300000 canwrites=0 timeouts=2299987
-1394914593.050703	bro	child	-	-	-	info	selects=2400000 canwrites=0 timeouts=2399987
-1394914606.106130	bro	child	-	-	-	info	selects=2500000 canwrites=0 timeouts=2499987
-1394914618.406122	bro	child	-	-	-	info	selects=2600000 canwrites=0 timeouts=2599987
-1394914631.317008	bro	child	-	-	-	info	selects=2700000 canwrites=0 timeouts=2699987
-1394914643.654790	bro	child	-	-	-	info	selects=2800000 canwrites=0 timeouts=2799987
-1394914655.930365	bro	child	-	-	-	info	selects=2900000 canwrites=0 timeouts=2899987
-1394914668.382867	bro	child	-	-	-	info	selects=3000000 canwrites=0 timeouts=2999987
-1394914680.943376	bro	child	-	-	-	info	selects=3100000 canwrites=0 timeouts=3099987
-1394914693.532006	bro	child	-	-	-	info	selects=3200000 canwrites=0 timeouts=3199987
-1394914705.968720	bro	child	-	-	-	info	selects=3300000 canwrites=0 timeouts=3299987
-1394914718.476263	bro	child	-	-	-	info	selects=3400000 canwrites=0 timeouts=3399987
-1394914731.043508	bro	child	-	-	-	info	selects=3500000 canwrites=0 timeouts=3499987
-1394914743.824263	bro	child	-	-	-	info	selects=3600000 canwrites=0 timeouts=3599987
-1394914756.498975	bro	child	-	-	-	info	selects=3700000 canwrites=0 timeouts=3699987
-1394914769.300504	bro	child	-	-	-	info	selects=3800000 canwrites=0 timeouts=3799987
-1394914782.120290	bro	child	-	-	-	info	selects=3900000 canwrites=0 timeouts=3899987
-1394914795.327590	bro	child	-	-	-	info	selects=4000000 canwrites=0 timeouts=3999987
-1394914807.845331	bro	child	-	-	-	info	selects=4100000 canwrites=0 timeouts=4099987
-1394914820.709866	bro	child	-	-	-	info	selects=4200000 canwrites=0 timeouts=4199987
-1394914833.411167	bro	child	-	-	-	info	selects=4300000 canwrites=0 timeouts=4299987
-1394914846.241140	bro	child	-	-	-	info	selects=4400000 canwrites=0 timeouts=4399987
-1394914858.681726	bro	child	-	-	-	info	selects=4500000 canwrites=0 timeouts=4499987
-1394914871.145295	bro	child	-	-	-	info	selects=4600000 canwrites=0 timeouts=4599987
+1395181344.933969	bro	parent	-	-	-	info	raised pipe's socket buffer size from 208K to 1024K
+1395181344.933969	bro	parent	-	-	-	info	communication started, parent pid is 6477, child pid is 6478
+1395181344.933969	bro	parent	-	-	-	info	[#1/127.0.0.1:1337] added peer
+1395181344.938186	bro	child	-	-	-	info	[#1/127.0.0.1:1337] connected
+1395181344.939292	bro	parent	-	-	-	info	[#1/127.0.0.1:1337] peer connected
+1395181344.939292	bro	parent	-	-	-	info	[#1/127.0.0.1:1337] phase: version
+1395181344.940413	bro	child	-	-	-	info	listening on 0.0.0.0:47758 (clear)
+1395181344.940413	bro	script	-	-	-	info	connection established
+1395181344.940413	bro	script	-	-	-	info	requesting events matching /^?(my_event_response)$?/
+1395181344.940413	bro	script	-	-	-	info	accepting state
+1395181344.941777	bro	parent	-	-	-	info	[#1/127.0.0.1:1337] phase: handshake
+1395181344.941777	bro	parent	-	-	-	info	warning: no events to request
+1395181344.942867	bro	parent	-	-	-	info	[#1/127.0.0.1:1337] peer_description is bro
+1395181344.945117	bro	parent	-	-	-	info	[#1/127.0.0.1:1337] registered for event build_table_command
+1395181344.947520	bro	parent	-	-	-	info	[#1/127.0.0.1:1337] p1395181356.091389	bro	child	-	-	-	info	selects=100000 canwrites=0 timeouts=99992
+1395181368.235302	bro	child	-	-	-	info	selects=200000 canwrites=0 timeouts=199992
+1395181381.023747	bro	child	-	-	-	info	selects=300000 canwrites=0 timeouts=299992
+1395181393.641519	bro	child	-	-	-	info	selects=400000 canwrites=0 timeouts=399992
+1395181403.863611	bro	parent	-	-	-	info	parent statistics: pending=0 bytes=0K/0K chunks=25/11 io=10/3 bytes/io=0.01395181404.938340	bro	parent	-	-	-	info	parent statistics: pending=0 bytes=0K/0K chunks=25/13 io=8/4 bytes/io=0.08K/0.08K events=0/1 operations=0/0
+13951814041395181405.864315	bro	child	-	-	-	info	selects=500000 canwrites=0 timeouts=499991
+1395181418.132459	bro	child	-	-	-	info	selects=600000 canwrites=0 timeouts=599991
+1395181431.459024	bro	child	-	-	-	info	selects=700000 canwrites=0 timeouts=699991
+1395181445.868029	bro	child	-	-	-	info	selects=800000 canwrites=0 timeouts=799991
+1395181458.455664	bro	child	-	-	-	info	selects=900000 canwrites=0 timeouts=899991
+1395181463.864047	bro	parent	-	-	-	info	parent statistics: pending=0 bytes=1K/0K chunks=37/11 io=16/3 bytes/io=0.1395181464.937804	bro	parent	-	-	-	info	parent statistics: pending=0 bytes=1K/0K chunks=37/13 io=14/4 bytes/io=0.07K/0.08K events=0/1 operations=0/0
+13951814641395181470.565451	bro	child	-	-	-	info	selects=1000000 canwrites=0 timeouts=999990
+1395181482.971086	bro	child	-	-	-	info	selects=1100000 canwrites=0 timeouts=1099990
+1395181497.287247	bro	child	-	-	-	info	selects=1200000 canwrites=0 timeouts=1199990
+1395181510.136951	bro	child	-	-	-	info	selects=1300000 canwrites=0 timeouts=1299990
+1395181522.509956	bro	child	-	-	-	info	selects=1400000 canwrites=0 timeouts=1399990
+1395181523.863898	bro	parent	1395181523.435334	bro	child	-	-	-	info	selects=1400000 canwrites=0 timeouts=1399990
+1395181524.938473	bro	parent	-	-	-	info	parent statistics: pending=0 bytes=1K/0K chunks=49/13 io=20/4 bytes/io=0.07K/0.08K events=0/1 operations=0/0
+13951815241395181534.558245	bro	child	-	-	-	info	selects=1500000 canwrites=0 timeouts=1499989
+1395181546.555553	bro	child	-	-	-	info	selects=1600000 canwrites=0 timeouts=1599989
+1395181558.687033	bro	child	-	-	-	info	selects=1700000 canwrites=0 timeouts=1699989
+1395181570.776105	bro	child	-	-	-	info	selects=1800000 canwrites=0 timeouts=1799989
+1395181582.979877	bro	child	-	-	-	info	selects=1900000 canwrites=0 timeouts=1899989
+1395181583.863624	bro	parent	1395181583.908082	bro	child	-	-	-	info	selects=1900000 canwrites=0 timeouts=1899989
+1395181584.938459	bro	parent	-	-	-	info	parent statistics: pending=0 bytes=1K/0K chunks=61/13 io=26/4 bytes/io=0.07K/0.08K events=0/1 operations=0/0
+13951815841395181595.293737	bro	child	-	-	-	info	selects=2000000 canwrites=0 timeouts=1999988
+1395181607.711830	bro	child	-	-	-	info	selects=2100000 canwrites=0 timeouts=2099988
+1395181619.942544	bro	child	-	-	-	info	selects=2200000 canwrites=0 timeouts=2199988
+canwrites=0 timeouts=2099988
+1395181620.883446	bro	child	-	-	-	info	selects=2200000 canwrites=0 timeouts=2199988
