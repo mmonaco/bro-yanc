@@ -13,21 +13,23 @@ redef Communication::nodes += {
 ["foo"] = [$host = 127.0.0.1, $p=1337/tcp, $events = /my_event_response/, $connect=T]
 };
 
-#this recieves the event 
-
-event build_table_command()
+event my_event_request(details: string)
 {
-	print fmt ("BUILDING tABLE");
+print "sent my_event_request", details;
 }
-
  
-event remote_connection_handshake_done(p: event_peer) 
+event my_event_response(details: count)
 {
-	print fmt("Connection established to: %s", p);
-	event build_table_command();
+print "recv my_event_response", details;
+print "terminating";
+terminate();
 }
-
-
+ 
+event remote_connection_handshake_done(p: event_peer)
+{
+print fmt("connection established to: %s", p);
+event my_event_request("hello");
+}
 
 #######################Sets up connection with yanc controller#############################
 redef Communication::listen_port = 47758/tcp;
@@ -73,9 +75,12 @@ event bro_list(){
 }
 
 event init_update(){
+	print "init_update";
 
-	for (b in yanc::user_set)
-		print fmt("Local name:  %s", b$local_name);
-		print fmt("Local ip  %s", b$ip);
+
+	for ( b in yanc::user_set)
+		print fmt("  %s", b$local_name);
+		print fmt("  %s", b$ip);
 		event update(b$local_name, b$ip);
+		print "started update";
 }
