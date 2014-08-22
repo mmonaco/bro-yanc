@@ -18,43 +18,47 @@ bc = Connection("127.0.0.1:47758")
 user_dict ={}
 #this maps the variables on the bro end to variables on our end  
 
-my_record = record_type("a","b")
+my_record = record_type("name","ip")
 
 def term():
 	print ("\nTerminal to Bro Device. Type 'help' for commands")
+	history = []
 	while True:	
 		n = raw_input("\n>> ")
 
-		commands = ["update","setbro","help","list","setvar","quit"]
-
 		splitLine = (n.lower()).split()
 		
-		if splitLine[0] == commands[0]: 
+		history.append(splitLine)
+
+		if splitLine[0] == "update": 
 			#update
 			user_dict.clear()
 			update_waiter()
 
-		if splitLine[0] == commands[1]:
+		if splitLine[0] == "setbro":
 			#setbro
 			do_setbro(splitLine)
 		
-		if splitLine[0] == commands[2]:
+		if splitLine[0] == "help":
 			#help
 			do_help(splitLine)
 
-		if splitLine[0] == commands[3]: 
+		if splitLine[0] == "list": 
 			#list
 			do_list()
 
-		if splitLine[0] == commands[4]: 
+		if splitLine[0] == "setvar": 
 			#setvar
 			do_setvar(splitLine)
 
-		if splitLine[0] == commands[5]:
+		if splitLine[0] == "quit":
 			#quit
 			break
 
-		if not splitLine[0] in commands:
+		if splitLine[0] == "history":
+			print(history)
+		
+		else:
 			print ("Do you need help? Type 'help' for a list of possible commands.")
 
 #TODO
@@ -63,10 +67,9 @@ def term():
 #up arrow support 
 
 @event
-def update(a,b):
-	user_dict[a] = b
-
+def update(name,ip):
 	global recv
+	user_dict[a] = b
 	recv += 1 
 
 def update_waiter():
@@ -75,14 +78,11 @@ def update_waiter():
 	#initalize the two recievers 
 	bc = Connection("127.0.0.1:47758")
 	#makes the connection
-
-	bc.send("init_update")
+	bc.send("bro_init_update")
 	#initiate init_update, which will send back to the python script from the bro
 
 	while True:
 		bc.processInput();
-		print (recv)
-		print (recv_counter)
 		if recv >= recv_counter:
 			recv_counter = (recv + 1)
 			#recv counter needs to be set one larger at the end of this so it can be ready to wait for the next test properly
@@ -102,7 +102,7 @@ def do_setvar(splitLine):
 	else: 
 		for i in range (1,len(splitLine)-1,2):
 			#sends the list in 2s
-			bc.send("setvar",string(splitLine[i]),addr(splitLine[i+1])) 
+			bc.send("bro_setvar",string(splitLine[i]),addr(splitLine[i+1])) 
 
 		#user_dict[splitLine[i]] = splitLine[i+1]
 

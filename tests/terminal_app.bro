@@ -17,14 +17,14 @@ redef Communication::nodes += {
 
 event build_table_command()
 {
-#print "XXXXXXXXXXXXXXXXXXXXXXXsent build_table_command";
+	print fmt ("BUILDING tABLE");
 }
 
  
 event remote_connection_handshake_done(p: event_peer) 
 {
-print fmt("@@@@@@@@@@@@@@@@@@@@connection established to: %s", p);
-event build_table_command();
+	print fmt("Connection established to: %s", p);
+	event build_table_command();
 }
 
 
@@ -73,12 +73,9 @@ event bro_list(){
 }
 
 event init_update(){
-	print "init_update";
 
-
-	for ( b in yanc::user_set)
-		#print fmt("  %s", b$local_name);
-		#print fmt("  %s", b$ip);
+	for (b in yanc::user_set)
+		print fmt("Local name:  %s", b$local_name);
+		print fmt("Local ip  %s", b$ip);
 		event update(b$local_name, b$ip);
-		print "started update";
 }
