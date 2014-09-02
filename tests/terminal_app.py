@@ -64,6 +64,7 @@ def term():
 
 @event
 def update(a,b):
+	print("recieved ", a, " and", b)
 	user_dict[a] = b
 
 	global recv
@@ -92,9 +93,7 @@ def update_waiter():
 	#list out the stuff in the dictionary
 
 def do_setvar(splitLine):
-	#setvar brick rick brob rob blane lane
-	#why doesn't it run a on the firts go?
-
+	bc.send("bro_list")
 	if (len(splitLine) % 2 != 1):
 		print "Wrong numbe of variables"
 	#checks if there are an odd number of variables input 
@@ -102,9 +101,8 @@ def do_setvar(splitLine):
 		for i in range (1,len(splitLine)-1,2):
 			#sends the list in 2s
 			bc.send("setvar",string(splitLine[i]),addr(splitLine[i+1])) 
-
+			print("sent",string(splitLine[i]), " ",addr(splitLine[i+1]))
 		#user_dict[splitLine[i]] = splitLine[i+1]
-
 def do_list():
 	print user_dict
 	return

@@ -78,9 +78,7 @@ event init_update(){
 	print "init_update";
 
 
-	for ( b in yanc::user_set)
-		print fmt("  %s", b$local_name);
-		print fmt("  %s", b$ip);
+	for ( b in yanc::user_set){
 		event update(b$local_name, b$ip);
-		print "started update";
+	}
 }
