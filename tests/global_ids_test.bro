@@ -50,6 +50,7 @@ event remote_connection_handshake_done(p: event_peer)
 	print fmt("AAAAAAAAAAAAAAAAAAAAAAAAconnection established to: %s", p);
 }
   
+event send_ids()
 event build_table_command()
 {
 	event build_table();

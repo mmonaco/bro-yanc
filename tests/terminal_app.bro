@@ -60,11 +60,9 @@ event setvar(x:string, y:addr){
 
 	local bro_rec : yanc::ip_map;
 	#sets up a record 
-	  bro_rec$local_name = x;
-	  #name 
-	  bro_rec$ip = y;
-
-	  #
+	bro_rec$local_name = x;
+	 #name 
+	bro_rec$ip = y;
 
 	add yanc::user_set[bro_rec];
 }
@@ -74,10 +72,8 @@ event bro_list(){
         print fmt("  %s", b);
 }
 
+#init update, loops through user set and sends the info to the python controlller 
 event init_update(){
-	print "init_update";
-
-
 	for ( b in yanc::user_set){
 		event update(b$local_name, b$ip);
 	}
