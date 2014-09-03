@@ -6,19 +6,18 @@
 @load base/frameworks/control
 
 ###########################################################################################
-
 ####################################For controlling the child script#####################################
 
 event my_event_request(details: string)
 {
-print "sent my_event_request", details;
+	print "sent my_event_request", details;
 }
  
 event my_event_response(details: count)
 {
-print "recv my_event_response", details;
-print "terminating";
-terminate();
+	print "recv my_event_response", details;
+	print "terminating";
+	terminate();
 }
  
 #This is run whenever an event is sent via bro 
@@ -48,27 +47,28 @@ event test1(){
         print "bro completed task, move to test1"; 
 }
 
-event setvar(x:string, y:addr){
+event setvar(local_name:string, ipAddress:addr){
 
 	print "Setvar ran";
 
 	local bro_rec : yanc::ip_map;
 	#sets up a record 
-	bro_rec$local_name = x;
+	bro_rec$local_name = local_name;
 	 #name 
-	bro_rec$ip = y;
+	bro_rec$ip = ipAddress;
 
-	add yanc::user_set[bro_rec];
+	add yanc::host_set[bro_rec];
 }
 #bro list is for debugging purposes
 event bro_list(){
-	for ( b in yanc::user_set ) #go through the users and print out users in the set on the bro device 
-        print fmt("  %s", b);
+	for ( host in yanc::host_set ) #go through the users and print out users in the set on the bro device 
+        print fmt("  %s", host);
 }
 
 #init update, loops through user set and sends the info to the python controlller 
 event init_update(){
-	for ( b in yanc::user_set){
-		event update(b$local_name, b$ip);
+
+	for ( host in yanc::host_set){
+		event update(host$local_name, host$ip);
 	}
 }
