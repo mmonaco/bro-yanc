@@ -9,10 +9,6 @@
 
 ####################################For controlling the child script#####################################
 
-redef Communication::nodes += {
-["foo"] = [$host = 127.0.0.1, $p=1337/tcp, $events = /my_event_response/, $connect=T]
-};
-
 event my_event_request(details: string)
 {
 print "sent my_event_request", details;
@@ -25,10 +21,11 @@ print "terminating";
 terminate();
 }
  
+#This is run whenever an event is sent via bro 
 event remote_connection_handshake_done(p: event_peer)
 {
-print fmt("connection established to: %s", p);
-event my_event_request("hello");
+	#print fmt("connection established to: %s", p);
+	event my_event_request("hello");
 }
 
 #######################Sets up connection with yanc controller#############################
@@ -47,9 +44,6 @@ event bro_init(){
 	print "bro is up ";
 }
 
-event child_command(){
-
-}
 event test1(){
         print "bro completed task, move to test1"; 
 }
