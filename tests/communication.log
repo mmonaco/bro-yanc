@@ -74,3 +74,15 @@
 1409930398.689795	bro	child	-	-	-	info	selects=300000 canwrites=0 timeouts=299967
 1409930411.290381	bro	child	-	-	-	info	selects=400000 canwrites=0 timeouts=399967
 1409930424.015590	bro	child	-	-	-	info	selects=500000 canwrites=0 timeouts=499966
+1409930436.665109	bro	child	-	-	-	info	selects=600000 canwrites=0 timeouts=599966
+1409930449.557190	bro	child	-	-	-	info	selects=700000 canwrites=0 timeouts=699966
+1409930462.190498	bro	child	-	-	-	info	selects=800000 canwrites=0 timeouts=799966
+1409930474.886723	bro	child	-	-	-	info	selects=900000 canwrites=0 timeouts=899966
+1409930487.646963	bro	child	-	-	-	info	selects=1000000 canwrites=0 timeouts=999966
+1409930500.338079	bro	child	-	-	-	info	selects=1100000 canwrites=0 timeouts=1099966
+1409930513.106423	bro	child	-	-	-	info	selects=1200000 canwrites=0 timeouts=1199966
+1409930525.680615	bro	child	-	-	-	info	selects=1300000 canwrites=0 timeouts=1299966
+1409930538.204228	bro	child	-	-	-	info	selects=1400000 canwrites=0 timeouts=1399966
+1409930553.009027	bro	child	-	-	-	info	selects=1500000 canwrites=0 timeouts=1499966
+1409930568.311542	bro	child	-	-	-	info	selects=1600000 canwrites=0 timeouts=1599966
+1409930581.263649	bro	child	-	-	-	info	selects=1700000 canwrites=0 timeouts=1699966
