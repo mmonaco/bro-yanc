@@ -3,60 +3,74 @@
 #empty_field	(empty)
 #unset_field	-
 #path	communication
-#open	2014-09-03-14-22-52
+#open	2014-09-05-09-19-19
 #fields	ts	peer	src_name	connected_peer_desc	connected_peer_addr	connected_peer_port	level	message
 #types	time	string	string	string	addr	port	string	string
-1409775772.120329	bro	parent	-	-	-	info	raised pipe's socket buffer size from 208K to 1024K
-1409775772.120329	bro	parent	-	-	-	info	communication started, parent pid is 10775, child pid is 10776
-1409775772.124170	bro	child	-	-	-	info	listening on 0.0.0.0:47758 (clear)
-1409775772.762460	bro	child	-	-	-	info	[#10000/127.0.0.1:56587] accepted clear connection
-1409775772.763635	bro	parent	-	-	-	info	[#10000/127.0.0.1:56587] added peer
-1409775772.763635	bro	parent	-	-	-	info	[#10000/127.0.0.1:56587] peer connected
-1409775772.763635	bro	parent	-	-	-	info	[#10000/127.0.0.1:56587] phase: version
-1409775772.763635	bro	script	-	-	-	info	connection established
-1409775772.763635	bro	script	-	-	-	info	requesting events matching /^?(test1|setvar|list|init_update|bro_list)$?/
-1409775772.763635	bro	script	-	-	-	info	accepting state
-1409775772.765404	bro	parent	-	-	-	info	[#10000/127.0.0.1:56587] phase: handshake
-1409775773.001042	bro	parent	-	-	-	info	[#10000/127.0.0.1:56587] peer does not support 64bit PIDs; using compatibility mode
-1409775773.001042	bro	parent	-	-	-	info	[#10000/127.0.0.1:56587] peer is a Broccoli
-1409775773.001042	bro	parent	-	-	-	info	[#10000/127.0.0.1:56587] phase: running
-1409775782.228935	bro	child	-	-	-	info	[#10001/127.0.0.1:56588] accepted clear connection
-1409775782.230130	bro	parent	-	-	-	info	[#10001/127.0.0.1:56588] added peer
-1409775782.230130	bro	parent	-	-	-	info	[#10001/127.0.0.1:56588] peer connected
-1409775782.230130	bro	parent	-	-	-	info	[#10001/127.0.0.1:56588] phase: version
-1409775782.230130	bro	script	-	-	-	info	connection established
-1409775782.230130	bro	script	-	-	-	info	requesting events matching /^?(test1|setvar|list|init_update|bro_list)$?/
-1409775782.230130	bro	script	-	-	-	info	accepting state
-1409775782.231674	bro	parent	-	-	-	info	[#10001/127.0.0.1:56588] phase: handshake
-1409775782.428323	bro	parent	-	-	-	info	[#10001/127.0.0.1:56588] registered for event update
-1409775782.466730	bro	parent	-	-	-	info	[#10001/127.0.0.1:56588] peer does not support 64bit PIDs; using compatibility mode
-1409775782.466730	bro	parent	-	-	-	info	[#10001/127.0.0.1:56588] peer is a Broccoli
-1409775782.466730	bro	parent	-	-	-	info	[#10001/127.0.0.1:56588] phase: running
-1409775784.788384	bro	child	-	-	-	info	selects=100000 canwrites=0 timeouts=99984
-1409775789.069920	bro	child	-	-	-	info	[#10002/127.0.0.1:56589] accepted clear connection
-1409775789.071361	bro	parent	-	-	-	info	[#10002/127.0.0.1:56589] added peer
-1409775789.071361	bro	parent	-	-	-	info	[#10002/127.0.0.1:56589] peer connected
-1409775789.071361	bro	parent	-	-	-	info	[#10002/127.0.0.1:56589] phase: version
-1409775789.071361	bro	script	-	-	-	info	connection established
-1409775789.071361	bro	script	-	-	-	info	requesting events matching /^?(test1|setvar|list|init_update|bro_list)$?/
-1409775789.071361	bro	script	-	-	-	info	accepting state
-1409775789.072914	bro	parent	-	-	-	info	[#10002/127.0.0.1:56589] phase: handshake
-1409775789.269966	bro	parent	-	-	-	info	[#10002/127.0.0.1:56589] registered for event update
-1409775789.306906	bro	parent	-	-	-	info	[#10002/127.0.0.1:56589] peer does not support 64bit PIDs; using compatibility mode
-1409775789.306906	bro	parent	-	-	-	info	[#10002/127.0.0.1:56589] peer is a Broccoli
-1409775789.306906	bro	parent	-	-	-	info	[#10002/127.0.0.1:56589] phase: running
-1409775797.551720	bro	child	-	-	-	info	selects=200000 canwrites=0 timeouts=199977
-1409775800.547411	bro	child	-	-	-	info	[#10003/127.0.0.1:56590] accepted clear connection
-1409775800.548540	bro	parent	-	-	-	info	[#10003/127.0.0.1:56590] added peer
-1409775800.548540	bro	parent	-	-	-	info	[#10003/127.0.0.1:56590] peer connected
-1409775800.548540	bro	parent	-	-	-	info	[#10003/127.0.0.1:56590] phase: version
-1409775800.548540	bro	script	-	-	-	info	connection established
-1409775800.548540	bro	script	-	-	-	info	requesting events matching /^?(test1|setvar|list|init_update|bro_list)$?/
-1409775800.548540	bro	script	-	-	-	info	accepting state
-1409775800.549958	bro	parent	-	-	-	info	[#10003/127.0.0.1:56590] phase: handshake
-1409775800.747199	bro	parent	-	-	-	info	[#10003/127.0.0.1:56590] registered for event update
-1409775800.786406	bro	parent	-	-	-	info	[#10003/127.0.0.1:56590] peer does not support 64bit PIDs; using compatibility mode
-1409775800.786406	bro	parent	-	-	-	info	[#10003/127.0.0.1:56590] peer is a Broccoli
-1409775800.786406	bro	parent	-	-	-	info	[#10003/127.0.0.1:56590] phase: running
-1409775811.016020	bro	child	-	-	-	info	selects=300000 canwrites=0 timeouts=299969
-1409775825.127988	bro	child	-	-	-	info	selects=400000 canwrites=0 timeouts=399969
+1409930359.718791	bro	parent	-	-	-	info	raised pipe's socket buffer size from 208K to 1024K
+1409930359.718791	bro	parent	-	-	-	info	communication started, parent pid is 11142, child pid is 11143
+1409930359.722511	bro	child	-	-	-	info	listening on 0.0.0.0:47758 (clear)
+1409930360.838404	bro	child	-	-	-	info	[#10000/127.0.0.1:56785] accepted clear connection
+1409930360.839700	bro	parent	-	-	-	info	[#10000/127.0.0.1:56785] added peer
+1409930360.839700	bro	parent	-	-	-	info	[#10000/127.0.0.1:56785] peer connected
+1409930360.839700	bro	parent	-	-	-	info	[#10000/127.0.0.1:56785] phase: version
+1409930360.839700	bro	script	-	-	-	info	connection established
+1409930360.839700	bro	script	-	-	-	info	requesting events matching /^?(test1|setvar|list|init_update|bro_list|delvar)$?/
+1409930360.839700	bro	script	-	-	-	info	accepting state
+1409930360.841589	bro	parent	-	-	-	info	[#10000/127.0.0.1:56785] phase: handshake
+1409930361.075706	bro	parent	-	-	-	info	[#10000/127.0.0.1:56785] peer does not support 64bit PIDs; using compatibility mode
+1409930361.075706	bro	parent	-	-	-	info	[#10000/127.0.0.1:56785] peer is a Broccoli
+1409930361.075706	bro	parent	-	-	-	info	[#10000/127.0.0.1:56785] phase: running
+1409930369.902479	bro	child	-	-	-	info	[#10001/127.0.0.1:56786] accepted clear connection
+1409930369.903690	bro	parent	-	-	-	info	[#10001/127.0.0.1:56786] added peer
+1409930369.903690	bro	parent	-	-	-	info	[#10001/127.0.0.1:56786] peer connected
+1409930369.903690	bro	parent	-	-	-	info	[#10001/127.0.0.1:56786] phase: version
+1409930369.903690	bro	script	-	-	-	info	connection established
+1409930369.903690	bro	script	-	-	-	info	requesting events matching /^?(test1|setvar|list|init_update|bro_list|delvar)$?/
+1409930369.903690	bro	script	-	-	-	info	accepting state
+1409930369.905288	bro	parent	-	-	-	info	[#10001/127.0.0.1:56786] phase: handshake
+1409930370.102591	bro	parent	-	-	-	info	[#10001/127.0.0.1:56786] registered for event update
+1409930370.141489	bro	parent	-	-	-	info	[#10001/127.0.0.1:56786] peer does not support 64bit PIDs; using compatibility mode
+1409930370.141489	bro	parent	-	-	-	info	[#10001/127.0.0.1:56786] peer is a Broccoli
+1409930370.141489	bro	parent	-	-	-	info	[#10001/127.0.0.1:56786] phase: running
+1409930372.527608	bro	child	-	-	-	info	selects=100000 canwrites=0 timeouts=99985
+1409930382.437058	bro	child	-	-	-	info	[#10002/127.0.0.1:56787] accepted clear connection
+1409930382.438262	bro	parent	-	-	-	info	[#10002/127.0.0.1:56787] added peer
+1409930382.438262	bro	parent	-	-	-	info	[#10002/127.0.0.1:56787] peer connected
+1409930382.438262	bro	parent	-	-	-	info	[#10002/127.0.0.1:56787] phase: version
+1409930382.438262	bro	script	-	-	-	info	connection established
+1409930382.438262	bro	script	-	-	-	info	requesting events matching /^?(test1|setvar|list|init_update|bro_list|delvar)$?/
+1409930382.438262	bro	script	-	-	-	info	accepting state
+1409930382.439806	bro	parent	-	-	-	info	[#10002/127.0.0.1:56787] phase: handshake
+1409930382.636388	bro	parent	-	-	-	info	[#10002/127.0.0.1:56787] registered for event update
+1409930382.677612	bro	parent	-	-	-	info	[#10002/127.0.0.1:56787] peer does not support 64bit PIDs; using compatibility mode
+1409930382.677612	bro	parent	-	-	-	info	[#10002/127.0.0.1:56787] peer is a Broccoli
+1409930382.677612	bro	parent	-	-	-	info	[#10002/127.0.0.1:56787] phase: running
+1409930385.335859	bro	child	-	-	-	info	selects=200000 canwrites=0 timeouts=199977
+1409930391.536514	bro	child	-	-	-	info	[#10003/127.0.0.1:56788] accepted clear connection
+1409930391.537653	bro	parent	-	-	-	info	[#10003/127.0.0.1:56788] added peer
+1409930391.537653	bro	parent	-	-	-	info	[#10003/127.0.0.1:56788] peer connected
+1409930391.537653	bro	parent	-	-	-	info	[#10003/127.0.0.1:56788] phase: version
+1409930391.537653	bro	script	-	-	-	info	connection established
+1409930391.537653	bro	script	-	-	-	info	requesting events matching /^?(test1|setvar|list|init_update|bro_list|delvar)$?/
+1409930391.537653	bro	script	-	-	-	info	accepting state
+1409930391.539276	bro	parent	-	-	-	info	[#10003/127.0.0.1:56788] phase: handshake
+1409930391.734023	bro	parent	-	-	-	info	[#10003/127.0.0.1:56788] registered for event update
+1409930391.773033	bro	parent	-	-	-	info	[#10003/127.0.0.1:56788] peer does not support 64bit PIDs; using compatibility mode
+1409930391.773033	bro	parent	-	-	-	info	[#10003/127.0.0.1:56788] peer is a Broccoli
+1409930391.773033	bro	parent	-	-	-	info	[#10003/127.0.0.1:56788] phase: running
+1409930395.388404	bro	script	-	-	-	info	connection closed
+1409930395.390101	bro	parent	-	-	-	info	[#10000/127.0.0.1:56785] peer disconnected
+1409930395.391212	bro	child	-	-	-	info	[#10000/127.0.0.1:56785] connection closed
+1409930395.391212	bro	script	-	-	-	info	connection closed
+1409930395.392373	bro	parent	-	-	-	info	[#10002/127.0.0.1:56787] peer disconnected
+1409930395.393610	bro	child	-	-	-	info	[#10002/127.0.0.1:56787] connection closed
+1409930395.394748	bro	child	-	-	-	error	can't read data chunk: Connection reset by peer [104]
+1409930395.394748	bro	script	-	-	-	info	connection closed
+1409930395.395901	bro	parent	-	-	-	info	[#10001/127.0.0.1:56786] peer disconnected
+1409930395.397015	bro	child	-	-	-	info	[#10001/127.0.0.1:56786] connection closed
+1409930395.397015	bro	script	-	-	-	info	connection closed
+1409930395.398186	bro	parent	-	-	-	info	[#10003/127.0.0.1:56788] peer disconnected
+1409930395.402951	bro	child	-	-	-	info	[#10003/127.0.0.1:56788] connection closed
+1409930398.689795	bro	child	-	-	-	info	selects=300000 canwrites=0 timeouts=299967
+1409930411.290381	bro	child	-	-	-	info	selects=400000 canwrites=0 timeouts=399967
+1409930424.015590	bro	child	-	-	-	info	selects=500000 canwrites=0 timeouts=499966

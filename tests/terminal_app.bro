@@ -31,7 +31,7 @@ event remote_connection_handshake_done(p: event_peer)
 redef Communication::listen_port = 47758/tcp;
 
 redef Communication::nodes += {
-        ["controller"] = [$host = 127.0.0.1, $events = /test1|setvar|list|init_update|bro_list/, $connect=F, $ssl=F] #declares the tests 
+        ["controller"] = [$host = 127.0.0.1, $events = /test1|setvar|list|init_update|bro_list|delvar/, $connect=F, $ssl=F] #declares the tests 
 };
 ###########################################################################################
 
@@ -46,6 +46,20 @@ event bro_init(){
 event test1(){
         print "bro completed task, move to test1"; 
 }
+
+event delvar(local_name:string, ipAddress:addr){
+
+	print "Delvar ran";
+
+	local bro_rec : yanc::ip_map;
+	#sets up a record 
+	bro_rec$local_name = local_name;
+	 #name 
+	bro_rec$ip = ipAddress;
+
+	delete yanc::host_set[bro_rec];
+}
+
 
 event setvar(local_name:string, ipAddress:addr){
 

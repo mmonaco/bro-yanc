@@ -39,7 +39,7 @@ def term():
 
 		splitLine = (n.lower()).split()
 
-		commands = ["update","setbro","help","list","setvar","quit"]
+		commands = ["update","setscript","help","list","setvar","delvar","quit"]
 
 		try:
 			if splitLine[0] == commands[0]: 
@@ -49,7 +49,7 @@ def term():
 			
 			if splitLine[0] == commands[1]:
 				#setbro
-				do_setbro(splitLine)
+				do_set_script(splitLine)
 			
 			if splitLine[0] == commands[2]:
 				#help
@@ -63,7 +63,11 @@ def term():
 				#setvar
 				do_setvar(splitLine)
 
-			if splitLine[0] == commands[5]:
+			if splitLine[0] == commands[5]: 
+				#setvar
+				do_delvar(splitLine)
+
+			if splitLine[0] == commands[6]:
 				#quit
 				break
 
@@ -117,6 +121,27 @@ def do_setvar(splitLine):
 	
 	except:
 		print("Error")
+
+def do_delvar(splitLine):
+	try: 
+		print ("Delvar runs!")
+		if (len(splitLine) % 2 != 1):
+			print "Wrong numbe of variables"
+		#checks if there are an odd number of variables input 
+		else: 
+			for i in range (1,len(splitLine)-1,2):
+				#sends the list in 2s
+				bc.send("delvar",string(splitLine[i]),addr(splitLine[i+1])) 
+		
+		bc.send("bro_list")
+
+	except:
+		print("Error")
+
+
+def do_set_script(splitLine):
+	broFile = open(splitLine[1], 'w')
+	
 
 def do_list():
 	print user_dict
