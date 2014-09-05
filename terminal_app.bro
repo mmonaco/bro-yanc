@@ -35,9 +35,7 @@ redef Communication::nodes += {
 };
 ###########################################################################################
 
-
 global update:event(a: string, b: addr);
-
 
 event bro_init(){
 	print "bro is up ";
@@ -47,6 +45,7 @@ event test1(){
         print "bro completed task, move to test1"; 
 }
 
+#This deletes a record from the host_set 
 event delvar(local_name:string, ipAddress:addr){
 
 	print "Delvar ran";
@@ -60,7 +59,7 @@ event delvar(local_name:string, ipAddress:addr){
 	delete yanc::host_set[bro_rec];
 }
 
-
+#This adds a record to the host set
 event setvar(local_name:string, ipAddress:addr){
 
 	print "Setvar ran";
@@ -73,16 +72,25 @@ event setvar(local_name:string, ipAddress:addr){
 
 	add yanc::host_set[bro_rec];
 }
+
 #bro list is for debugging purposes
 event bro_list(){
-	for ( host in yanc::host_set ) #go through the users and print out users in the set on the bro device 
+	#go through the users and print out users in the set on the bro device 
+	for ( host in yanc::host_set ){
         print fmt("  %s", host);
+	}
 }
 
 #init update, loops through user set and sends the info to the python controlller 
 event init_update(){
-	
 	for ( host in yanc::host_set){
 		event update(host$local_name, host$ip);
+	}
+}
+
+#This is a sample test case where we can use the set
+event http_begin_entity(c: connection){
+	if (c$http$host in yanc::host_set){
+		print "WE HAVE A HIT"
 	}
 }
