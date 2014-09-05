@@ -18,6 +18,35 @@ user_dict ={}
 
 my_record = record_type("a","b")
 
+class bro_connector: 
+
+	ip_port = ""
+	recv = 0
+	recv_counter=1 
+
+	port_regex = re.compile("(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}):(\d{1,5})")
+
+	def __init__(self,ip_port):
+		self.ip_port = ip_port
+
+		if(self.port_regex.match(ip_port)):
+			print("Good connection!")
+			#bro_connection = Connection(ipBro)
+
+		else:
+			print("Bad connection!")
+
+	def increment_recv(self):
+		self.recv = self.recv + 1
+
+	def increment_recv_counter(self):
+		self.recv_counter = self.recv_counter + 1 
+
+	def wait(self):
+		if recv >= recv_counter:
+			recv_counter = (recv + 1)
+
+
 #####
 #This launches the actual terminal process where we will call the differnet methods from 
 #####
@@ -26,13 +55,20 @@ def term():
 	print ("\nTerminal to Bro Device. Type 'help' for commands")
 
 	#This regex is used to test for a valid ip address to connect to a bro device 
-	regex = re.compile("(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}):(\d{1,5})")
 	ipBro = raw_input("Ip and port of a bro device you want to connect to(def- 127.0.0.1:47758): ")
 	
 	#if the address is valid, then set that as the address
-	if(regex.match(ipBro)):
-		global bc 
-		bc = Connection(ipBro)
+
+	test_connection = bro_connector("127.0.0.1:47758")
+	print ("Base recv is: ",test_connection.recv)
+	print ("Base recv_counter is: ",test_connection.recv_counter)
+	print ("Base connect is: ",test_connection.ip_port)
+	test_connection.test()
+	test_connection.increment_recv()
+	test_connection.increment_recv_counter()
+	print ("AFTER Base recv is: ",test_connection.recv)
+	print ("AFTER Base recv_counter is: ",test_connection.recv_counter)
+
 
 	while True:	
 		n = raw_input("\n>> ")
@@ -122,6 +158,7 @@ def do_setvar(splitLine):
 	except:
 		print("Error")
 
+#This deletes a variable in the bro set. 
 def do_delvar(splitLine):
 	try: 
 		print ("Delvar runs!")
@@ -138,11 +175,13 @@ def do_delvar(splitLine):
 	except:
 		print("Error")
 
-
+#TODO in future
+#This should be used to parse the scripts to send to a bro device. 
 def do_set_script(splitLine):
 	broFile = open(splitLine[1], 'w')
 	
 
+#This lists out the varaibles in the dictionary 
 def do_list():
 	print user_dict
 

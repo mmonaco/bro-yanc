@@ -87,10 +87,3 @@ event init_update(){
 		event update(host$local_name, host$ip);
 	}
 }
-
-#This is a sample test case where we can use the set
-event http_begin_entity(c: connection){
-	if (c$http$host in yanc::host_set){
-		print "WE HAVE A HIT"
-	}
-}
