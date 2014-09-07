@@ -146,14 +146,13 @@ def do_update_waiter():
 #This sends the variable to the bro device to be added to the user set. 
 def do_setvar(split_line,bro_connection):
 	#try:
-	bro_connection.connection.send("") 
 	bro_connection.connection.send("bro_list")
 	if (len(split_line) % 2 != 1):
 		print "Wrong numbe of variables"
 	#checks if there are an odd number of variables input 
 	else: 
 		for i in range (1,len(split_line)-1,2):
-			#sends the list in 2s
+			#sends the list in twos
 			bro_connection.connection.send("setvar",string(split_line[i]),addr(split_line[i+1])) 
 
 	# except:
@@ -183,8 +182,8 @@ def do_set_script(split_line):
 	
 
 #This lists out the varaibles in the dictionary 
-def do_list():
-	print user_dict
+def do_list(bro_connection):
+	print bro_connection.var_dict
 
 def do_help(split_line):
 	print("\nSupported commands are:\n")
