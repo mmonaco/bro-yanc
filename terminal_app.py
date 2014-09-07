@@ -4,52 +4,49 @@ from broccoli import *
 import time as Time
 import re
 
-global bc 
-#bc = Connection("127.0.0.1:47758")
+#recieved is incremented by one every time an event is sent from bro to the script and properly recieved 
+global recieved 
+recieved = 0 
 
-global recv 
-recv = 0 
-# we will use recv as a counter for when our event actually runs 
-
-global recv_counter
-recv_counter = 1
-# recv counter will wait until the event is completed 
-
-user_dict ={}
+temp_dict ={}
 #this maps the variables on the bro end to variables on our end  
 
 myRecord = record_type("a","b")
 
 class bro_connection: 
+
 	var_dict = {}
 	ip_port = ""
-	recv = 0
-	recv_counter=1
+	recvieved_counter=1
 	connection = ""
 
 	port_regex = re.compile("(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}):(\d{1,5})")
 
 	def __init__(self,ip_port):
-		self.ip_port = ip_port
 
-		if(self.port_regex.match(ip_port)):
-			print("Good connection!")
-			#bro_connection = Connection(ipBro)
-		else:
-			print("Bad connection!")
+		if not (self.port_regex.match(ip_port)):
+			raise ValueError()
+
+		self.ip_port = ip_port
 
 	def open_connection(self):
 		self.connection = Connection(self.ip_port)
 
-	def increment_recv(self):
-		self.recv = self.recv + 1
-
-	def increment_recv_counter(self):
-		self.recv_counter = self.recv_counter + 1 
+	def increment_recv_counter(self,recieved):
+		self.recvieved_counter = recieved + 1 
 
 	def wait(self):
-		if recv >= recv_counter:
-			recv_counter = (recv + 1)
+		while True:
+
+			self.connection.processInput()
+
+			global recieved
+
+			if recieved >= self.recvieved_counter:
+				self.increment_recv_counter(recieved)
+				break
+
+			Time.sleep(1)
 
 #####
 #This launches the actual terminal process where we will call the differnet methods from 
@@ -68,85 +65,85 @@ def term():
 
 		split_line = (n.lower()).split()
 
+		#add new commands here so we can tell valid/invalid commands 
 		commands = ["update","setscript","help","list","setvar","delvar","quit","connection"]
 
 		try:
 			#Syntax: update
-			if split_line[0] == commands[0]: 
-				user_dict.clear()
-				do_update_waiter()
+			if split_line[0] == "update": 
+				temp_dict.clear()
+				do_update_waiter(test_connection)
 			
 			#Syntax: setscript (UNDER CONSTRUCTION)
-			if split_line[0] == commands[1]:
+			if split_line[0] == "setscript":
 				do_set_script(split_line)
 			
 			#Syntax: help
-			if split_line[0] == commands[2]:
+			if split_line[0] == "help":
 				do_help(split_line)
 
 			#Syntax: list
-			if split_line[0] == commands[3]: 
-				do_list()
+			if split_line[0] == "list": 
+				do_list(test_connection)
 
 			#Syntax: setvar foo 255.255.255.255
-			if split_line[0] == commands[4]: 
+			if split_line[0] == "setvar": 
 				do_setvar(split_line,test_connection)
 
 			#Syntax: delvar foo 255.255.255.255
-			if split_line[0] == commands[5]: 
-				do_delvar(split_line)
+			if split_line[0] == "delvar": 
+				do_delvar(split_line,test_connection)
 
 			#Syntax: quit
-			if split_line[0] == commands[6]:
+			if split_line[0] == "quit":
 				break
 
 			#Syntax: connection 127.0.0.1:47758
-			if split_line[0] == commands[7]:
+			if split_line[0] == "connection":
 				test_connection = bro_connection(split_line[1])
 				test_connection.open_connection()
 
+			#if they typed in an invalid command
 			if not split_line[0] in commands:
 				print ("Do you need help? Type 'help' for a list of possible commands.")
 
+		#this is if they are trying to press enter with nothing actually in the line
 		except IndexError:
 			print("Make sure you have have some content!")
+
+		except ValueError:
+			print("Your ip/port is invalid, you the proper syntax: 127.0.0.1:47758")
 
 #This is the method that recieves the update information from bro and populates the dictionary 
 @event
 def update(device_name,ip_address):
 	print("recieved ", device_name, " and", ip_address)
-	user_dict[device_name] = ip_address
+	temp_dict[device_name] = ip_address
 
-	global recv
-	recv += 1 
+	#when we recieved the info from bro, we incrmenet the recieved counter by 1. 
+	global recieved
+	recieved += 1 
 
-#TODO -- possibly pass different connection objects as parameters so I can work on each individual connection 
 #This waits for the update info to be sent from the bro device. 
-def do_update_waiter():
+def do_update_waiter(bro_connection):
 
-	global recv_counter
-	global recv
-	#initalize the two recievers 
-	bc = Connection("127.0.0.1:47758")
-	#makes the connection
-	bc.send("init_update")
-	#initiate init_update, which will send back to the python script from the bro
+	global temp_dict
 
-	while True:
-		bc.processInput();
-		if recv >= recv_counter:
-			recv_counter = (recv + 1)
-			#recv counter needs to be set one larger at the end of this so it can be ready to wait for the next test properly
-			break
-		Time.sleep(1)
+	#we init the update and start waiting for the response
+	bro_connection.connection.send("init_update")
+	bro_connection.wait()
 
-	do_list()
+	#response are saved globally in temp_dict (this is becaue I couldn't get bro to send me the individual connection objects for each connection)
+	bro_connection.var_dict = temp_dict
+	#the temp dict is then put into the connection object, and the temp dict is cleared for the next connection to add to it. 
+	temp_dict.clear
+
+	do_list(bro_connection)
 	#list out the stuff in the dictionary
 
 #This sends the variable to the bro device to be added to the user set. 
 def do_setvar(split_line,bro_connection):
-	#try:
-	bro_connection.connection.send("bro_list")
+
 	if (len(split_line) % 2 != 1):
 		print "Wrong numbe of variables"
 	#checks if there are an odd number of variables input 
@@ -155,25 +152,16 @@ def do_setvar(split_line,bro_connection):
 			#sends the list in twos
 			bro_connection.connection.send("setvar",string(split_line[i]),addr(split_line[i+1])) 
 
-	# except:
-	# 	print("Error")
-
 #This deletes a variable in the bro set. 
-def do_delvar(split_line):
-	try: 
-		print ("Delvar runs!")
-		if (len(split_line) % 2 != 1):
-			print "Wrong numbe of variables"
-		#checks if there are an odd number of variables input 
-		else: 
-			for i in range (1,len(split_line)-1,2):
-				#sends the list in 2s
-				bc.send("delvar",string(split_line[i]),addr(split_line[i+1])) 
-		
-		bc.send("bro_list")
+def do_delvar(split_line,bro_connection):
 
-	except:
-		print("Error")
+	if (len(split_line) % 2 != 1):
+		print "Wrong numbe of variables"
+	#checks if there are an odd number of variables input 
+	else: 
+		for i in range (1,len(split_line)-1,2):
+			#sends the list in twos
+			bro_connection.connection.send("delvar",string(split_line[i]),addr(split_line[i+1])) 
 
 #TODO in future
 #This should be used to parse the scripts to send to a bro device. 
@@ -183,7 +171,7 @@ def do_set_script(split_line):
 
 #This lists out the varaibles in the dictionary 
 def do_list(bro_connection):
-	print bro_connection.var_dict
+	print (bro_connection.var_dict)
 
 def do_help(split_line):
 	print("\nSupported commands are:\n")
