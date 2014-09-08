@@ -28,3 +28,6 @@
 1410138149.964416	bro	child	-	-	-	info	selects=200000 canwrites=0 timeouts=199987
 1410138162.618940	bro	child	-	-	-	info	selects=300000 canwrites=0 timeouts=299987
 1410138175.710504	bro	child	-	-	-	info	selects=400000 canwrites=0 timeouts=399987
+1410138188.433377	bro	child	-	-	-	info	selects=500000 canwrites=0 timeouts=499986
+1410138201.527057	bro	child	-	-	-	info	selects=600000 canwrites=0 timeouts=599986
+1410138216.630493	bro	child	-	-	-	info	selects=700000 canwrites=0 timeouts=699986
