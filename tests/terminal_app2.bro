@@ -28,28 +28,17 @@ event remote_connection_handshake_done(p: event_peer)
 }
 
 #######################Sets up connection with yanc controller#############################
-redef Communication::listen_port = 47758/tcp;
+redef Communication::listen_port = 47759/tcp;
 
 redef Communication::nodes += {
-        ["controller"] = [$host = 127.0.0.1, $events = /test1|setvar|list|init_update|bro_list|delvar/, $connect=F, $ssl=F] #declares the tests 
+        ["controller"] = [$host = 127.0.0.1, $events = /setvar|list|init_update|bro_list|delvar/, $connect=F, $ssl=F] #declares the tests 
 };
 ###########################################################################################
 
 global update:event(a: string, b: addr);
 
 event bro_init(){
-	print "bro is up ";
-
-	local bro_rec : yanc::ip_map;
-
-	bro_rec$local_name = "default";
-	bro_rec$ip = 0.0.0.0;
-
-	add yanc::host_set[bro_rec];
-}
-
-event test1(){
-        print "bro completed task, move to test1"; 
+	print "Bro2 is up";
 }
 
 #This deletes a record from the host_set 
@@ -90,7 +79,6 @@ event bro_list(){
 
 #init update, loops through user set and sends the info to the python controlller 
 event init_update(){
-
 	for ( host in yanc::host_set){
 		event update(host$local_name, host$ip);
 	}

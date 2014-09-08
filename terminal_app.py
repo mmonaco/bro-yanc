@@ -8,15 +8,17 @@ import re
 global recieved 
 recieved = 0 
 
-temp_dict ={}
-#this maps the variables on the bro end to variables on our end  
 global open_connections
 open_connections = []
 
-myRecord = record_type("a","b")
+global temp_dict
+temp_dict ={}
+
+myRecord = record_type("host_name","ip_address")
 
 class bro_connection: 
 
+	name = ""
 	var_dict = {}
 	ip_port = ""
 	recvieved_counter=1
@@ -55,7 +57,7 @@ class bro_connection:
 #####
 def term():
 
-	test_connection = ""
+	current_connection = ""
 
 	print ("\nTerminal to Bro Device. Type 'help' for commands")
 
@@ -65,14 +67,13 @@ def term():
 		split_line = (n.lower()).split()
 
 		#add new commands here so we can tell valid/invalid commands 
-		commands = ["update","setscript","help","list","setvar","delvar","quit","connection","test","q"]
+		commands = ["update","setscript","help","list","setvar","delvar","quit","connection","test","q","update_all"]
 
 		try:
-			#Syntax: update
-			if split_line[0] == "update": 
-				temp_dict.clear()
-				do_update_waiter(test_connection)
-			
+			#Syntax: quit
+			if split_line[0] == ("quit" or "q"):
+				break
+
 			#Syntax: setscript (UNDER CONSTRUCTION)
 			if split_line[0] == "setscript":
 				do_set_script(split_line)
@@ -81,41 +82,72 @@ def term():
 			if split_line[0] == "help":
 				do_help(split_line)
 
-			#Syntax: list
-			if split_line[0] == "list": 
-				do_list(test_connection)
-
-			#Syntax: setvar foo 255.255.255.255
-			if split_line[0] == "setvar": 
-				do_setvar(split_line,test_connection)
-
-			#Syntax: delvar foo 255.255.255.255
-			if split_line[0] == "delvar": 
-				do_delvar(split_line,test_connection)
-
-			#Syntax: quit
-			if split_line[0] == ("quit" or "q"):
-				break
+			#INVALID COMMAND
+			if not split_line[0] in commands:
+				print ("Do you need help? Type 'help' for a list of possible commands.")
 
 			#Syntax: connection 127.0.0.1:47758
 			if split_line[0] == "connection":
+				print ("Old connection is: ",current_connection)
+				make = True
 
-				if split_line[1] == "local":
-					open_connections.append(bro_connection("127.0.0.1:47758"))
-					open_connections[-1].open_connection()
-					test_connection = open_connections[-1]
+				#This is used for making sure no duplicate connection is made 
+				for connection in open_connections:
+					if connection.name == split_line[1]:
+						make = False
+						print("Connection already made at: ",connection.ip_port)
 
-				else:
-					open_connections.append(bro_connection(split_line[1]))
-					open_connections[-1].open_connection()
-					test_connection = open_connections[-1]
+				if (make):
+					if split_line[1] == "local":
+						open_connections.append(bro_connection("127.0.0.1:47758"))
+						bro_connection.name = "local"
+						open_connections[-1].open_connection()
+						current_connection = open_connections[-1]
 
+					elif split_line[1] == "away":
+						open_connections.append(bro_connection("127.0.0.1:47759"))
+						bro_connection.name = "away"
+						open_connections[-1].open_connection()
+						current_connection = open_connections[-1]
+					else:
+						open_connections.append(bro_connection(split_line[1]))
+						open_connections[-1].open_connection()
+						current_connection = open_connections[-1]
+
+				print ("NEW connection is: ",current_connection)
+
+			#for dev testing, can fill this out with other random stuff
 			if split_line[0] == "test":
 				print open_connections
+	
 
-			#if they typed in an invalid command
-			if not split_line[0] in commands:
-				print ("Do you need help? Type 'help' for a list of possible commands.")
+			#These commands require there to be an active connection 	
+			if (current_connection): 	
+				#Syntax: update
+				if split_line[0] == "update": 
+					temp_dict.clear()
+					do_update_waiter(current_connection)
+
+				#Syntax: list
+				if split_line[0] == "list": 
+					do_list(current_connection)
+
+				#Syntax: setvar foo 255.255.255.255
+				if split_line[0] == "setvar": 
+					do_setvar(split_line,current_connection)
+
+				#Syntax: delvar foo 255.255.255.255
+				if split_line[0] == "delvar": 
+					do_delvar(split_line,current_connection)
+
+				#this goes through all of the dictionaries
+				if split_line[0] == "update_all":
+					big_dict = {}
+					for i in range (0, len(open_connections)-1):
+						big_dict += i.var_dict
+
+					print big_dict
+
 
 		#this is if they are trying to press enter with nothing actually in the line
 		except IndexError:
@@ -128,7 +160,9 @@ def term():
 @event
 def update(device_name,ip_address):
 	print("recieved ", device_name, " and", ip_address)
-	temp_dict[device_name] = ip_address
+
+	if not (device_name == "default" and ip_address == "0.0.0.0"):
+		temp_dict[device_name] = ip_address
 
 	#when we recieved the info from bro, we incrmenet the recieved counter by 1. 
 	global recieved
@@ -177,7 +211,6 @@ def do_delvar(split_line,bro_connection):
 #This should be used to parse the scripts to send to a bro device. 
 def do_set_script(split_line):
 	bro_file = open(split_line[1], 'w')
-	
 
 #This lists out the varaibles in the dictionary 
 def do_list(bro_connection):
