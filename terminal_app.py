@@ -10,6 +10,8 @@ recieved = 0
 
 temp_dict ={}
 #this maps the variables on the bro end to variables on our end  
+global open_connections
+open_connections = []
 
 myRecord = record_type("a","b")
 
@@ -53,10 +55,7 @@ class bro_connection:
 #####
 def term():
 
-	device = "127.0.0.1:47758"
-	#device = raw_input("Input a port & ip: ")
-	test_connection = bro_connection(device)
-	test_connection.open_connection()
+	test_connection = ""
 
 	print ("\nTerminal to Bro Device. Type 'help' for commands")
 
@@ -66,7 +65,7 @@ def term():
 		split_line = (n.lower()).split()
 
 		#add new commands here so we can tell valid/invalid commands 
-		commands = ["update","setscript","help","list","setvar","delvar","quit","connection"]
+		commands = ["update","setscript","help","list","setvar","delvar","quit","connection","test","q"]
 
 		try:
 			#Syntax: update
@@ -95,13 +94,24 @@ def term():
 				do_delvar(split_line,test_connection)
 
 			#Syntax: quit
-			if split_line[0] == "quit":
+			if split_line[0] == ("quit" or "q"):
 				break
 
 			#Syntax: connection 127.0.0.1:47758
 			if split_line[0] == "connection":
-				test_connection = bro_connection(split_line[1])
-				test_connection.open_connection()
+
+				if split_line[1] == "local":
+					open_connections.append(bro_connection("127.0.0.1:47758"))
+					open_connections[-1].open_connection()
+					test_connection = open_connections[-1]
+
+				else:
+					open_connections.append(bro_connection(split_line[1]))
+					open_connections[-1].open_connection()
+					test_connection = open_connections[-1]
+
+			if split_line[0] == "test":
+				print open_connections
 
 			#if they typed in an invalid command
 			if not split_line[0] in commands:
@@ -112,7 +122,7 @@ def term():
 			print("Make sure you have have some content!")
 
 		except ValueError:
-			print("Your ip/port is invalid, you the proper syntax: 127.0.0.1:47758")
+			print("Your ip/port is invalid, use the proper syntax: 127.0.0.1:47758")
 
 #This is the method that recieves the update information from bro and populates the dictionary 
 @event
