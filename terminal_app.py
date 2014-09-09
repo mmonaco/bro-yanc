@@ -71,12 +71,18 @@ def term():
 
 		try:
 			#Syntax: quit
-			if split_line[0] == ("quit"):
+			if split_line[0] == "quit":
 				break
 
-			#Syntax: setscript (UNDER CONSTRUCTION)
-			if split_line[0] == "setscript":
-				do_set_script(split_line)
+			if split_line[0] == "set_connection":
+				try:
+					for i in open_connections:
+						if i.name == split_line[1]:
+							current_connection=i
+						else:
+							print("connection name not found")
+				except:
+					print("Include a name with the following format: set_connection local")
 			
 			#Syntax: help
 			if split_line[0] == "help":
@@ -85,47 +91,44 @@ def term():
 			#for dev testing, can fill this out with other random stuff
 			if split_line[0] == "current_connection":
 				if (current_connection):
-					print ("Connected to: ",current_connection.ip_port)
+					print ("Connected to: ",current_connection.ip_port, " with ", current_connection.name)
 				else:
 					print("No current connection to any device, maybe use the 'connect' command?")
 
 			if split_line[0] == "connections":
 				for i in open_connections:
-					print i.name
+					print i
 
 			#Syntax: connection 127.0.0.1:47758
 			if split_line[0] == "connect":
-				print ("Old connection is: ",current_connection)
 				make = True
 
 				#This is used for making sure no duplicate connection is made 
 				for connection in open_connections:
-					if connection.name == split_line[1] or connection.ip_port == split_line[2]:
+					print connection
+					if (connection.name == split_line[1] or connection.ip_port == split_line[2]):
 						make = False
 						print("Connection already made at: ",connection.ip_port, " with name", connection.name)
 
 				if (make):
-					if split_line[1] == "local":
-						open_connections.append(bro_connection("127.0.0.1:47758"))
-						bro_connection.name = "local"
-						open_connections[-1].open_connection()
-						current_connection = open_connections[-1]
+					# if split_line[1] == "local":
+					# 	open_connections.append(bro_connection("127.0.0.1:47758"))
+					# 	open_connections[-1].open_connection()
+					# 	current_connection = open_connections[-1]
 
-					elif split_line[1] == "away":
-						open_connections.append(bro_connection("127.0.0.1:47759"))
-						bro_connection.name = "away"
-						open_connections[-1].open_connection()
-						current_connection = open_connections[-1]
-					else:
-						open_connections.append(bro_connection(split_line[1]))
-						open_connections[-1].open_connection()
-						current_connection = open_connections[-1]
+					# elif split_line[1] == "away":
+					# 	open_connections.append(bro_connection("127.0.0.1:47759"))
+					# 	open_connections[-1].open_connection()
+					# 	current_connection = open_connections[-1]
+					# else:
+					open_connections.append(bro_connection(split_line[1]))
+					open_connections[-1].open_connection()
+					current_connection = open_connections[-1]
 
-				print ("NEW connection is: ",current_connection)
-
+			
 			if not split_line[0] in commands:
 				print ("Do you need help? Type 'help' for a list of possible commands.")
-			
+
 			#These commands require there to be an active connection 	
 			if (current_connection): 	
 				#Syntax: update
@@ -210,11 +213,6 @@ def do_delvar(split_line,bro_connection):
 		for i in range (1,len(split_line)-1,2):
 			#sends the list in twos
 			bro_connection.connection.send("delvar",string(split_line[i]),addr(split_line[i+1])) 
-
-#TODO in future
-#This should be used to parse the scripts to send to a bro device. 
-def do_set_script(split_line):
-	bro_file = open(split_line[1], 'w')
 
 #This lists out the varaibles in the dictionary 
 def do_list(bro_connection):
