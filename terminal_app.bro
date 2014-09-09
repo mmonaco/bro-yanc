@@ -28,7 +28,7 @@ event remote_connection_handshake_done(p: event_peer)
 }
 
 #######################Sets up connection with yanc controller#############################
-redef Communication::listen_port = 47758/tcp;
+redef Communication::listen_port = 47759/tcp;
 
 redef Communication::nodes += {
         ["controller"] = [$host = 127.0.0.1, $events = /test1|setvar|list|init_update|bro_list|delvar/, $connect=F, $ssl=F] #declares the tests 

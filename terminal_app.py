@@ -24,7 +24,7 @@ class bro_connection:
 	recvieved_counter=1
 	connection = ""
 
-	port_regex = re.compile("(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}):(\d{1,5})")
+	port_regex = re.compile("(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}):(\d{0,5})")
 
 	def __init__(self,ip_port):
 
@@ -67,11 +67,11 @@ def term():
 		split_line = (n.lower()).split()
 
 		#add new commands here so we can tell valid/invalid commands 
-		commands = ["update","setscript","help","list","setvar","delvar","quit","connection","test","q","update_all"]
+		commands = ["update","setscript","help","list","setvar","delvar","quit","connect","test","update_all","current_connection","connections"]
 
 		try:
 			#Syntax: quit
-			if split_line[0] == ("quit" or "q"):
+			if split_line[0] == ("quit"):
 				break
 
 			#Syntax: setscript (UNDER CONSTRUCTION)
@@ -82,20 +82,27 @@ def term():
 			if split_line[0] == "help":
 				do_help(split_line)
 
-			#INVALID COMMAND
-			if not split_line[0] in commands:
-				print ("Do you need help? Type 'help' for a list of possible commands.")
+			#for dev testing, can fill this out with other random stuff
+			if split_line[0] == "current_connection":
+				if (current_connection):
+					print ("Connected to: ",current_connection.ip_port)
+				else:
+					print("No current connection to any device, maybe use the 'connect' command?")
+
+			if split_line[0] == "connections":
+				for i in open_connections:
+					print i.name
 
 			#Syntax: connection 127.0.0.1:47758
-			if split_line[0] == "connection":
+			if split_line[0] == "connect":
 				print ("Old connection is: ",current_connection)
 				make = True
 
 				#This is used for making sure no duplicate connection is made 
 				for connection in open_connections:
-					if connection.name == split_line[1]:
+					if connection.name == split_line[1] or connection.ip_port == split_line[2]:
 						make = False
-						print("Connection already made at: ",connection.ip_port)
+						print("Connection already made at: ",connection.ip_port, " with name", connection.name)
 
 				if (make):
 					if split_line[1] == "local":
@@ -116,11 +123,9 @@ def term():
 
 				print ("NEW connection is: ",current_connection)
 
-			#for dev testing, can fill this out with other random stuff
-			if split_line[0] == "test":
-				print open_connections
-	
-
+			if not split_line[0] in commands:
+				print ("Do you need help? Type 'help' for a list of possible commands.")
+			
 			#These commands require there to be an active connection 	
 			if (current_connection): 	
 				#Syntax: update
@@ -147,7 +152,6 @@ def term():
 						big_dict += i.var_dict
 
 					print big_dict
-
 
 		#this is if they are trying to press enter with nothing actually in the line
 		except IndexError:
