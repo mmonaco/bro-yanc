@@ -26,12 +26,13 @@ class bro_connection:
 
 	port_regex = re.compile("(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}):(\d{0,5})")
 
-	def __init__(self,ip_port):
+	def __init__(self,ip_port,name):
 
 		if not (self.port_regex.match(ip_port)):
 			raise ValueError()
 
 		self.ip_port = ip_port
+		self.name = name
 
 	def open_connection(self):
 		self.connection = Connection(self.ip_port)
@@ -67,7 +68,7 @@ def term():
 		split_line = (n.lower()).split()
 
 		#add new commands here so we can tell valid/invalid commands 
-		commands = ["update","setscript","help","list","setvar","delvar","quit","connect","test","update_all","current_connection","connections"]
+		commands = ["update","setscript","help","list","setvar","delvar","quit","connect","test","update_all","current_connection","connections","set_connection"]
 
 		try:
 			#Syntax: quit
@@ -97,33 +98,34 @@ def term():
 
 			if split_line[0] == "connections":
 				for i in open_connections:
-					print i
+					print i.name
 
 			#Syntax: connection 127.0.0.1:47758
 			if split_line[0] == "connect":
 				make = True
 
+				if split_line[1] == "bro1":
+					open_connections.append(bro_connection("127.0.0.1:47758","bro1"))
+					open_connections[-1].open_connection()
+					current_connection = open_connections[-1]
+
+				if split_line[1] == "bro2":
+					open_connections.append(bro_connection("127.0.0.1:47759","bro2"))
+					open_connections[-1].open_connection()
+					current_connection = open_connections[-1]
+
+
 				#This is used for making sure no duplicate connection is made 
 				for connection in open_connections:
 					print connection
-					if (connection.name == split_line[1] or connection.ip_port == split_line[2]):
+					if (connection.name == split_line[2] or connection.ip_port == split_line[1]):
 						make = False
 						print("Connection already made at: ",connection.ip_port, " with name", connection.name)
 
 				if (make):
-					# if split_line[1] == "local":
-					# 	open_connections.append(bro_connection("127.0.0.1:47758"))
-					# 	open_connections[-1].open_connection()
-					# 	current_connection = open_connections[-1]
-
-					# elif split_line[1] == "away":
-					# 	open_connections.append(bro_connection("127.0.0.1:47759"))
-					# 	open_connections[-1].open_connection()
-					# 	current_connection = open_connections[-1]
-					# else:
-					open_connections.append(bro_connection(split_line[1]))
+					open_connections.append(bro_connection(split_line[1],split_line[2]))
 					open_connections[-1].open_connection()
-					current_connection = open_connections[-1]
+					current_connection=open_connections[-1]
 
 			
 			if not split_line[0] in commands:
