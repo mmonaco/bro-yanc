@@ -53,9 +53,9 @@ class bro_connection:
 
 			Time.sleep(1)
 
-#####
-#This launches the actual terminal process where we will call the differnet methods from 
-#####
+###########################################################################################
+# This launches the actual terminal process where we will call the differnet methods from # 
+###########################################################################################
 def term():
 
 	current_connection = ""
@@ -68,7 +68,8 @@ def term():
 		split_line = (n.lower()).split()
 
 		#add new commands here so we can tell valid/invalid commands 
-		commands = ["update","setscript","help","list","setvar","delvar","quit","connect","test","update_all","current_connection","connections","set_connection"]
+		commands = ["update","help","list","setvar","delvar","quit","connect","test",
+					"update_all","current_connection","connections","set_connection"]
 
 		try:
 			#Syntax: quit
@@ -77,9 +78,11 @@ def term():
 
 			if split_line[0] == "set_connection":
 				try:
-					for i in open_connections:
-						if i.name == split_line[1]:
-							current_connection=i
+					for connection in open_connections:
+						print ("connection.name is: " + connection.name + "arg is " + split_line[1])
+						if connection.name == split_line[1]:
+							current_connection=connection
+							break
 						else:
 							print("connection name not found")
 				except:
@@ -92,7 +95,7 @@ def term():
 			#for dev testing, can fill this out with other random stuff
 			if split_line[0] == "current_connection":
 				if (current_connection):
-					print ("Connected to: ",current_connection.ip_port, " with ", current_connection.name)
+					print ("Connected to: " + current_connection.ip_port + " with " + current_connection.name)
 				else:
 					print("No current connection to any device, maybe use the 'connect' command?")
 
@@ -114,13 +117,11 @@ def term():
 					open_connections[-1].open_connection()
 					current_connection = open_connections[-1]
 
-
 				#This is used for making sure no duplicate connection is made 
 				for connection in open_connections:
-					print connection
 					if (connection.name == split_line[2] or connection.ip_port == split_line[1]):
 						make = False
-						print("Connection already made at: ",connection.ip_port, " with name", connection.name)
+						print("Connection already made at: " + connection.ip_port + " with name" + connection.name)
 
 				if (make):
 					open_connections.append(bro_connection(split_line[1],split_line[2]))
@@ -152,23 +153,22 @@ def term():
 
 				#this goes through all of the dictionaries
 				if split_line[0] == "update_all":
-					big_dict = {}
-					for i in range (0, len(open_connections)-1):
-						big_dict += i.var_dict
-
-					print big_dict
+					do_update_all()
 
 		#this is if they are trying to press enter with nothing actually in the line
 		except IndexError:
-			print("Make sure you have have some content!")
+			print("Make sure your command has the proper arguments!")
 
 		except ValueError:
 			print("Your ip/port is invalid, use the proper syntax: 127.0.0.1:47758")
 
+		except socket.error:
+			print ("Your Ip address in invalid")
+
 #This is the method that recieves the update information from bro and populates the dictionary 
 @event
 def update(device_name,ip_address):
-	print("recieved ", device_name, " and", ip_address)
+	print("recieved " + device_name + " and " + ip_address)
 
 	if not (device_name == "default" and ip_address == "0.0.0.0"):
 		temp_dict[device_name] = ip_address
@@ -205,6 +205,8 @@ def do_setvar(split_line,bro_connection):
 			#sends the list in twos
 			bro_connection.connection.send("setvar",string(split_line[i]),addr(split_line[i+1])) 
 
+	print("Set varaible successfuly on " + bro_connection.name)
+
 #This deletes a variable in the bro set. 
 def do_delvar(split_line,bro_connection):
 
@@ -219,6 +221,11 @@ def do_delvar(split_line,bro_connection):
 #This lists out the varaibles in the dictionary 
 def do_list(bro_connection):
 	print (bro_connection.var_dict)
+
+def do_update_all():
+	for connection in open_connections:
+		do_update_waiter(connection)
+		print("++++++++++++++++++")
 
 def do_help(split_line):
 	print("\nSupported commands are:\n")
