@@ -68,7 +68,7 @@ def term():
 		split_line = (n.lower()).split()
 
 		#add new commands here so we can tell valid/invalid commands 
-		commands = ["update","help","list","setvar","delvar","quit","connect","test",
+		commands = ["ls_var","help","list","setvar","delvar","quit","connect","test",
 					"update_all","current_connection","connections","set_connection"]
 
 		try:
@@ -121,7 +121,9 @@ def term():
 				for connection in open_connections:
 					if (connection.name == split_line[2] or connection.ip_port == split_line[1]):
 						make = False
-						print("Connection already made at: " + connection.ip_port + " with name" + connection.name)
+						
+						if not make:
+							print("Connection already made at: " + connection.ip_port + " with name " + connection.name)
 
 				if (make):
 					open_connections.append(bro_connection(split_line[1],split_line[2]))
@@ -135,7 +137,7 @@ def term():
 			#These commands require there to be an active connection 	
 			if (current_connection): 	
 				#Syntax: update
-				if split_line[0] == "update": 
+				if split_line[0] == "ls_var": 
 					temp_dict.clear()
 					do_update_waiter(current_connection)
 
@@ -157,14 +159,30 @@ def term():
 
 		#this is if they are trying to press enter with nothing actually in the line
 		except IndexError:
-			print("Make sure your command has the proper arguments!")
 
+			#this is when i make the quick connection via "connect bro1" or "connect bro2"
+			if (split_line[1] == "bro1" or "bro2"):
+				print("shortcut connection made")
+
+			else:
+				print("Make sure your command has the proper arguments!")
+
+		#this is for when user is entering an invalid ip:port string
 		except ValueError:
 			print("Your ip/port is invalid, use the proper syntax: 127.0.0.1:47758")
 
+		#this handles an error thrown when we try to make a connection from a the python script to an invalid bro device
 		except socket.error:
 			print ("Your Ip address in invalid")
 
+		#When trying to connect to a bro device fails
+		except IOError:
+			#if user has ever even initated a connection
+			if(current_connection):
+				print ("Can't reach the bro device at: " + current_connection.name + " with " + current_connection.ip_port)
+		
+			else:
+				print ("Can't contact bro device")
 #This is the method that recieves the update information from bro and populates the dictionary 
 @event
 def update(device_name,ip_address):
@@ -222,6 +240,7 @@ def do_delvar(split_line,bro_connection):
 def do_list(bro_connection):
 	print (bro_connection.var_dict)
 
+#This goes through all open connections and calls update on all of them.
 def do_update_all():
 	for connection in open_connections:
 		do_update_waiter(connection)
