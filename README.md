@@ -13,5 +13,5 @@ To run and test bro-yanc, start the bro script terminal_app.bro and terminal_app
 
 ```> connect bro1```
 
-This will create a connection between your client and bro1. This is a shortcut command for testing purposes and creates a connection to ```127.0.0.1:47758```. You can then set varaibles using the command ```setvar```(ex. ```setvar a 1.1.1.1```) , which would create a connection in the bro module between a and 1.1.1.1, you can delete them with ```delvar```(ex. ```delvar a 1.1.1.1```) which would delete the variable. You can also run ```update``` which will order the bro device to dump all of it's variable maps (ex. a:1.1.1.1, b:2.2.2.2, c:3.3.3.3) to the controller and then display them. 
+This will create a connection between your client and bro1. This is a shortcut command for testing purposes and creates a connection to ```127.0.0.1:47758```. You can then set varaibles using the command ```setvar```(ex. ```setvar a 1.1.1.1```) , which would create a connection in the bro module between a and 1.1.1.1, you can delete them with ```delvar```(ex. ```delvar a 1.1.1.1```) which would delete the variable. You can also run ```lsvar``` which will order the bro device to dump all of it's variable maps (ex. a:1.1.1.1, b:2.2.2.2, c:3.3.3.3) to the controller and then display them. 
 
