@@ -3,6 +3,7 @@
 from broccoli import *
 import time as Time
 import re
+import paramiko
 
 #recieved is incremented by one every time an event is sent from bro to the script and properly recieved 
 global recieved 
@@ -58,6 +59,8 @@ class bro_connection:
 ###########################################################################################
 def term():
 
+	paramiko.util.log_to_file('/tmp/paramiko.log')
+
 	current_connection = ""
 
 	print ("\nTerminal to Bro Device. Type 'help' for commands")
@@ -69,7 +72,7 @@ def term():
 
 		#add new commands here so we can tell valid/invalid commands 
 		commands = ["ls_var","help","list","setvar","delvar","quit","connect","test",
-					"update_all","current_connection","connections","set_connection"]
+					"update_all","current_connection","connections","set_connection","script"]
 
 		try:
 			#Syntax: quit
@@ -157,6 +160,11 @@ def term():
 				if split_line[0] == "update_all":
 					do_update_all()
 
+				#do_send_script(host,user,password,path):
+				if split_line[0] == "script":
+					print("howdy")
+					do_send_script("127.0.0.1","user","user","/home/user/Documents/broc_yanc/broccoli_python/testfile","twit")
+
 		#this is if they are trying to press enter with nothing actually in the line
 		except IndexError:
 
@@ -175,14 +183,14 @@ def term():
 		except socket.error:
 			print ("Your Ip address in invalid")
 
-		#When trying to connect to a bro device fails
-		except IOError:
-			#if user has ever even initated a connection
-			if(current_connection):
-				print ("Can't reach the bro device at: " + current_connection.name + " with " + current_connection.ip_port)
+		# #When trying to connect to a bro device fails
+		# except IOError:
+		# 	#if user has ever even initated a connection
+		# 	if(current_connection):
+		# 		print ("Can't reach the bro device at: " + current_connection.name + " with " + current_connection.ip_port)
 		
-			else:
-				print ("Can't contact bro device")
+		# 	else:
+		# 		print ("Can't contact bro device")
 #This is the method that recieves the update information from bro and populates the dictionary 
 @event
 def update(device_name,ip_address):
@@ -245,6 +253,21 @@ def do_update_all():
 	for connection in open_connections:
 		do_update_waiter(connection)
 		print("++++++++++++++++++")
+
+def do_send_script(host,username,password,path,filename):
+	print("HOWDY")
+	host = "127.0.0.1"
+	port = 22
+	transport = paramiko.Transport((host, port))
+	transport.connect(username = username, password = password)
+	sftp = paramiko.SFTPClient.from_transport(transport)
+
+	filepath = '/home/user/bro/scripts/yanc/' + filename
+	localpath = path
+	sftp.put(localpath, filepath)
+
+	sftp.close()
+	transport.close()
 
 def do_help(split_line):
 	print("\nSupported commands are:\n")
