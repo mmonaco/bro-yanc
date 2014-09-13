@@ -28,13 +28,10 @@ class bro_connection:
 	recvieved_counter=1
 	connection = ""
 
-	port_regex = re.compile("(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}):(\d{0,5})")
 
 	def __init__(self,ip_port,name):
 
-		if not (self.port_regex.match(ip_port)):
-			raise ValueError()
-
+		check_ip_port(ip_port)
 		self.ip_port = ip_port
 		self.name = name
 
@@ -75,7 +72,7 @@ def term():
 
 		#add new commands here so we can tell valid/invalid commands 
 		commands = ["ls_var","help","list","setvar","delvar","quit","connect","test",
-					"update_all","current_connection","connections","set_connection","script","module"]
+					"update_all","current_connection","connections","set_connection","script","module","modify_script"]
 
 		try:
 			#Syntax: quit
@@ -109,8 +106,6 @@ def term():
 				for i in open_connections:
 					print i.name
 
-			if split_line[0] == "module":
-				do_create_module(split_line[1],split_line[2])
 			#Syntax: connection 127.0.0.1:47758
 			if split_line[0] == "connect":
 				make = True
@@ -165,10 +160,22 @@ def term():
 				if split_line[0] == "update_all":
 					do_update_all()
 
-				#do_send_script(host,user,password,path):
-				if split_line[0] == "script":
-					print("howdy")
-					do_send_script("127.0.0.1","user","user","/home/user/Documents/broc_yanc/broccoli_python/testfile","twit")
+			########################################
+			#These are for prepping/sending scripts#
+			########################################
+
+			#this creates a custom module with: name, port 
+			if split_line[0] == "module":
+				do_create_module(split_line[1],split_line[2])
+
+			#this modifies a 1) bro script with 2) module name
+			if split_line[0] == "modify_script":
+				do_modify_script(split_line[1],split_line[2])
+
+			#do_send_script(host,user,password,path):
+			if split_line[0] == "script":
+				print("howdy")
+				do_send_script("127.0.0.1","user","user","/home/user/Documents/broc_yanc/broccoli_python/testfile","twit")
 
 		#this is if they are trying to press enter with nothing actually in the line
 		except IndexError:
@@ -207,6 +214,13 @@ def update(device_name,ip_address):
 	#when we recieved the info from bro, we incrmenet the recieved counter by 1. 
 	global recieved
 	recieved += 1 
+
+#Checks for proper formatting of ip and port
+def check_ip_port(ip_port):
+
+	port_regex = re.compile("(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}):(\d{0,5})")
+	if not (port_regex.match(ip_port)):
+		raise ValueError()
 
 #This waits for the update info to be sent from the bro device. 
 def do_update_waiter(bro_connection):
@@ -259,35 +273,41 @@ def do_update_all():
 		do_update_waiter(connection)
 		print("++++++++++++++++++")
 
+#This takes the template module from /yanc/main.bro and edits features to create a custom module for a bro script 
 def do_create_module(name,port):
 
+	#this creates the new module directory 
 	mypath = name + "_module"
 	if not os.path.isdir(mypath):
 	   os.makedirs(mypath)
 
+	#this copies the template files from the template directory to our new directory
 	shutil.copyfile('./yanc/main.bro', "./" + mypath + "/template_main.bro")
 	shutil.copyfile('./yanc/__load__.bro', "./" + mypath + "/__load__.bro")
 	
+	#this opens up the template and starts chaning stuff around 
 	template_main = open("./" + mypath + "/template_main.bro", 'r')
 	real_main = open("./" + mypath + "/main.bro", 'wr')
+	#this is where to add different replacements. More will be added over time, match these with the parameters for the function so the user can control this
 	for line in template_main:
 		real_main.write(line.replace("redef Communication::listen_port = 47758/tcp;","redef Communication::listen_port = " + port + ";"))
+		real_main.write(line.replace("module yanc;","module" + name + ";"))
 
+	#this closes the files and removes the leftover template
 	template_main.close
-	os.remove("./" + mypath + "/template_main.bro")
 	real_main.close()
+	os.remove("./" + mypath + "/template_main.bro")
 
+#This function is given a bro file as a param and does the following:
+# 1. Creates a copy in the same directory
+# 2. Goes through copy and removes all references to predefined module
+# 3. Replaces them with references to module that we made.
 
-	# filedata = module_template.read()
-	# module_template.close()
-
-	# newdata = filedata.replace("redef Communication::listen_port = 47758/tcp;","redef Communication::listen_port = " + port + ";")
-
-	# module_template = open("./" + mypath + "/main.bro",'w')
-	# module_template.write(newdata)
-	# module_template.close()
-
-
+def do_modify_script(bro_file,module_name):
+	shutil.copyfile(bro_file, bro_file + "_yanced")
+	#yanced_file = open(bro_file + "_yanced", 'w+b')
+	# for line in yanced_file:
+	# 	real_main.write(line.replace("yanc", module_name))
 
 
 def do_send_script(host,username,password,path,filename):

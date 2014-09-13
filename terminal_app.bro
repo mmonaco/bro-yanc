@@ -10,7 +10,8 @@
 global update:event(a: string, b: addr);
 
 event bro_init(){
-	print "bro is up ";
+
+	print "Minimal bro is up";
 
 	local bro_rec : yanc::ip_map;
 
@@ -18,4 +19,11 @@ event bro_init(){
 	bro_rec$ip = 0.0.0.0;
 
 	add yanc::host_set[bro_rec];
+}
+
+event bro_list(){
+	#go through the users and print out users in the set on the bro device 
+	for ( host in yanc::host_set ){
+        print fmt("On small script:  %s", host);
+	}
 }
