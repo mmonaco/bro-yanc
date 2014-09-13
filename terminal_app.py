@@ -1,9 +1,12 @@
 #! /usr/bin/env python
-
+from tempfile import mkstemp
+import shutil
+import os 
 from broccoli import *
 import time as Time
 import re
 import paramiko
+import fileinput
 
 #recieved is incremented by one every time an event is sent from bro to the script and properly recieved 
 global recieved 
@@ -72,7 +75,7 @@ def term():
 
 		#add new commands here so we can tell valid/invalid commands 
 		commands = ["ls_var","help","list","setvar","delvar","quit","connect","test",
-					"update_all","current_connection","connections","set_connection","script"]
+					"update_all","current_connection","connections","set_connection","script","module"]
 
 		try:
 			#Syntax: quit
@@ -106,6 +109,8 @@ def term():
 				for i in open_connections:
 					print i.name
 
+			if split_line[0] == "module":
+				do_create_module(split_line[1],split_line[2])
 			#Syntax: connection 127.0.0.1:47758
 			if split_line[0] == "connect":
 				make = True
@@ -254,8 +259,39 @@ def do_update_all():
 		do_update_waiter(connection)
 		print("++++++++++++++++++")
 
+def do_create_module(name,port):
+
+	mypath = name + "_module"
+	if not os.path.isdir(mypath):
+	   os.makedirs(mypath)
+
+	shutil.copyfile('./yanc/main.bro', "./" + mypath + "/template_main.bro")
+	shutil.copyfile('./yanc/__load__.bro', "./" + mypath + "/__load__.bro")
+	
+	template_main = open("./" + mypath + "/template_main.bro", 'r')
+	real_main = open("./" + mypath + "/main.bro", 'wr')
+	for line in template_main:
+		real_main.write(line.replace("redef Communication::listen_port = 47758/tcp;","redef Communication::listen_port = " + port + ";"))
+
+	template_main.close
+	os.remove("./" + mypath + "/template_main.bro")
+	real_main.close()
+
+
+	# filedata = module_template.read()
+	# module_template.close()
+
+	# newdata = filedata.replace("redef Communication::listen_port = 47758/tcp;","redef Communication::listen_port = " + port + ";")
+
+	# module_template = open("./" + mypath + "/main.bro",'w')
+	# module_template.write(newdata)
+	# module_template.close()
+
+
+
+
 def do_send_script(host,username,password,path,filename):
-	print("HOWDY")
+
 	host = "127.0.0.1"
 	port = 22
 	transport = paramiko.Transport((host, port))
