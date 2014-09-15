@@ -1,8 +1,9 @@
 #! /usr/bin/env python
 from tempfile import mkstemp
+from broccoli import *
+
 import shutil
 import os 
-from broccoli import *
 import time as Time
 import re
 import paramiko
@@ -27,7 +28,6 @@ class bro_connection:
 	ip_port = ""
 	recvieved_counter=1
 	connection = ""
-
 
 	def __init__(self,ip_port,name):
 
@@ -59,8 +59,6 @@ class bro_connection:
 ###########################################################################################
 def term():
 
-	paramiko.util.log_to_file('/tmp/paramiko.log')
-
 	current_connection = ""
 
 	print ("\nTerminal to Bro Device. Type 'help' for commands")
@@ -72,13 +70,20 @@ def term():
 
 		#add new commands here so we can tell valid/invalid commands 
 		commands = ["ls_var","help","list","setvar","delvar","quit","connect","test",
-					"update_all","current_connection","connections","set_connection","script","module","modify_script"]
+					"update_all","current_connection","connections","set_connection",
+					"send_script","module","modify_script"]
 
+		#Comments on top of splitline is syntax
 		try:
-			#Syntax: quit
+			# quit
 			if split_line[0] == "quit":
 				break
 
+			# help
+			if split_line[0] == "help":
+				do_help(split_line)
+
+			#set_connection (connection_name)	
 			if split_line[0] == "set_connection":
 				try:
 					for connection in open_connections:
@@ -90,23 +95,19 @@ def term():
 							print("connection name not found")
 				except:
 					print("Include a name with the following format: set_connection local")
-			
-			#Syntax: help
-			if split_line[0] == "help":
-				do_help(split_line)
 
-			#for dev testing, can fill this out with other random stuff
+			#current_connection 		
 			if split_line[0] == "current_connection":
 				if (current_connection):
 					print ("Connected to: " + current_connection.ip_port + " with " + current_connection.name)
 				else:
 					print("No current connection to any device, maybe use the 'connect' command?")
-
+			#connections
 			if split_line[0] == "connections":
 				for i in open_connections:
 					print i.name
 
-			#Syntax: connection 127.0.0.1:47758
+			#connection 127.0.0.1:47758
 			if split_line[0] == "connect":
 				make = True
 
@@ -137,26 +138,27 @@ def term():
 			if not split_line[0] in commands:
 				print ("Do you need help? Type 'help' for a list of possible commands.")
 
-			#These commands require there to be an active connection 	
+			#These commands require there to be an active connection to work 
+
 			if (current_connection): 	
-				#Syntax: update
+				# ls_var
 				if split_line[0] == "ls_var": 
 					temp_dict.clear()
 					do_update_waiter(current_connection)
 
-				#Syntax: list
+				# list
 				if split_line[0] == "list": 
 					do_list(current_connection)
 
-				#Syntax: setvar foo 255.255.255.255
+				# setvar foo 255.255.255.255
 				if split_line[0] == "setvar": 
 					do_setvar(split_line,current_connection)
 
-				#Syntax: delvar foo 255.255.255.255
+				# delvar foo 255.255.255.255
 				if split_line[0] == "delvar": 
 					do_delvar(split_line,current_connection)
 
-				#this goes through all of the dictionaries
+				# update_all
 				if split_line[0] == "update_all":
 					do_update_all()
 
@@ -164,16 +166,16 @@ def term():
 			#These are for prepping/sending scripts#
 			########################################
 
-			#this creates a custom module with: name, port 
+			# module (name) (port)
 			if split_line[0] == "module":
 				do_create_module(split_line[1],split_line[2])
 
-			#this modifies a 1) bro script with 2) module name
+			# modify_script (bro file) (module_name)
 			if split_line[0] == "modify_script":
 				do_modify_script(split_line[1],split_line[2])
 
-			#do_send_script(host,user,password,path):
-			if split_line[0] == "script":
+			# send_script (Dest ip) (Dest username) (Dest password) (brofile localpath) (dest filename)
+			if split_line[0] == "send_script":
 				print("howdy")
 				do_send_script("127.0.0.1","user","user","/home/user/Documents/broc_yanc/broccoli_python/testfile","twit")
 
@@ -193,16 +195,21 @@ def term():
 
 		#this handles an error thrown when we try to make a connection from a the python script to an invalid bro device
 		except socket.error:
-			print ("Your Ip address in invalid")
+			print ("Your I{} address in invalid")
 
 		# #When trying to connect to a bro device fails
-		# except IOError:
-		# 	#if user has ever even initated a connection
-		# 	if(current_connection):
-		# 		print ("Can't reach the bro device at: " + current_connection.name + " with " + current_connection.ip_port)
+		except IOError:
+			#if user has ever even initated a connection
+			if(current_connection):
+				print ("Can't reach the bro device at: " + current_connection.name + " with " + current_connection.ip_port)
 		
-		# 	else:
-		# 		print ("Can't contact bro device")
+			else:
+				print ("Can't contact bro device")
+
+###########################################################################################
+#END OF TERMINAL APP#######################################################################
+###########################################################################################
+
 #This is the method that recieves the update information from bro and populates the dictionary 
 @event
 def update(device_name,ip_address):
@@ -268,6 +275,7 @@ def do_list(bro_connection):
 	print (bro_connection.var_dict)
 
 #This goes through all open connections and calls update on all of them.
+#UNDER CONSTRUCTION!!!
 def do_update_all():
 	for connection in open_connections:
 		do_update_waiter(connection)
@@ -288,6 +296,7 @@ def do_create_module(name,port):
 	#this opens up the template and starts chaning stuff around 
 	template_main = open("./" + mypath + "/template_main.bro", 'r')
 	real_main = open("./" + mypath + "/main.bro", 'wr')
+	
 	#this is where to add different replacements. More will be added over time, match these with the parameters for the function so the user can control this
 	for line in template_main:
 		real_main.write(line.replace("redef Communication::listen_port = 47758/tcp;","redef Communication::listen_port = " + port + ";"))
@@ -304,12 +313,21 @@ def do_create_module(name,port):
 # 3. Replaces them with references to module that we made.
 
 def do_modify_script(bro_file,module_name):
-	shutil.copyfile(bro_file, bro_file + "_yanced")
-	#yanced_file = open(bro_file + "_yanced", 'w+b')
-	# for line in yanced_file:
-	# 	real_main.write(line.replace("yanc", module_name))
 
+	mod_file_string =  bro_file.replace(".bro","_yanced.bro")
+	shutil.copyfile(bro_file,mod_file_string)
 
+	template_main = open(bro_file, 'r')
+	real_main = open(mod_file_string, 'wr')
+	#this is where to add different replacements. More will be added over time, match these with the parameters for the function so the user can control this
+	for line in template_main:
+		real_main.write(line.replace("yanc", module_name))
+
+	#this closes the files and removes the leftover template
+	template_main.close()
+	real_main.close()
+
+#This takes the newly modified script, sends it to the proper host via ssh for it to be run. 
 def do_send_script(host,username,password,path,filename):
 
 	host = "127.0.0.1"
