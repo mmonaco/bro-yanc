@@ -1,3 +1,11 @@
+
+
+
+
+
+
+
+
 #! /usr/bin/env python
 from tempfile import mkstemp
 from broccoli import *
@@ -13,10 +21,11 @@ import fileinput
 global recieved 
 recieved = 0 
 
+#open connections is the list of open_connections to different bro devices 
 global open_connections
 open_connections = []
 
-global temp_dict
+#the temp_dict is populated by the update method and then flushed into bro_connection.var_dict
 temp_dict ={}
 
 myRecord = record_type("host_name","ip_address")
