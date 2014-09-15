@@ -10,13 +10,13 @@ To get started download and install a copy of bro 2.2 or greater and the Broccol
 General Outline
 ===============
 Proper way to use the program: 
-1. Create a sample bro script. 
-2. While writing the bro script, instead of using normal variables make it yanc::user_set[x](finishing this up)
-3. Create a custom module using do_create_module
-4. "yancify" the script using the do_modify_script
-5. Send the script to proper directory on the device
-6. Send the module to the frameworks directory 
-7. Run the bro script and start changing stuff from the controllers terminal_app.py
+1.  Create a sample bro script.  
+2.  While writing the bro script, instead of using normal variables make it yanc::user_set[x](finishing this up)
+3.  Create a custom module using do_create_module
+4.  "yancify" the script using the do_modify_script
+5.  Send the script to proper directory on the device
+6.  Send the module to the frameworks directory 
+7.  Run the bro script and start changing stuff from the controllers terminal_app.py
 
 Notes- All of the connections between the controller and the bro device are kept in custom module, so when the script is being written the only thing the writer needs to worry about is making the variables look at the module, which can use the placeholder value of yanc:: because our script modifer will change the actual module name and any references.
 

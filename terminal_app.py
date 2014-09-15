@@ -1,12 +1,18 @@
-
-
-
-
-
-
-
-
 #! /usr/bin/env python
+
+# Proper way to use the program: 
+# 1. Create a sample bro script. 
+# 2. While writing the bro script, instead of using normal variables make it yanc::user_set[x] (finishing this up)
+# 3. Create a custom module using do_create_module
+# 4. "yancify" the script using the do_modify_script
+# 5. Send the script to proper directory on the device
+# 6. Send the module to the frameworks directory 
+# 7. Run the bro script and start changing stuff from the terminal_app
+
+# Notes: All of the connections between the controller and the bro device are kept in custom module, so when the script is being written
+# the only thing the writer needs to worry about is making the variables look at the module, which can use the placeholder value of yanc:: because 
+# our script modifer will change the actual module name and any references. 
+
 from tempfile import mkstemp
 from broccoli import *
 
@@ -21,11 +27,11 @@ import fileinput
 global recieved 
 recieved = 0 
 
-#open connections is the list of open_connections to different bro devices 
+#list of open_connections to different bro devices 
 global open_connections
 open_connections = []
 
-#the temp_dict is populated by the update method and then flushed into bro_connection.var_dict
+#temp_dict is populated by the update method and then flushed into bro_connection.var_dict
 temp_dict ={}
 
 myRecord = record_type("host_name","ip_address")
@@ -80,7 +86,7 @@ def term():
 		#add new commands here so we can tell valid/invalid commands 
 		commands = ["ls_var","help","list","setvar","delvar","quit","connect","test",
 					"update_all","current_connection","connections","set_connection",
-					"send_script","module","modify_script"]
+					"send_script","module","modify_script","demo"]
 
 		#Comments on top of splitline is syntax
 		try:
@@ -171,6 +177,8 @@ def term():
 				if split_line[0] == "update_all":
 					do_update_all()
 
+				if split_line[0] == "demo":
+					do_demo(current_connection)
 			########################################
 			#These are for prepping/sending scripts#
 			########################################
@@ -268,16 +276,14 @@ def do_setvar(split_line,bro_connection):
 
 	print("Set varaible successfuly on " + bro_connection.name)
 
+def do_demo(bro_connection):
+	bro_connection.connection.send("bro_demo") 
+
 #This deletes a variable in the bro set. 
 def do_delvar(split_line,bro_connection):
 
-	if (len(split_line) % 2 != 1):
-		print "Wrong numbe of variables"
-	#checks if there are an odd number of variables input 
-	else: 
-		for i in range (1,len(split_line)-1,2):
-			#sends the list in twos
-			bro_connection.connection.send("delvar",string(split_line[i]),addr(split_line[i+1])) 
+	for i in range (1,len(split_line)-1):
+		bro_connection.connection.send("delvar",string(split_line[i])) 
 
 #This lists out the varaibles in the dictionary 
 def do_list(bro_connection):

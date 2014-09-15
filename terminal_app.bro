@@ -13,17 +13,20 @@ event bro_init(){
 
 	print "Minimal bro is up";
 
-	local bro_rec : yanc::ip_map;
+	yanc::addr_map["default"]=0.0.0.0;
+	yanc::addr_map["a"]=99.99.99.99;
 
-	bro_rec$local_name = "default";
-	bro_rec$ip = 0.0.0.0;
 
-	add yanc::host_set[bro_rec];
 }
 
 event bro_list(){
 	#go through the users and print out users in the set on the bro device 
-	for ( host in yanc::host_set ){
-        print fmt("On small script:  %s", host);
+	for ( host in yanc::addr_map ){
+        print fmt("On small script:  %s is mapped to %s", host,yanc::addr_map[host]);
 	}
+}
+
+event bro_demo(){
+	print fmt("BRO DEMO INTIATED!");
+	print fmt("Blocking ip address: %s", yanc::addr_map["a"]);
 }
