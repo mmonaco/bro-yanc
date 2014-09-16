@@ -89,139 +89,139 @@ def term():
 					"send_script","module","modify_script","demo"]
 
 		#Comments on top of splitline is syntax
-		try:
-			# quit
-			if split_line[0] == "quit":
-				break
+		#try:
+		# quit
+		if split_line[0] == "quit":
+			break
 
-			# help
-			if split_line[0] == "help":
-				do_help(split_line)
+		# help
+		if split_line[0] == "help":
+			do_help(split_line)
 
-			#set_connection (connection_name)	
-			if split_line[0] == "set_connection":
-				try:
-					for connection in open_connections:
-						print ("connection.name is: " + connection.name + "arg is " + split_line[1])
-						if connection.name == split_line[1]:
-							current_connection=connection
-							break
-						else:
-							print("connection name not found")
-				except:
-					print("Include a name with the following format: set_connection local")
-
-			#current_connection 		
-			if split_line[0] == "current_connection":
-				if (current_connection):
-					print ("Connected to: " + current_connection.ip_port + " with " + current_connection.name)
-				else:
-					print("No current connection to any device, maybe use the 'connect' command?")
-			#connections
-			if split_line[0] == "connections":
-				for i in open_connections:
-					print i.name
-
-			#connection 127.0.0.1:47758
-			if split_line[0] == "connect":
-				make = True
-
-				if split_line[1] == "bro1":
-					open_connections.append(bro_connection("127.0.0.1:47758","bro1"))
-					open_connections[-1].open_connection()
-					current_connection = open_connections[-1]
-
-				if split_line[1] == "bro2":
-					open_connections.append(bro_connection("127.0.0.1:47759","bro2"))
-					open_connections[-1].open_connection()
-					current_connection = open_connections[-1]
-
-				#This is used for making sure no duplicate connection is made 
+		#set_connection (connection_name)	
+		if split_line[0] == "set_connection":
+			try:
 				for connection in open_connections:
-					if (connection.name == split_line[2] or connection.ip_port == split_line[1]):
-						make = False
-						
-						if not make:
-							print("Connection already made at: " + connection.ip_port + " with name " + connection.name)
+					print ("connection.name is: " + connection.name + "arg is " + split_line[1])
+					if connection.name == split_line[1]:
+						current_connection=connection
+						break
+					else:
+						print("connection name not found")
+			except:
+				print("Include a name with the following format: set_connection local")
 
-				if (make):
-					open_connections.append(bro_connection(split_line[1],split_line[2]))
-					open_connections[-1].open_connection()
-					current_connection=open_connections[-1]
-
-			
-			if not split_line[0] in commands:
-				print ("Do you need help? Type 'help' for a list of possible commands.")
-
-			#These commands require there to be an active connection to work 
-
-			if (current_connection): 	
-				# ls_var
-				if split_line[0] == "ls_var": 
-					temp_dict.clear()
-					do_update_waiter(current_connection)
-
-				# list
-				if split_line[0] == "list": 
-					do_list(current_connection)
-
-				# setvar foo 255.255.255.255
-				if split_line[0] == "setvar": 
-					do_setvar(split_line,current_connection)
-
-				# delvar foo 255.255.255.255
-				if split_line[0] == "delvar": 
-					do_delvar(split_line,current_connection)
-
-				# update_all
-				if split_line[0] == "update_all":
-					do_update_all()
-
-				if split_line[0] == "demo":
-					do_demo(current_connection)
-			########################################
-			#These are for prepping/sending scripts#
-			########################################
-
-			# module (name) (port)
-			if split_line[0] == "module":
-				do_create_module(split_line[1],split_line[2])
-
-			# modify_script (bro file) (module_name)
-			if split_line[0] == "modify_script":
-				do_modify_script(split_line[1],split_line[2])
-
-			# send_script (Dest ip) (Dest username) (Dest password) (brofile localpath) (dest filename)
-			if split_line[0] == "send_script":
-				print("howdy")
-				do_send_script("127.0.0.1","user","user","/home/user/Documents/broc_yanc/broccoli_python/testfile","twit")
-
-		#this is if they are trying to press enter with nothing actually in the line
-		except IndexError:
-
-			#this is when i make the quick connection via "connect bro1" or "connect bro2"
-			if (split_line[1] == "bro1" or "bro2"):
-				print("shortcut connection made")
-
+		#current_connection 		
+		if split_line[0] == "current_connection":
+			if (current_connection):
+				print ("Connected to: " + current_connection.ip_port + " with " + current_connection.name)
 			else:
-				print("Make sure your command has the proper arguments!")
+				print("No current connection to any device, maybe use the 'connect' command?")
+		#connections
+		if split_line[0] == "connections":
+			for i in open_connections:
+				print i.name
 
-		#this is for when user is entering an invalid ip:port string
-		except ValueError:
-			print("Your ip/port is invalid, use the proper syntax: 127.0.0.1:47758")
+		#connection 127.0.0.1:47758
+		if split_line[0] == "connect":
+			make = True
 
-		#this handles an error thrown when we try to make a connection from a the python script to an invalid bro device
-		except socket.error:
-			print ("Your I{} address in invalid")
+			if split_line[1] == "bro1":
+				open_connections.append(bro_connection("127.0.0.1:47758","bro1"))
+				open_connections[-1].open_connection()
+				current_connection = open_connections[-1]
 
-		# #When trying to connect to a bro device fails
-		except IOError:
-			#if user has ever even initated a connection
-			if(current_connection):
-				print ("Can't reach the bro device at: " + current_connection.name + " with " + current_connection.ip_port)
+			if split_line[1] == "bro2":
+				open_connections.append(bro_connection("127.0.0.1:47759","bro2"))
+				open_connections[-1].open_connection()
+				current_connection = open_connections[-1]
+
+			#This is used for making sure no duplicate connection is made 
+			for connection in open_connections:
+				if (connection.name == split_line[2] or connection.ip_port == split_line[1]):
+					make = False
+					
+					if not make:
+						print("Connection already made at: " + connection.ip_port + " with name " + connection.name)
+
+			if (make):
+				open_connections.append(bro_connection(split_line[1],split_line[2]))
+				open_connections[-1].open_connection()
+				current_connection=open_connections[-1]
+
 		
-			else:
-				print ("Can't contact bro device")
+		if not split_line[0] in commands:
+			print ("Do you need help? Type 'help' for a list of possible commands.")
+
+		#These commands require there to be an active connection to work 
+
+		if (current_connection): 	
+			# ls_var
+			if split_line[0] == "ls_var": 
+				temp_dict.clear()
+				do_update_waiter(current_connection)
+
+			# list
+			if split_line[0] == "list": 
+				do_list(current_connection)
+
+			# setvar foo 255.255.255.255
+			if split_line[0] == "setvar": 
+				do_setvar(split_line,current_connection)
+
+			# delvar foo 255.255.255.255
+			if split_line[0] == "delvar": 
+				do_delvar(split_line,current_connection)
+
+			# update_all
+			if split_line[0] == "update_all":
+				do_update_all()
+
+			if split_line[0] == "demo":
+				do_demo(current_connection)
+		########################################
+		#These are for prepping/sending scripts#
+		########################################
+
+		# module (name) (port)
+		if split_line[0] == "module":
+			do_create_module(split_line[1],split_line[2])
+
+		# modify_script (bro file) (module_name)
+		if split_line[0] == "modify_script":
+			do_modify_script(split_line[1],split_line[2])
+
+		# send_script (Dest ip) (Dest username) (Dest password) (brofile localpath) (dest filename)
+		if split_line[0] == "send_script":
+			print("howdy")
+			do_send_script("127.0.0.1","user","user","/home/user/Documents/broc_yanc/broccoli_python/testfile","twit")
+
+		# #this is if they are trying to press enter with nothing actually in the line
+		# except IndexError:
+
+		# 	#this is when i make the quick connection via "connect bro1" or "connect bro2"
+		# 	if (split_line[1] == "bro1" or "bro2"):
+		# 		print("shortcut connection made")
+
+		# 	else:
+		# 		print("Make sure your command has the proper arguments!")
+
+		# #this is for when user is entering an invalid ip:port string
+		# except ValueError:
+		# 	print("Your ip/port is invalid, use the proper syntax: 127.0.0.1:47758")
+
+		# #this handles an error thrown when we try to make a connection from a the python script to an invalid bro device
+		# except socket.error:
+		# 	print ("Your I{} address in invalid")
+
+		# # #When trying to connect to a bro device fails
+		# except IOError:
+		# 	#if user has ever even initated a connection
+		# 	if(current_connection):
+		# 		print ("Can't reach the bro device at: " + current_connection.name + " with " + current_connection.ip_port)
+		
+		# 	else:
+		# 		print ("Can't contact bro device")
 
 ###########################################################################################
 #END OF TERMINAL APP#######################################################################
@@ -229,11 +229,11 @@ def term():
 
 #This is the method that recieves the update information from bro and populates the dictionary 
 @event
-def update(device_name,ip_address):
-	print("recieved " + device_name + " and " + ip_address)
+def update(variable,ip_address):
+	print("recieved " + variable + " and " + ip_address)
 
-	if not (device_name == "default" and ip_address == "0.0.0.0"):
-		temp_dict[device_name] = ip_address
+	if not (variable == "default" and ip_address == "0.0.0.0"):
+		temp_dict[variable] = ip_address
 
 	#when we recieved the info from bro, we incrmenet the recieved counter by 1. 
 	global recieved
@@ -314,14 +314,20 @@ def do_create_module(name,port):
 	
 	#this is where to add different replacements. More will be added over time, match these with the parameters for the function so the user can control this
 	for line in template_main:
-		real_main.write(line.replace("redef Communication::listen_port = 47758/tcp;","redef Communication::listen_port = " + port + ";"))
-		real_main.write(line.replace("module yanc;","module" + name + ";"))
+
+		if line.strip() == ("redef Communication::listen_port = 47758/tcp;"):
+			real_main.write("redef Communication::listen_port = " + port + ";")
+			
+		elif line.strip() == ("module yanc;"):
+			real_main.write("module " + name + ";\n")
+
+		else:
+			real_main.write(line)
 
 	#this closes the files and removes the leftover template
 	template_main.close
 	real_main.close()
 	os.remove("./" + mypath + "/template_main.bro")
-
 #This function is given a bro file as a param and does the following:
 # 1. Creates a copy in the same directory
 # 2. Goes through copy and removes all references to predefined module
@@ -336,7 +342,7 @@ def do_modify_script(bro_file,module_name):
 	real_main = open(mod_file_string, 'wr')
 	#this is where to add different replacements. More will be added over time, match these with the parameters for the function so the user can control this
 	for line in template_main:
-		real_main.write(line.replace("yanc", module_name))
+		real_main.write(line.replace('yanc', module_name))
 
 	#this closes the files and removes the leftover template
 	template_main.close()
