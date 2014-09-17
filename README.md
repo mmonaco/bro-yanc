@@ -1,7 +1,7 @@
 bro-yanc
 ========
 
-Bro module for yanc sdn controller. 
+Bro module for yanc sdn controller. Any line in the format ```>>...``` means it is a command to be typed into the controller end. 
 
 Installation
 ============
@@ -15,13 +15,13 @@ General Test
 
 3.  Create a custom module using do_create_module. This takes the template yanc/main.bro, copies it and replaces the name and port with our parameters. Use the command ```>> module test_mod 1337``` in terminal_app.py to create the custom module. Put the new directory in /usr/local/bro/share/bro/base/frameworks/ .
 
-4.  "yancify" the script using the do_modify_script. This takes in a bro file name that we want to modify, and the module name of the module we created in step three. Example: ```modify_script sample_script.bro test_mod``` 
+4.  "yancify" the script using the do_modify_script. This takes in a bro file name that we want to modify, and the module name of the module we created in step three. Example: ```>> modify_script sample_script.bro test_mod``` 
 
 5.  Send the script to proper directory on the device. Still working on this, for now you can jsut run the script directly using your bro commands. 
 
 7.  Run the bro script and start changing vars from the controllers terminal_app.py
 
-Notes- All of the connections between the controller and the bro device are kept in custom module, so when the script is being written the only thing the writer needs to worry about is making the variables look at the different table maps, which can use the placeholder value of ```yanc::___map[]``` because our script modifer will change the actual module name and any references.
+Notes: All of the connections between the controller and the bro device are kept in custom module, so when the script is being written the only thing the writer needs to worry about is making the variables look at the different table maps, which can use the placeholder value of ```yanc::___map[]``` because our script modifer will change the actual module name and any references.
 
 Connections with bro-yanc
 =========================
@@ -32,14 +32,16 @@ To run and test bro-yanc, start the bro script terminal_app.bro and terminal_app
 This will create a connection between your client and the bro device that we will refer to as bro1. If the module was created properly with the same ip address, it should be listening @ 127.0.0.1 on port 47758.
 
 If you are maintaining more than one connection, you can use the command: 
-```
->> connections 
-```
+```>> connections ```
 to list open connections. Also the command:
-```
->> current_connection
-```
+```>> current_connection```
 will list the bro device that we are currently interacting with. 
+
+The way the code is setup, is that you are interfacing with only one bro device at a time, so the variable dictionary is tied directly to that bro device. 
+
+Setting Variables
+=================
+To actually change variables on the bro end of a device. Make sure you are connected properly. To get a list of varaibles that have been set already use the command ```>> ls_var``` this will contact the bro instace and retrieve a list of variables and maps. From there, you can set different variables depending on data type. For example, we might use the command ```>> set_int b 45``` to set the variable c to 45 on the bro end. Or we might use ```>> set_addr a 192.168.1.1``` to set the address for variable d. We can also use ```>> set_string c foobar``` to change the map of b to a string "foobar". You can test these by calling ```>> demo``` when working with the sample_script. 
 
 
 

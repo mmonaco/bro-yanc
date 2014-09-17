@@ -36,10 +36,16 @@ redef Communication::nodes += {
 };
 ###########################################################################################
 
-global update:event(a: string, b: addr);
+global update_addrs:event(a: string, b: addr);
+global update_strings:event(a: string, b: string);
+global update_ints:event(a: string, b: int);
 
 event bro_init(){
 	print "YANC MODULE IS UP ";
+	#this initializes some defaults to the variable tables
+	yanc::addr_map["default_addr"]=0.0.0.0;
+	yanc::int_map["default_int"]=0;
+	yanc::string_map["default_string"]="null";
 }
 
 event test1(){
@@ -82,7 +88,15 @@ event bro_list(){
 #init update, loops through user set and sends the info to the python controlller 
 event init_update(){
 
-	for ( host in addr_map){
-		event update(host, addr_map[host]);
+	for ( variable in addr_map){
+		event update_addrs(variable, addr_map[variable]);
+	}
+
+	for ( variable in string_map){
+		event update_strings(variable, string_map[variable]);
+	}
+
+	for ( variable in int_map){
+		event update_ints(variable, int_map[variable]);
 	}
 }

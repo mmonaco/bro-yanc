@@ -155,7 +155,7 @@ def term():
 		#These commands require there to be an active connection to work 
 
 		if (current_connection): 	
-			# ls_var
+			# ls_var, right now this only works with address table. I will work to find a way to get other tables later. 
 			if split_line[0] == "ls_var": 
 				temp_dict.clear()
 				do_update_waiter(current_connection)
@@ -165,7 +165,7 @@ def term():
 				do_list(current_connection)
 
 			# set_addr foo 255.255.255.255
-			if split_line[0] == "set_addr": 
+			if split_line[0] == "set_var": 
 				do_set_addr(split_line,current_connection)
 
 			# set_int foo 4
@@ -186,6 +186,7 @@ def term():
 
 			if split_line[0] == "demo":
 				do_demo(current_connection)
+
 		########################################
 		#These are for prepping/sending scripts#
 		########################################
@@ -236,15 +237,42 @@ def term():
 
 #This is the method that recieves the update information from bro and populates the dictionary 
 @event
-def update(variable,ip_address):
-	print("recieved " + variable + " and " + ip_address)
+def update_strings(variable_name,value):
+	print("recieved " + variable_name + " and " + value)
 
-	if not (variable == "default" and ip_address == "0.0.0.0"):
-		temp_dict[variable] = ip_address
+	if not (variable_name == "default_string" and value == "null"):
+		temp_dict[variable_name] = value
 
 	#when we recieved the info from bro, we incrmenet the recieved counter by 1. 
 	global recieved
 	recieved += 1 
+
+
+@event
+def update_addrs(variable_name,value):
+	print("recieved " + variable_name + " and " + value)
+
+	if not (variable_name == "default_addr" and value == "0.0.0.0"):
+		temp_dict[variable_name] = value
+
+	#when we recieved the info from bro, we incrmenet the recieved counter by 1. 
+	global recieved
+	recieved += 1 
+
+
+@event
+def update_ints(variable_name,value):
+	print("recieved " + variable_name + " and " + value)
+
+	if not (variable_name == "default_int" and value == 0):
+		temp_dict[variable_name] = value
+
+	#when we recieved the info from bro, we incrmenet the recieved counter by 1. 
+	global recieved
+	recieved += 1 
+
+
+
 
 #This waits for the update info to be sent from the bro device. 
 def do_update_waiter(bro_connection):
