@@ -11,10 +11,13 @@ global update:event(a: string, b: addr);
 
 event bro_init(){
 
-	print "Minimal bro is up";
+	print "Sample_script bro is up";
 
 	yanc::addr_map["default"]=0.0.0.0;
 	yanc::addr_map["a"]=99.99.99.99;
+	yanc::int_map["b"]=55;
+	yanc::string_map["c"]="cow";
+
 }
 
 event bro_list(){
@@ -26,5 +29,9 @@ event bro_list(){
 
 event bro_demo(){
 	print fmt("BRO DEMO INTIATED!");
-	print fmt("Blocking ip address on BRO1 is: %s", yanc::addr_map["a"]);
+	print fmt("Blocking ip address: %s", yanc::addr_map["a"]);
+	print fmt("Integer map is: %s", yanc::int_map["b"]);
+	print fmt("Blocking ip address: %s", yanc::string_map["cd"]);
+
+
 }

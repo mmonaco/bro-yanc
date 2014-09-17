@@ -46,7 +46,6 @@ class bro_connection:
 
 	def __init__(self,ip_port,name):
 
-		check_ip_port(ip_port)
 		self.ip_port = ip_port
 		self.name = name
 
@@ -84,9 +83,9 @@ def term():
 		split_line = (n.lower()).split()
 
 		#add new commands here so we can tell valid/invalid commands 
-		commands = ["ls_var","help","list","setvar","delvar","quit","connect","test",
+		commands = ["ls_var","help","list","set_addr","delvar","quit","connect","test",
 					"update_all","current_connection","connections","set_connection",
-					"send_script","module","modify_script","demo"]
+					"send_script","module","modify_script","demo","set_string","set_int"]
 
 		#Comments on top of splitline is syntax
 		#try:
@@ -122,7 +121,7 @@ def term():
 			for i in open_connections:
 				print i.name
 
-		#connection 127.0.0.1:47758
+		#connect 127.0.0.1:47758 bro1
 		if split_line[0] == "connect":
 			make = True
 
@@ -165,9 +164,17 @@ def term():
 			if split_line[0] == "list": 
 				do_list(current_connection)
 
-			# setvar foo 255.255.255.255
-			if split_line[0] == "setvar": 
-				do_setvar(split_line,current_connection)
+			# set_addr foo 255.255.255.255
+			if split_line[0] == "set_addr": 
+				do_set_addr(split_line,current_connection)
+
+			# set_int foo 4
+			if split_line[0] == "set_int": 
+				do_set_int(split_line,current_connection)
+
+			# set_string foo bar 
+			if split_line[0] == "set_string": 
+				do_set_string(split_line,current_connection)
 
 			# delvar foo 255.255.255.255
 			if split_line[0] == "delvar": 
@@ -239,13 +246,6 @@ def update(variable,ip_address):
 	global recieved
 	recieved += 1 
 
-#Checks for proper formatting of ip and port
-def check_ip_port(ip_port):
-
-	port_regex = re.compile("(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}):(\d{0,5})")
-	if not (port_regex.match(ip_port)):
-		raise ValueError()
-
 #This waits for the update info to be sent from the bro device. 
 def do_update_waiter(bro_connection):
 
@@ -264,7 +264,7 @@ def do_update_waiter(bro_connection):
 	#list out the stuff in the dictionary
 
 #This sends the variable to the bro device to be added to the user set. 
-def do_setvar(split_line,bro_connection):
+def do_set_addr(split_line,bro_connection):
 
 	if (len(split_line) % 2 != 1):
 		print "Wrong numbe of variables"
@@ -272,9 +272,34 @@ def do_setvar(split_line,bro_connection):
 	else: 
 		for i in range (1,len(split_line)-1,2):
 			#sends the list in twos
-			bro_connection.connection.send("setvar",string(split_line[i]),addr(split_line[i+1])) 
+			bro_connection.connection.send("set_addr",string(split_line[i]),addr(split_line[i+1])) 
 
-	print("Set varaible successfuly on " + bro_connection.name)
+	print("Set address successfuly on " + bro_connection.name)
+
+def do_set_string(split_line,bro_connection):
+
+	if (len(split_line) % 2 != 1):
+		print "Wrong numbe of variables"
+	#checks if there are an odd number of variables input 
+	else: 
+		for i in range (1,len(split_line)-1,2):
+			#sends the list in twos
+			bro_connection.connection.send("set_string",string(split_line[i]),string(split_line[i+1])) 
+
+	print("Set string successfuly on " + bro_connection.name)
+
+def do_set_int(split_line,bro_connection):
+
+	if (len(split_line) % 2 != 1):
+		print "Wrong numbe of variables"
+	#checks if there are an odd number of variables input 
+	else: 
+		for i in range (1,len(split_line)-1,2):
+			#sends the list in twos
+			bro_connection.connection.send("set_int",string(split_line[i]),int(split_line[i+1])) 
+
+	print("Set int successfuly on " + bro_connection.name)
+
 
 def do_demo(bro_connection):
 	bro_connection.connection.send("bro_demo") 
@@ -300,7 +325,7 @@ def do_update_all():
 def do_create_module(name,port):
 
 	#this creates the new module directory 
-	mypath = name + "_module"
+	mypath = name
 	if not os.path.isdir(mypath):
 	   os.makedirs(mypath)
 
@@ -370,8 +395,8 @@ def do_help(split_line):
 	print("Example: >> list\n")
 	print("update -- which updates the values of your local variables to those on the bro device\n")
 	print("Example: >> update\n")
-	print("setvar -- which takes in an array of strings, seperated by spaces, and creates a record on the bro device that maps the first string to the second\n")
-	print("Example: >> setvar a 1.1.1.1 b 2.2.2.2\n")
+	print("set_addr -- which takes in an array of strings, seperated by spaces, and creates a record on the bro device that maps the first string to the second\n")
+	print("Example: >> set_addr a 1.1.1.1 b 2.2.2.2\n")
 	print("quit -- which quits the program\n")
 	print("Example: >> quit")
 	return 

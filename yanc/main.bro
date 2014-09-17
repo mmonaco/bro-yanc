@@ -3,14 +3,10 @@
 module yanc;
 
 export {
-
-	type ip_map: record {
-	 	#this intializes a data struct for us to use with the with setbro
-	    local_name: string;
-	    ip: addr;
-	};
-	
-	global host_set:set[ip_map];
+	#we can add a new map for every type of variable
+	global addr_map:	table[string] of addr;
+	global int_map:		table[string] of int;
+	global string_map:	table[string] of string;
 }
 
 event my_event_request(details: string)
@@ -36,7 +32,7 @@ event remote_connection_handshake_done(p: event_peer)
 redef Communication::listen_port = 47758/tcp;
 
 redef Communication::nodes += {
-        ["controller"] = [$host = 127.0.0.1, $events = /test1|setvar|list|init_update|bro_list|delvar/, $connect=F, $ssl=F] #declares the tests 
+        ["controller"] = [$host = 127.0.0.1, $events = /test1|set_string|list|init_update|bro_list|delvar|bro_demo|set_int|set_addr/, $connect=F, $ssl=F] #declares the tests 
 };
 ###########################################################################################
 
@@ -44,59 +40,49 @@ global update:event(a: string, b: addr);
 
 event bro_init(){
 	print "YANC MODULE IS UP ";
-
-	local bro_rec : ip_map;
-
-	bro_rec$local_name = "default";
-	bro_rec$ip = 0.0.0.0;
-
-	add host_set[bro_rec];
 }
 
 event test1(){
         print "bro completed task, move to test1"; 
 }
 
-#This deletes a record from the host_set 
-event delvar(local_name:string, ipAddress:addr){
-
+#This deletes an entry from the addr_map, possibly need to add more.
+event delvar(local_name:string){
 	print "Delvar ran";
-
-	local bro_rec : ip_map;
-	#sets up a record 
-	bro_rec$local_name = local_name;
-	 #name 
-	bro_rec$ip = ipAddress;
-
-	delete host_set[bro_rec];
+	delete addr_map[local_name];
 }
 
 #This adds a record to the host set
-event setvar(local_name:string, ipAddress:addr){
+event set_addr(local_name:string, IpAddress:addr){
+	print "Setaddr ran";
+	delete addr_map[local_name];
+	addr_map[local_name]=IpAddress;
+}
 
-	print "Setvar ran";
+event set_int(local_name:string, Int:int){
+	print "Setint ran";
+	delete int_map[local_name];
+	int_map[local_name]=Int;
+}
 
-	local bro_rec : ip_map;
-	#sets up a record 
-	bro_rec$local_name = local_name;
-	 #name 
-	bro_rec$ip = ipAddress;
-
-	add host_set[bro_rec];
+event set_string(local_name:string, String:string){
+	print "Setstring ran";
+	delete string_map[local_name];
+	string_map[local_name]=String;
 }
 
 #bro list is for debugging purposes
 event bro_list(){
 	#go through the users and print out users in the set on the bro device 
-	for ( host in host_set ){
-        print fmt("  %s", host);
+	for ( address in addr_map ){
+        print fmt("Variable is: %s, value is %s", address, addr_map[address]);
 	}
 }
 
 #init update, loops through user set and sends the info to the python controlller 
 event init_update(){
 
-	for ( host in host_set){
-		event update(host$local_name, host$ip);
+	for ( host in addr_map){
+		event update(host, addr_map[host]);
 	}
 }
