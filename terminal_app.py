@@ -80,16 +80,17 @@ def term():
 	while True:	
 
 		if current_connection:
-			n = raw_input("\n" + current_connection.name + " >> ")
+			n = raw_input("\n" + current_connection.name + " >>")
 
 		else:
-			n = raw_input("\n" +  ">> ")
+			n = raw_input("\n" +  ">>")
 		split_line = (n.lower()).split()
 
 		#add new commands here so we can tell valid/invalid commands 
-		commands = ["ls_var","help","list","set_addr","delvar","quit","connect","test",
+		commands = ["ls_var","help","list","set_addr","quit","connect",
 					"update_all","current_connection","connections","set_connection",
-					"send_script","module","modify_script","demo","set_string","set_int"]
+					"send_script","module","modify_script","demo","set_string","set_int"
+					,"ls_var_current"]
 
 		#Comments on top of splitline is syntax
 		try:
@@ -156,14 +157,11 @@ def term():
 
 			#These commands require there to be an active connection to work 
 			if (current_connection): 	
-				# ls_var, right now this only works with address table. I will work to find a way to get other tables later. 
-				if split_line[0] == "ls_var": 
+				# ls_var_current
+				# this prints out the variable dictionary for the current_dictionary
+				if split_line[0] == "ls_var_current": 
 					temp_dict.clear()
 					do_update_waiter(current_connection)
-					do_list(current_connection)
-
-				# list
-				if split_line[0] == "list": 
 					do_list(current_connection)
 
 				# set_addr foo 255.255.255.255
@@ -178,14 +176,11 @@ def term():
 				if split_line[0] == "set_string": 
 					do_set_string(split_line,current_connection)
 
-				# delvar foo 255.255.255.255
-				if split_line[0] == "delvar": 
-					do_delvar(split_line,current_connection)
-
 				# update_all
-				if split_line[0] == "update_all":
+				if split_line[0] == "ls_var":
 					do_update_all()
 
+				#demo
 				if split_line[0] == "demo":
 					do_demo(current_connection)
 
@@ -319,12 +314,6 @@ def do_set_int(split_line,bro_connection):
 def do_demo(bro_connection):
 	bro_connection.connection.send("bro_demo") 
 
-#This deletes a variable in the bro set. 
-def do_delvar(split_line,bro_connection):
-
-	for i in range (1,len(split_line)-1):
-		bro_connection.connection.send("delvar",string(split_line[i])) 
-
 #This lists out the varaibles in the dictionary 
 def do_list(bro_connection):
 	print (bro_connection.var_dict)
@@ -406,15 +395,23 @@ def do_send_script(host,username,password,path,filename):
 	transport.close()
 
 def do_help(split_line):
-	print("\nSupported commands are:\n")
-	print("list -- which lists out all of the locally stored variable names and values\n")
-	print("Example: >> list\n")
-	print("update -- which updates the values of your local variables to those on the bro device\n")
-	print("Example: >> update\n")
-	print("set_addr -- which takes in an array of strings, seperated by spaces, and creates a record on the bro device that maps the first string to the second\n")
-	print("Example: >> set_addr a 1.1.1.1 b 2.2.2.2\n")
-	print("quit -- which quits the program\n")
-	print("Example: >> quit")
+	print ("This is the help function, commands are shown beginning with Syntax- , parameters for the commands are shown in parentheses ().\n")
+	print("Syntax- ls_var : this will print out all of the variable dictionaries for all of our connections.\n") 
+	print("Syntax- help : prints this page. How else did you get here?\n" )
+	print("Syntax- set_addr (variable name) (ip) : this makes a map between a variable name on the bro device and an ip in the form (255.255.255.255). NO SUBNET MASKS OR CIDR notation support yet.\n")
+	print("Syntax- quit : this quits the program.\n")
+	print("Syntax- connect (ip:port) (name) : this creates a connection between the controller and a bro device on a certain ip:port in form (255.255.255.255:1337).\n\n")
+	print("Syntax- ls_var_current : this runs ls_var only on our current connection.\n")
+	print("Syntax- current_connection : this prins out our current connection.\n")
+	print("Syntax- connections : this prints out all of our connection.\n"),
+	print("Syntax- set_connection (connection_name) : this changes our current connection.\n")
+	print("Syntax- send_script (Dest ip) (Dest username) (Dest password) (brofile localpath) (dest filename) : this sends our script to a bro device.\n")
+	print("Syntax- module (name) (port) : this creates a custom module based on the one in yanc/main which has all of our communcation info.\n")
+	print("Syntax- modify_script (bro file) (module_name) : modifies a script so that it has the proper references to a module.\n")
+	print("Syntax- demo : prints out our demo on the bro device. This will be deleted later.\n")
+	print("Syntax- set_int (variable name) (int) : this makes a map between a variable name on the bro device and an int.\n")
+	print("Syntax- set_string (variable name) (string) : this makes a map between a variable name on the bro device and a stirng.\n")
+
 	return 
 
 if __name__ == "__main__":
