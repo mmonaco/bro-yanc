@@ -3,8 +3,7 @@
 # Proper way to use the program: 
 # 1. Create a sample bro script. 
 # 2. While writing the bro script, instead of using normal variables make it yanc::user_set[x] (finishing this up)
-# 3. Create a custom module using do_create_module
-# 4. "yancify" the script using the do_modify_script
+# 3. Create a custom module using do_create_module and feed in your script name to make a yancifyed script
 # 5. Send the script to proper directory on the device
 # 6. Send the module to the frameworks directory 
 # 7. Run the bro script and start changing stuff from the terminal_app
@@ -80,10 +79,10 @@ def term():
 	while True:	
 
 		if current_connection:
-			n = raw_input("\n" + current_connection.name + " >>")
+			n = raw_input("\n" + current_connection.name + " >> ")
 
 		else:
-			n = raw_input("\n" +  ">>")
+			n = raw_input("\n" +  ">> ")
 		split_line = (n.lower()).split()
 
 		#add new commands here so we can tell valid/invalid commands 
@@ -188,13 +187,9 @@ def term():
 			#These are for prepping/sending scripts#
 			########################################
 
-			# module (name) (port)
+			# module (name) (port) (controllerIp) (bro file)
 			if split_line[0] == "module":
-				do_create_module(split_line[1],split_line[2])
-
-			# modify_script (bro file) (module_name)
-			if split_line[0] == "modify_script":
-				do_modify_script(split_line[1],split_line[2])
+				do_create_module(split_line[1],split_line[2],split_line[3],split_line[4])
 
 			# send_script (Dest ip) (Dest username) (Dest password) (brofile localpath) (dest filename)
 			if split_line[0] == "send_script":
@@ -327,7 +322,7 @@ def do_update_all():
 		do_list(connection)
 
 #This takes the template module from /yanc/main.bro and edits features to create a custom module for a bro script 
-def do_create_module(name,port):
+def do_create_module(name,port,controller_ip,bro_script):
 
 	#this creates the new module directory 
 	mypath = name
@@ -345,11 +340,17 @@ def do_create_module(name,port):
 	#this is where to add different replacements. More will be added over time, match these with the parameters for the function so the user can control this
 	for line in template_main:
 
+		#replaces the listening port
 		if line.strip() == ("redef Communication::listen_port = 47758/tcp;"):
 			real_main.write("redef Communication::listen_port = " + port + ";")
 			
+		#replaces name of moudle at the top 
 		elif line.strip() == ("module yanc;"):
 			real_main.write("module " + name + ";\n")
+
+		#this replaces the ip of the controller 
+		elif line.strip() == ('["controller"] = [$host = 127.0.0.1, $events = /test1|set_string|list|init_update|bro_list|delvar|bro_demo|set_int|set_addr/, $connect=F, $ssl=F]'):
+			real_main.write('["controller"] = [$host = ' + controller_ip + ', $events = /test1|set_string|list|init_update|bro_list|delvar|bro_demo|set_int|set_addr/, $connect=F, $ssl=F]')
 
 		else:
 			real_main.write(line)
@@ -358,6 +359,8 @@ def do_create_module(name,port):
 	template_main.close
 	real_main.close()
 	os.remove("./" + mypath + "/template_main.bro")
+	do_modify_script(bro_script,name)
+
 #This function is given a bro file as a param and does the following:
 # 1. Creates a copy in the same directory
 # 2. Goes through copy and removes all references to predefined module
@@ -406,8 +409,7 @@ def do_help(split_line):
 	print("Syntax- connections : this prints out all of our connection.\n"),
 	print("Syntax- set_connection (connection_name) : this changes our current connection.\n")
 	print("Syntax- send_script (Dest ip) (Dest username) (Dest password) (brofile localpath) (dest filename) : this sends our script to a bro device.\n")
-	print("Syntax- module (name) (port) : this creates a custom module based on the one in yanc/main which has all of our communcation info.\n")
-	print("Syntax- modify_script (bro file) (module_name) : modifies a script so that it has the proper references to a module.\n")
+	print("Syntax- module (name) (port) (controller_ip) (bro_file) : this creates a custom module based on the one in yanc/main which has all of our communcation info. It also modifies a bro script with the correct module name\n")
 	print("Syntax- demo : prints out our demo on the bro device. This will be deleted later.\n")
 	print("Syntax- set_int (variable name) (int) : this makes a map between a variable name on the bro device and an int.\n")
 	print("Syntax- set_string (variable name) (string) : this makes a map between a variable name on the bro device and a stirng.\n")

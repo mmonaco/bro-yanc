@@ -13,15 +13,15 @@ General Test
 
 2.  While writing the bro script, instead of using normal variables make it yanc::addr_map["x"] for addresses. So instead of making a variable ```count=5``` you would write ```yanc::int_map["count"]``` and ```yanc::int_map["b"]=55``` in the bro_int porition of the script. 
 
-3.  Create a custom module using do_create_module. This takes the template yanc/main.bro, copies it and replaces the name and port with our parameters. Use the command ```>> module test_mod 1337``` in terminal_app.py to create the custom module. Put the new directory in /usr/local/bro/share/bro/base/frameworks/ .
+3.  Create a custom module using do_create_module and modify a script to take the new module. This takes the template yanc/main.bro, copies it and replaces the name and port with our parameters. Use the command ```>> module smiley  1337/tcp 127.0.0.5 sample_script.bro ``` in terminal_app.py to create the custom module. Put the new directory in /usr/local/bro/share/bro/base/frameworks/. This also yancifies a script so it can work with the new module. 
 
-4.  "yancify" the script using the do_modify_script. This takes in a bro file name that we want to modify, and the module name of the module we created in step three. Example: ```>> modify_script sample_script.bro test_mod``` 
+4. NOW DONE IN MODULE MAKER. DEPRICATED! do_create_module "yancify" the script using the do_modify_script. This takes in a bro file name that we want to modify, and the module name of the module we created in step three. Example: ```>> modify_script sample_script.bro test_mod``` 
 
 5.  Send the script to proper directory on the device. Still working on this, for now you can jsut run the script directly using your bro commands. 
 
 7.  Run the bro script and start changing vars from the controllers terminal_app.py
 
-Notes: All of the connections between the controller and the bro device are kept in custom module, so when the script is being written the only thing the writer needs to worry about is making the variables look at the different table maps, which can use the placeholder value of ```yanc::___map[]``` because our script modifer will change the actual module name and any references.
+Notes: All of the connections between the controller and the bro device are kept in custom module, so when the script is being written the only thing the writer needs to worry about is making the variables look at the different table maps, which can use the placeholder value of ```yanc::___int_map[]``` because our script modifer will change the actual module name and any references.
 
 Connections with bro-yanc
 =========================

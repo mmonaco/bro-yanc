@@ -1,6 +1,6 @@
 ##! This is our bro framework
 
-module yanc;
+module smiley;
 
 export {
 	#we can add a new map for every type of variable
@@ -29,11 +29,9 @@ event remote_connection_handshake_done(p: event_peer)
 }
 
 #######################Sets up connection with yanc controller#############################
-redef Communication::listen_port = 47758/tcp;
-
+redef Communication::listen_port = 1337/tcp;
 redef Communication::nodes += {
-        ["controller"] = [$host = 127.0.0.1, $events = /test1|set_string|list|init_update|bro_list|delvar|bro_demo|set_int|set_addr/, $connect=F, $ssl=F]
-};
+["controller"] = [$host = 127.0.0.5, $events = /test1|set_string|list|init_update|bro_list|delvar|bro_demo|set_int|set_addr/, $connect=F, $ssl=F]};
 ###########################################################################################
 
 global update_addrs:event(a: string, b: addr);
