@@ -91,7 +91,7 @@ def term():
 					"send_script","module","modify_script","demo","set_string","set_int"
 					,"ls_var_current"]
 
-		#Comments on top of splitline is syntax
+		#Comments on top of split_line is syntax
 		try:
 			# quit	
 			if split_line[0] == "quit":
@@ -186,15 +186,17 @@ def term():
 			########################################
 			#These are for prepping/sending scripts#
 			########################################
-
+			# module smiley  1337/tcp 127.0.0.5 sample_script.bro
 			# module (name) (port) (controllerIp) (bro file)
 			if split_line[0] == "module":
 				do_create_module(split_line[1],split_line[2],split_line[3],split_line[4])
 
-			# send_script (Dest ip) (Dest username) (Dest password) (brofile localpath) (dest filename)
+			# send_script 127.0.0.1 user user sample_script_yanced.bro sample_script_yanced.bro smiley smiley_test
+			# send_script (Dest ip) (Dest username) (Dest password) (brofile localpath) (dest filename) (module dir localpath) (dest module name)
+			#def do_send_script(host,username,password,bro_file,bro_filename,module_dir,module_name):
+
 			if split_line[0] == "send_script":
-				print("howdy")
-				do_send_script("127.0.0.1","user","user","/home/user/Documents/broc_yanc/broccoli_python/testfile","twit")
+				do_send_script("127.0.0.1","user","user",split_line[4],split_line[5],split_line[6],split_line[7])
 
 		#this is if they are trying to press enter with nothing actually in the line
 		except IndexError:
@@ -382,7 +384,8 @@ def do_modify_script(bro_file,module_name):
 	real_main.close()
 
 #This takes the newly modified script, sends it to the proper host via ssh for it to be run. 
-def do_send_script(host,username,password,path,filename):
+#send_script 127.0.0.1 user user sample_script_yanced.bro sample_script_yanced.bro smiley/ smiley_test/
+def do_send_script(host,username,password,bro_file,bro_filename,module_dir,module_name):
 
 	host = "127.0.0.1"
 	port = 22
@@ -390,9 +393,13 @@ def do_send_script(host,username,password,path,filename):
 	transport.connect(username = username, password = password)
 	sftp = paramiko.SFTPClient.from_transport(transport)
 
-	filepath = '/home/user/bro/scripts/yanc/' + filename
-	localpath = path
-	sftp.put(localpath, filepath)
+	script_filepath = '/home/user/bro/scripts/yanc/' + bro_filename
+	script_localpath = bro_file
+	sftp.put(script_localpath, script_filepath)
+
+	module_filepath = '/usr/local/bro/share/bro/base/frameworks/' + module_dir
+	module_localpath = module_dir
+	sftp.put(module_localpath, module_filepath)
 
 	sftp.close()
 	transport.close()
@@ -408,7 +415,7 @@ def do_help(split_line):
 	print("Syntax- current_connection : this prins out our current connection.\n")
 	print("Syntax- connections : this prints out all of our connection.\n"),
 	print("Syntax- set_connection (connection_name) : this changes our current connection.\n")
-	print("Syntax- send_script (Dest ip) (Dest username) (Dest password) (brofile localpath) (dest filename) : this sends our script to a bro device.\n")
+	print("Syntax- send_script (Dest ip) (Dest username) (Dest password) (brofile localpath) (dest filename) (module_dir) (module_name) : this sends our script to a bro device.\n")
 	print("Syntax- module (name) (port) (controller_ip) (bro_file) : this creates a custom module based on the one in yanc/main which has all of our communcation info. It also modifies a bro script with the correct module name\n")
 	print("Syntax- demo : prints out our demo on the bro device. This will be deleted later.\n")
 	print("Syntax- set_int (variable name) (int) : this makes a map between a variable name on the bro device and an int.\n")
