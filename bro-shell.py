@@ -20,10 +20,11 @@ class BroScript(object):
 	REMOTE_PATH = "/usr/local/bro/share/bro/base/frameworks"
 	UPSTART_CONF = "lib/upstart-bro-yanc.conf"
 
-	def __init__(self, ssh, sftp, name, local_script_path, port):
+	def __init__(self, bro, name, local_script_path, port):
 
-		self.ssh  = ssh
-		self.sftp = sftp
+		self.bro  = bro
+		self.ssh  = bro.ssh
+		self.sftp = bro.sftp
 
 		self.name = name
 		self.port = port
@@ -35,28 +36,9 @@ class BroScript(object):
 
 	def __del__(self):
 
-		try:
-			self.sftp.remove(self.remote_script_path)
-		except Exception as e:
-			print("warning: error removing '%s': %s" % (self.remote_script_path, str(e)))
-
-		try:
-			self.sftp.chdir(self.remote_mod_path)
-		except Exception as e:
-			print("warning: error changing to '%s': %s" % (self.remote_mod_path, str(e)))
-
-		for f in self.sftp.listdir():
-			try:
-				self.sftp.remove(f)
-			except Exception as e:
-				print("warning: error removing '%s': %s" % (f, str(e)))
-
-		self.sftp.chdir("..")
-		try:
-			self.sftp.rmdir(self.remote_mod_path)
-		except Exception as e:
-			print("warning: error removing '%s': %s" % (self.remote_mod_path, str(e)))
-
+		self.disconnect()
+		self.stop()
+		self.purge()
 
 	def load(self):
 
@@ -87,11 +69,43 @@ class BroScript(object):
 		with self.sftp.open(self.remote_script_path, "w") as fd:
 			fd.write(self.f_script)
 
+	def purge(self):
+
+		try:
+			self.sftp.remove(self.remote_script_path)
+		except Exception as e:
+			print("warning: error removing '%s': %s" % (self.remote_script_path, str(e)))
+
+		try:
+			self.sftp.chdir(self.remote_mod_path)
+		except Exception as e:
+			print("warning: error changing to '%s': %s" % (self.remote_mod_path, str(e)))
+
+		for f in self.sftp.listdir():
+			try:
+				self.sftp.remove(f)
+			except Exception as e:
+				print("warning: error removing '%s': %s" % (f, str(e)))
+
+		self.sftp.chdir("..")
+		try:
+			self.sftp.rmdir(self.remote_mod_path)
+		except Exception as e:
+			print("warning: error removing '%s': %s" % (self.remote_mod_path, str(e)))
+
 	def run(self):
 		self.ssh.exec_command("start bro-yanc id=" + self.name)
 
 	def stop(self):
 		self.ssh.exec_command("stop bro-yanc id=" + self.name)
+
+	def connect(self):
+		self.cxn = broccoli.Connection(self.bro.hostname + ":" + str(self.port))
+
+	def disconnect(self):
+		if self.cxn:
+			del self.cxn
+			self.cxn = None
 
 
 class BroConnection(object):
@@ -129,7 +143,7 @@ class BroConnection(object):
 			print("error: %s already loaded" % (name,))
 			return
 
-		script = BroScript(self.ssh, self.sftp, name, path, self.cur_bro_port)
+		script = BroScript(self, name, path, self.cur_bro_port)
 		script.load()
 		script.send()
 		script.run()
