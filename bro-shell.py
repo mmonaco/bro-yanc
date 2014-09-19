@@ -18,6 +18,7 @@ class BroScript(object):
 	MODULE_IN   = "lib/main.bro.in"
 	LOAD_IN     = "lib/__load__.bro.in"
 	REMOTE_PATH = "/usr/local/bro/share/bro/base/frameworks"
+	UPSTART_CONF = "lib/upstart-bro-yanc.conf"
 
 	def __init__(self, ssh, sftp, name, local_script_path, port):
 
@@ -87,7 +88,11 @@ class BroScript(object):
 			fd.write(self.f_script)
 
 	def run(self):
-		pass
+		self.ssh.exec_command("start bro-yanc id=" + self.name)
+
+	def stop(self):
+		self.ssh.exec_command("stop bro-yanc id=" + self.name)
+
 
 class BroConnection(object):
 
@@ -113,6 +118,8 @@ class BroConnection(object):
 
 		self.cur_bro_port = 47000
 
+		self.install_upstart_conf()
+
 	def __str__(self):
 		return self.address
 
@@ -129,6 +136,10 @@ class BroConnection(object):
 
 		self.scripts[name] = script
 		self.cur_bro_port += 1
+
+	def install_upstart_conf(self):
+
+		self.sftp.put(BroScript.UPSTART_CONF, "/etc/init/bro-yanc.conf")
 
 class BroShell(cmd.Cmd):
 
