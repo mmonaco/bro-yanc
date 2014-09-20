@@ -147,12 +147,15 @@ class BroScript(object):
 
 	def set_string(self, key, val):
 		self.cxn.send("set_string", key, val)
+		self.string_cache[key] = val
 
 	def set_int(self, key, val):
 		self.cxn.send("set_int", key, val)
+		self.int_cache[key] = val
 
 	def set_addr(self, key, val):
 		self.cxn.send("set_addr", key, val)
+		self.addr_cache[key] = val
 
 	def register_callbacks(self):
 		@broccoli.event
