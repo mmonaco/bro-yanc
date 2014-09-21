@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 
 from bro.shell import BroShell, USAGE
+import logging
 
 if __name__ == "__main__":
 	sh = BroShell()

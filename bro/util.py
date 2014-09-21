@@ -1,5 +1,8 @@
 #!/usr/bin/env python2
 
+import sys
+import logging
+
 def parse_ssh_hostname(arg):
 
 	user_hostport = arg.split('@', 1)
@@ -29,6 +32,17 @@ def format_ssh_hostname(host, user=None, port=None):
 	if port is not None:
 		fmt = fmt + ":" + str(port)
 	return fmt
+
+
+logging_formatter = logging.Formatter(fmt="%(name)s: %(message)s")
+logging_handler   = logging.StreamHandler(stream=sys.stdout)
+logging_handler.setFormatter(logging_formatter)
+
+def get_logger(name):
+	log = logging.getLogger(name)
+	log.setLevel(logging.DEBUG)
+	log.addHandler(logging_handler)
+	return log
 
 
 # vim: set noet ts=8 sts=8 sw=0 :

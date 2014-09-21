@@ -9,6 +9,8 @@ import broccoli
 import re
 import time
 import threading
+import logging
+from   bro.util import *
 
 class BroScript(object):
 
@@ -38,6 +40,8 @@ class BroScript(object):
 		self.addr_cache   = dict()
 
 		self.register_callbacks()
+
+		self.log = get_logger(bro.hostname+"/"+name)
 
 	def cleanup(self):
 	
@@ -150,24 +154,32 @@ class BroScript(object):
 		self.string_cache[key] = val
 
 	def set_int(self, key, val):
+		val = int(val)
 		self.cxn.send("set_int", key, val)
 		self.int_cache[key] = val
 
 	def set_addr(self, key, val):
+		val = broccoli.addr(val)
 		self.cxn.send("set_addr", key, val)
 		self.addr_cache[key] = val
 
 	def register_callbacks(self):
 		@broccoli.event
 		def update_strings(name, value):
-			self.string_cache[name] = value
+			if name not in self.string_cache or self.string_cache[name] != value:
+				self.log.info("update from Bro: string %s = %s", name, value)
+				self.string_cache[name] = value
 
 		@broccoli.event
 		def update_addrs(name, value):
-			self.addr_cache[name] = value
+			if name not in self.addr_cache or self.addr_cache[name] != value:
+				self.log.info("update from Bro: addr %s = %s", name, str(value))
+				self.addr_cache[name] = value
 
 		@broccoli.event
 		def update_ints(name, value):
-			self.int_cache[name] = value
+			if name not in self.int_cache or self.int_cache[name] != value:
+				self.log.info("update from Bro: int %s = %d", name, value)
+				self.int_cache[name] = value
 
 # vim: set noet ts=8 sts=8 sw=0 :
