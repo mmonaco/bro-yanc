@@ -79,3 +79,4 @@ class BroConnection(object):
 
 
 # vim: set noet ts=8 sts=8 sw=0 :
+# this is a test
