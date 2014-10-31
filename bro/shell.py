@@ -75,8 +75,12 @@ class BroShell(cmd.Cmd):
 
 	def do_connect(self, line):
 		"""connect [user@]host[:port] [alias]"""
+		try:
+			host, alias = self.__parse_args(line, 2)
 
-		host, alias = self.__parse_args(line, 2)
+		except ValueError as ve:
+			print("error: too many arguments")
+			return
 
 		if not host:
 			print("error: a hostname is required")
