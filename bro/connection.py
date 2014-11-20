@@ -1,18 +1,20 @@
 #!/usr/bin/env python2
 
+import os
 import paramiko
 from   bro.util  import *
 from   bro.script import BroScript
 
 class BroConnection(object):
 
-	def __init__(self, alias, hostname, port=None, user=None):
+	def __init__(self, alias, hostname, port=None, user=None, y_root="/net"):
 
 		self.alias     = alias
 		self.hostname  = hostname
 		self.user      = user
 		self.port      = port
 		self.address   = format_ssh_hostname(hostname, user, port)
+		self.path      = y_root + "/bro/" + self.alias
 
 		self.log       = get_logger(self.alias)
 
@@ -37,6 +39,14 @@ class BroConnection(object):
 		# Manage the run-state of scripts via upstart
 
 		self.install_upstart_conf()
+
+		# Create yanc directory for connection
+
+		try:
+			os.mkdir(self.path)
+			self.log.info("created " + self.path)
+		except OSError as e:
+			self.log.info("attached " + self.path)
 
 	def cleanup(self):
 		
