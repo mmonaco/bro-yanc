@@ -175,17 +175,23 @@ class BroScript(object):
 			if name not in self.string_cache or self.string_cache[name] != value:
 				self.log.info("update from Bro: string %s = %s", name, value)
 				self.string_cache[name] = value
+				with open(self.y_path + "/vars.str/" + name, "w") as fd:
+					fd.write(value)
 
 		@broccoli.event
 		def update_addrs(name, value):
 			if name not in self.addr_cache or self.addr_cache[name] != value:
 				self.log.info("update from Bro: addr %s = %s", name, str(value))
 				self.addr_cache[name] = value
+				with open(self.y_path + "/vars.ip32/" + name, "w") as fd:
+					fd.write(value)
 
 		@broccoli.event
 		def update_ints(name, value):
 			if name not in self.int_cache or self.int_cache[name] != value:
 				self.log.info("update from Bro: int %s = %d", name, value)
 				self.int_cache[name] = value
+				with open(self.y_path + "/vars.int/" + name, "w") as fd:
+					fd.write(value)
 
 # vim: set noet ts=8 sts=8 sw=0 :
