@@ -1,6 +1,5 @@
 #!/usr/bin/env python2
 
-from __future__ import print_function
 import paramiko
 from   bro.util  import *
 from   bro.script import BroScript
@@ -14,6 +13,8 @@ class BroConnection(object):
 		self.user      = user
 		self.port      = port
 		self.address   = format_ssh_hostname(hostname, user, port)
+
+		self.log       = get_logger(self.alias)
 
 		# An index of the currently loaded .bro scripts. 
 
@@ -49,7 +50,7 @@ class BroConnection(object):
 	def load(self, path, name):
 
 		if name in self.scripts:
-			print("error: %s already loaded" % (name,))
+			self.log.warning(str(name) + " already loaded")
 			return
 
 		script = BroScript(self, name, path, self.cur_bro_port)
@@ -62,7 +63,7 @@ class BroConnection(object):
 	def run(self, name):
 
 		if name not in self.scripts:
-			print("error: unknown script '%s'" % (name,))
+			self.log.warning("unknown script " + str(name))
 			return
 
 		script = self.scripts[name]
@@ -72,7 +73,7 @@ class BroConnection(object):
 	def stop(self, name):
 
 		if name not in self.scripts:
-			print("error: unknown script '%s'" % (name,))
+			self.log.warning("unknown script " + str(name))
 			return
 
 		script = self.scripts[name]
