@@ -95,7 +95,7 @@ class BroShell(cmd.Cmd):
 			return
 
 		try:
-			self.connections[alias] = BroConnection(host, port, user)
+			self.connections[alias] = BroConnection(alias, host, port, user)
 		except Exception as e:
 			print("error connecting: " + str(e))
 			return

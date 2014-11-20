@@ -7,8 +7,9 @@ from   bro.script import BroScript
 
 class BroConnection(object):
 
-	def __init__(self, hostname, port=None, user=None):
+	def __init__(self, alias, hostname, port=None, user=None):
 
+		self.alias     = alias
 		self.hostname  = hostname
 		self.user      = user
 		self.port      = port
@@ -43,7 +44,7 @@ class BroConnection(object):
 		self.ssh.close()
 
 	def __str__(self):
-		return self.address
+		return self.alias
 
 	def load(self, path, name):
 
