@@ -1,7 +1,5 @@
 #!/usr/bin/env python2
 
-from __future__ import print_function
-
 import sys
 sys.path.append("/usr/local/bro/lib/broctl/")
 
@@ -86,28 +84,28 @@ class BroScript(object):
 		try:
 			self.sftp.remove(self.remote_script_path)
 		except Exception as e:
-			print("warning: error removing '%s': %s" % (self.remote_script_path, str(e)))
+			self.log.warning("unable to remove '%s': %s", self.remote_script_path, str(e))
 
 		try:
 			self.sftp.chdir(self.remote_mod_path)
 		except Exception as e:
-			print("warning: error changing to '%s': %s" % (self.remote_mod_path, str(e)))
+			self.log.warning("unable to chdir '%s': %s", self.remote_script_path, str(e))
 
 		for f in self.sftp.listdir():
 			try:
 				self.sftp.remove(f)
 			except Exception as e:
-				print("warning: error removing '%s': %s" % (f, str(e)))
+				self.log.warning("unable to remove '%s': %s", f, str(e))
 
 		self.sftp.chdir("..")
 		try:
 			self.sftp.rmdir(self.remote_mod_path)
 		except Exception as e:
-			print("warning: error removing '%s': %s" % (self.remote_mod_path, str(e)))
+			self.log.warning("unable to remove '%s': %s", self.remote_mod_path, str(e))
 
 	def run(self):
 		if self.running:
-			print("warning: '%s' already running" % (self.name))
+			self.log.warning(self.name + " already running")
 		else:
 			self.ssh.exec_command("start bro-yanc id=" + self.name)
 			self.running = True
@@ -116,14 +114,14 @@ class BroScript(object):
 
 	def stop(self):
 		if not self.running:
-			print("warning: '%s' not running" % (self.name))
+			self.log.warning(self.name + " not running")
 		else:
 			self.ssh.exec_command("stop bro-yanc id=" + self.name)
 			self.running = False
 
 	def connect(self):
 		if self.cxn:
-			print("warning: '%s' already connected" % (self.name,))
+			self.log.warning(self.name + " already connected")
 		else:
 			self.cxn    = broccoli.Connection(self.bro.hostname + ":" + str(self.port))
 			self.run_thread = True
@@ -134,7 +132,7 @@ class BroScript(object):
 
 	def disconnect(self):
 		if not self.cxn:
-			print("warning: '%s' not connected" % (self.name,))
+			self.log.warning(self.name + " not connected")
 		else:
 			self.run_thread = False
 			self.thread.join()
