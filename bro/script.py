@@ -3,6 +3,7 @@
 import sys
 sys.path.append("/usr/local/bro/lib/broctl/")
 
+import os
 import broccoli
 import re
 import time
@@ -23,8 +24,9 @@ class BroScript(object):
 		self.ssh  = bro.ssh
 		self.sftp = bro.sftp
 
-		self.name = name
-		self.port = port
+		self.name   = name
+		self.port   = port
+		self.y_path = self.bro.path + "/scripts/" + self.name
 		self.local_script_path  = local_script_path
 		self.remote_script_path = "/run/" + name + ".bro"
 		self.remote_mod_path    = BroScript.REMOTE_PATH + "/" + self.name
@@ -40,6 +42,12 @@ class BroScript(object):
 		self.register_callbacks()
 
 		self.log = get_logger(bro.hostname+"/"+name)
+
+		try:
+			os.mkdir(self.y_path)
+			self.log.info("created " + self.y_path)
+		except OSError as e:
+			self.log.info("attached " + self.y_path)
 
 	def cleanup(self):
 	
