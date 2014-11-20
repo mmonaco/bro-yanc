@@ -14,7 +14,12 @@ class BroConnection(object):
 		self.port      = port
 		self.address   = format_ssh_hostname(hostname, user, port)
 
+		# An index of the currently loaded .bro scripts. 
+
 		self.scripts   = dict()
+		self.cur_bro_port = 47000
+
+		# Establish SSH/SFTP tunnel to remote server
 
 		kwargs = dict()
 		if port is not None:
@@ -27,7 +32,7 @@ class BroConnection(object):
 		self.ssh.connect(hostname, **kwargs)
 		self.sftp = self.ssh.open_sftp()
 
-		self.cur_bro_port = 47000
+		# Manage the run-state of scripts via upstart
 
 		self.install_upstart_conf()
 
