@@ -49,6 +49,8 @@ class BroScript(object):
 		except OSError as e:
 			self.log.info("attached " + self.y_path)
 
+		self.ignore_paths = set()
+
 	def cleanup(self):
 	
 		self.disconnect()

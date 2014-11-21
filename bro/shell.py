@@ -9,6 +9,8 @@ import shlex
 from   bro.connection import BroConnection
 from   bro.script     import BroScript
 from   bro.util       import *
+from   watchdog.observers import Observer
+from   watchdog.events    import FileSystemEventHandler
 
 USAGE = """\
 Welcome to the Yanc Bro Shell!
@@ -45,15 +47,18 @@ Welcome to the Yanc Bro Shell!
 @author: Matt Monaco
 """
 
-class BroShell(cmd.Cmd):
+LOG = get_logger("bro.shell")
+
+class BroShell(cmd.Cmd, FileSystemEventHandler):
 
 	prompt = "(disconnected)> "
 
-	def __init__(self):
+	def __init__(self, y_root="/net"):
 
 		cmd.Cmd.__init__(self)
 		self.connections = dict()
 		self.cur_cxn     = None
+		self.y_path      = y_root + "/bro"
 	
 		self.histfile = os.path.expanduser("~/.cache/bro_history")
 		try:
@@ -61,7 +66,13 @@ class BroShell(cmd.Cmd):
 		except IOError:
 			pass
 
+		self.observer = Observer()
+		self.observer.schedule(self, self.y_path, recursive=False)
+		self.observer.start()
+		
 	def cleanup(self):
+
+		self.observer.join()
 
 		for cxn in self.connections.values():
 			cxn.cleanup()
@@ -197,5 +208,24 @@ class BroShell(cmd.Cmd):
 	def postcmd(self, stop, line):
 		if line == "EOF":
 			return True
+
+	# Watchdog
+
+	def on_created(self, event):
+
+		LOG.info("on_created: event_type '%s', path '%s'", event.event_type, event.src_path)
+
+	def on_deleted(self, event):
+
+		LOG.info("on_deleted: event_type '%s', path '%s'", event.event_type, event.src_path)
+
+	def on_modified(self, event):
+
+		LOG.info("on_modified: event_type '%s', path '%s'", event.event_type, event.src_path)
+
+	def on_moved(self, event):
+
+		LOG.info("on_moved: event_type '%s', path '%s'", event.event_type, event.src_path)
+
 
 # vim: set noet ts=8 sts=8 sw=0 :
