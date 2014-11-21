@@ -58,17 +58,19 @@ class BroShell(cmd.Cmd, FileSystemEventHandler):
 		cmd.Cmd.__init__(self)
 		self.connections = dict()
 		self.cur_cxn     = None
-		self.y_path      = y_root + "/bro"
-	
+		self.y_path      = y_root + "/bro"	
 		self.histfile = os.path.expanduser("~/.cache/bro_history")
+		self.modified_paths = set([])
 		try:
 			readline.read_history_file(self.histfile)
 		except IOError:
 			pass
 
-		self.observer = Observer()
+		self.observer = Observer()	
 		self.observer.schedule(self, self.y_path, recursive=False)
 		self.observer.start()
+		
+	
 		
 	def cleanup(self):
 
@@ -220,6 +222,11 @@ class BroShell(cmd.Cmd, FileSystemEventHandler):
 		LOG.info("on_deleted: event_type '%s', path '%s'", event.event_type, event.src_path)
 
 	def on_modified(self, event):
+		if (event.src_path) in self.modified_paths:
+                        self.modified_paths.remove(event.src_path)
+
+		else:
+                        self.modified_paths.add(event.src_path)
 
 		LOG.info("on_modified: event_type '%s', path '%s'", event.event_type, event.src_path)
 
