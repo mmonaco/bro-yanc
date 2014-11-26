@@ -9,6 +9,8 @@ import re
 import time
 import threading
 import logging
+from   watchdog.observers import Observer
+from   watchdog.events    import FileSystemEventHandler
 from   bro.util import *
 
 class BroScript(object):
@@ -42,12 +44,18 @@ class BroScript(object):
 		self.register_callbacks()
 
 		self.log = get_logger(bro.hostname+"/"+name)
-
+		
 		try:
 			os.mkdir(self.y_path)
 			self.log.info("created " + self.y_path)
 		except OSError as e:
 			self.log.info("attached " + self.y_path)
+		
+		#This is the observer stuff for watchdog 
+		self.modified_paths = set([])
+		self.observer = Observer()
+                self.observer.schedule(self, self.y_path, recursive=False)
+                self.observer.start()
 
 		self.ignore_paths = set()
 
@@ -174,7 +182,12 @@ class BroScript(object):
 	def register_callbacks(self):
 		@broccoli.event
 		def update_strings(name, value):
-			if name not in self.string_cache or self.string_cache[name] != value:
+
+			if (event.src_path) in self.modified_paths:
+                        	self.modified_paths.remove(event.src_path)
+
+			elif name not in self.string_cache or self.string_cache[name] != value:
+                       		self.modified_paths.add(event.src_path)		
 				self.log.info("update from Bro: string %s = %s", name, value)
 				self.string_cache[name] = value
 				with open(self.y_path + "/vars.str/" + name, "w") as fd:
@@ -182,7 +195,12 @@ class BroScript(object):
 
 		@broccoli.event
 		def update_addrs(name, value):
-			if name not in self.addr_cache or self.addr_cache[name] != value:
+
+			if (event.src_path) in self.modified_paths:
+                        	self.modified_paths.remove(event.src_path)
+
+			elif name not in self.addr_cache or self.addr_cache[name] != value:
+                       		self.modified_paths.add(event.src_path)	
 				self.log.info("update from Bro: addr %s = %s", name, str(value))
 				self.addr_cache[name] = value
 				with open(self.y_path + "/vars.ip32/" + name, "w") as fd:
@@ -190,7 +208,13 @@ class BroScript(object):
 
 		@broccoli.event
 		def update_ints(name, value):
-			if name not in self.int_cache or self.int_cache[name] != value:
+			
+			#Checks if the we've modified the path, if we have remove it, and don't do anything
+			if (event.src_path) in self.modified_paths:
+                        	self.modified_paths.remove(event.src_path)
+
+			elif name not in self.int_cache or self.int_cache[name] != value:
+                       		self.modified_paths.add(event.src_path)
 				self.log.info("update from Bro: int %s = %d", name, value)
 				self.int_cache[name] = value
 				with open(self.y_path + "/vars.int/" + name, "w") as fd:
