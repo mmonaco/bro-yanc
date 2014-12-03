@@ -186,7 +186,7 @@ class BroShell(cmd.Cmd, FileSystemEventHandler):
 			return
 		path, name = self.__parse_args(line, 2)
 		if name is None:
-			name = os.path.basename(path)
+			name = os.path.basename(path).replace('.bro','')
 		self.cur_cxn.load(path, name)
 
 	def do_run(self, scriptname):
