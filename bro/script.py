@@ -186,7 +186,7 @@ class BroScript(object):
 			if (event.src_path) in self.modified_paths:
                         	self.modified_paths.remove(event.src_path)
 
-			elif name not in self.string_cache or self.string_cache[name] != value:
+			elif (name not in self.string_cache or self.string_cache[name] != value):
                        		self.modified_paths.add(event.src_path)		
 				self.log.info("update from Bro: string %s = %s", name, value)
 				self.string_cache[name] = value
@@ -199,7 +199,7 @@ class BroScript(object):
 			if (event.src_path) in self.modified_paths:
                         	self.modified_paths.remove(event.src_path)
 
-			elif name not in self.addr_cache or self.addr_cache[name] != value:
+			elif (name not in self.addr_cache or self.addr_cache[name] != value):
                        		self.modified_paths.add(event.src_path)	
 				self.log.info("update from Bro: addr %s = %s", name, str(value))
 				self.addr_cache[name] = value
@@ -213,7 +213,7 @@ class BroScript(object):
 			if (event.src_path) in self.modified_paths:
                         	self.modified_paths.remove(event.src_path)
 
-			elif name not in self.int_cache or self.int_cache[name] != value:
+			elif (name not in self.int_cache or self.int_cache[name] != value):
                        		self.modified_paths.add(event.src_path)
 				self.log.info("update from Bro: int %s = %d", name, value)
 				self.int_cache[name] = value
